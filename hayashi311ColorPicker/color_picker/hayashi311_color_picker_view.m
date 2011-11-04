@@ -52,11 +52,13 @@
         // パーツの配置
         current_color_frame_ = CGRectMake(10.0f, 30.0f, 40.0f, 40.0f);
         brightness_picker_frame_ = CGRectMake(120.0f, 30.0f, 190.0f, 40.0f);
+        brightness_picker_touch_frame_ = CGRectMake(100.0f, 30.0f, 230.0f, 40.0f);
         brightness_picker_shadow_frame_ = CGRectMake(120.0f-5.0f, 30.0f-5.0f, 190.0f+10.0f, 40.0f+10.0f);
         color_map_frame_ = CGRectMake(11.0f, 106.0f, 300.0f, 300.0f);
         color_map_side_frame_ = CGRectMake(10.0f, 105.0f, 300.0f, 300.0f);
         pixel_size_ = 15.0f;
-        brightness_under_limit_ = 0.4f;
+        brightness_lower_limit_ = 0.4f;
+        saturation_upper_limit_ = 0.95f;
         
         [self initColorCursor];
         
@@ -79,12 +81,28 @@
     return self;
 }
 
+- (float)BrightnessLowerLimit{
+    return brightness_lower_limit_;
+}
+
+- (void)setBrightnessLowerLimit:(float)brightness_under_limit{
+    brightness_lower_limit_ = brightness_under_limit;
+}
+
+- (float)SaturationUpperLimit{
+    return brightness_lower_limit_;
+}
+
+- (void)setSaturationUpperLimit:(float)saturation_upper_limit{
+    saturation_upper_limit_ = saturation_upper_limit;
+    [self initColorCursor];
+}
+
 - (void)initColorCursor{
     int pixel_count = color_map_frame_.size.height/pixel_size_;
     CGPoint new_position;
     new_position.x = current_hsv_color_.h * (float)pixel_count * pixel_size_ + color_map_frame_.origin.x + pixel_size_/2.0f;
-    new_position.y = (1.0f - current_hsv_color_.s) * (float)pixel_count * pixel_size_ + color_map_frame_.origin.y + pixel_size_/2.0f;
-    
+    new_position.y = (1.0f - current_hsv_color_.s) * (1.0f/saturation_upper_limit_) * (float)(pixel_count - 1) * pixel_size_ + color_map_frame_.origin.y + pixel_size_/2.0f;
     color_cursor_position_.x = (int)(new_position.x/pixel_size_) * pixel_size_  + color_map_frame_.origin.x - pixel_size_/2.0f;
     color_cursor_position_.y = (int)(new_position.y/pixel_size_) * pixel_size_ + pixel_size_/2.0f;
 }
@@ -127,8 +145,15 @@
             Hayashi311HSVColor new_hsv = current_hsv_color_;
             
             CGPoint new_position = CGPointMake(touch_position.x - color_map_frame_.origin.x, touch_position.y - color_map_frame_.origin.y);
+            /*
             new_hsv.h = (int)((new_position.x)/pixel_size_) / (float)pixel_count;
             new_hsv.s = 1.0f-(int)((new_position.y)/pixel_size_) / (float)pixel_count;
+            */
+            
+            float pixel_x = (int)((new_position.x)/pixel_size_)/(float)pixel_count; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+            float pixel_y = (int)((new_position.y)/pixel_size_)/(float)(pixel_count-1); // Y(彩度)は0.0f~1.0f
+            
+            HSVColorAt(&new_hsv, pixel_x, pixel_y, saturation_upper_limit_, current_hsv_color_.v);
             
             if (!isEqual(&new_hsv,&current_hsv_color_)) {
                 current_hsv_color_ = new_hsv;
@@ -137,13 +162,21 @@
                 
                 [self setNeedsDisplay];
             }
-            
-        }else if(CGRectContainsPoint(brightness_picker_frame_,touch_position)){
-            current_hsv_color_.v = (1.0f - ((touch_position.x - brightness_picker_frame_.origin.x )/ brightness_picker_frame_.size.width )) * (1.0f - brightness_under_limit_) + brightness_under_limit_;
+        }else if(CGRectContainsPoint(brightness_picker_touch_frame_,touch_position)){
+            if (CGRectContainsPoint(brightness_picker_frame_,touch_position)) {
+                // 輝度のスライダーの内側
+                current_hsv_color_.v = (1.0f - ((touch_position.x - brightness_picker_frame_.origin.x )/ brightness_picker_frame_.size.width )) * (1.0f - brightness_lower_limit_) + brightness_lower_limit_;
+            }else{
+                // 左右をタッチした場合
+                if (touch_position.x < brightness_picker_frame_.origin.x) {
+                    current_hsv_color_.v = 1.0f;
+                }else if((brightness_picker_frame_.origin.x + brightness_picker_frame_.size.width) < touch_position.x){
+                    current_hsv_color_.v = brightness_lower_limit_;
+                }
+            }
             [self setNeedsDisplay];
         }
     }
-    
     [self ClearInput];
 }
 
@@ -180,7 +213,7 @@
     
     Hayashi311RGBColor dark_color;
     Hayashi311RGBColor light_color;
-    UIColor* dark_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.v brightness:brightness_under_limit_ alpha:1.0f];
+    UIColor* dark_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.v brightness:brightness_lower_limit_ alpha:1.0f];
     UIColor* light_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.s brightness:1.0f alpha:1.0f];
     
     RGBColorFromUIColor(dark_color_from_hsv, &dark_color);
@@ -210,10 +243,7 @@
     
     // 現在の輝度を示す
     float pointer_size = 5.0f;
-    float tappoint_x = (1.0f - (current_hsv_color_.v - brightness_under_limit_)/(1.0f - brightness_under_limit_)) * brightness_picker_frame_.size.width + brightness_picker_frame_.origin.x;
-    
-    
-    
+    float tappoint_x = (1.0f - (current_hsv_color_.v - brightness_lower_limit_)/(1.0f - brightness_lower_limit_)) * brightness_picker_frame_.size.width + brightness_picker_frame_.origin.x;
     
     CGRect rect_ellipse = CGRectMake( tappoint_x - pointer_size,brightness_picker_frame_.origin.y + brightness_picker_frame_.size.height/2.0f - pointer_size, pointer_size*2, pointer_size*2);
     [[UIColor whiteColor] set];
@@ -243,15 +273,20 @@
     CGContextDrawPath(context, kCGPathStroke);
     CGContextRestoreGState(context);
     
-    
     CGContextSaveGState(context);
     float height;
     int pixel_count = color_map_frame_.size.height/pixel_size_;
     
     for (int j = 0; j < pixel_count; ++j) {
         height =  pixel_size_ * j + color_map_frame_.origin.y;
+        float pixel_y = (float)j/(pixel_count-1); // Y(彩度)は0.0f~1.0f
         for (int i = 0; i < pixel_count; ++i) {
-            CGContextSetFillColorWithColor(context, [UIColor colorWithHue:(float)i/pixel_count saturation:1.0f-((float)j/pixel_count) brightness:current_hsv_color_.v alpha:1.0f].CGColor);
+            float pixel_x = (float)i/pixel_count; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+            Hayashi311HSVColor pixel_hsv;
+            HSVColorAt(&pixel_hsv, pixel_x, pixel_y, saturation_upper_limit_, current_hsv_color_.v);
+            CGContextSetFillColorWithColor(context, [UIColor colorWithHue:pixel_hsv.h saturation:pixel_hsv.s brightness:pixel_hsv.v alpha:1.0f].CGColor);
+            
+            //CGContextAddRect(context, CGRectMake(pixel_size_*i+color_map_frame_.origin.x, height, pixel_size_-2.0f, pixel_size_-2.0f));
             CGContextAddRect(context, CGRectMake(pixel_size_*i+color_map_frame_.origin.x, height, pixel_size_-2.0f, pixel_size_-2.0f));
             CGContextDrawPath(context, kCGPathFill);
         }

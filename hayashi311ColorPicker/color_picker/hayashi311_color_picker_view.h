@@ -56,14 +56,15 @@
     // パーツの配置
     CGRect current_color_frame_;
     CGRect brightness_picker_frame_;
+    CGRect brightness_picker_touch_frame_;
     CGRect brightness_picker_shadow_frame_;
     CGRect color_map_frame_;
     CGRect color_map_side_frame_;
     float pixel_size_;
-    float brightness_under_limit_;
+    float brightness_lower_limit_;
+    float saturation_upper_limit_;
     
     bool show_color_cursor_;
-    
 }
 
 // デフォルトカラーで初期化
@@ -79,5 +80,8 @@
  */
 
 - (void)BeforeDealloc;
+
+@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit;
+@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit;
 
 @end

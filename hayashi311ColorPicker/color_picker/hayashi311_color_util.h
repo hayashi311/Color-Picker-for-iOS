@@ -67,4 +67,8 @@ void RGBColorFromUIColor(const UIColor*,Hayashi311RGBColor*);
 // 同値チェック
 bool isEqual(const Hayashi311HSVColor*,const Hayashi311HSVColor*);
 
+
+// 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
+void HSVColorAt(Hayashi311HSVColor* hsv,float x,float y,float saturation_lower_limit,float brightness);
+
 #endif

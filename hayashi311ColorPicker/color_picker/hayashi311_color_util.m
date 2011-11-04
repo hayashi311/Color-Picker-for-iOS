@@ -92,3 +92,9 @@ void RGBColorFromUIColor(const UIColor* ui_color,Hayashi311RGBColor* rgb){
 bool isEqual(const Hayashi311HSVColor* hsv1,const Hayashi311HSVColor* hsv2){
     return (hsv1->h == hsv2->h) && (hsv1->s == hsv2->s) && (hsv1->v == hsv2->v);
 }
+
+void HSVColorAt(Hayashi311HSVColor* hsv,float x,float y,float saturation_upper_limit,float brightness){
+    hsv->h = x;
+    hsv->s = 1.0f - (y * saturation_upper_limit);
+    hsv->v = brightness;
+}

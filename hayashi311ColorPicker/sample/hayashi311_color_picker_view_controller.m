@@ -40,6 +40,10 @@
         RGBColorFromUIColor(default_color, &rgb_color);
         color_picker_view = [[Hayashi311ColorPickerView alloc] initWithFrame:[self.view bounds] 
                                                              andDefaultColor:rgb_color];
+        
+        // すべての色を選択可能にしたい場合は以下をコメントをはずしてください。
+        //[color_picker_view setBrightnessLowerLimit:0.0f];
+        //[color_picker_view setSaturationUpperLimit:1.0f];
         [self setView:color_picker_view];
     }
     return self;
