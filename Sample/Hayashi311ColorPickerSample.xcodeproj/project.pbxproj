@@ -22,15 +22,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		46E87BF8146F46C600BC1608 /* Hayashi311CgUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hayashi311CgUtil.h; sourceTree = "<group>"; };
-		46E87BF9146F46C600BC1608 /* Hayashi311CgUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311CgUtil.m; sourceTree = "<group>"; };
-		46E87BFA146F46C600BC1608 /* Hayashi311ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hayashi311ColorPickerView.h; sourceTree = "<group>"; };
-		46E87BFB146F46C600BC1608 /* Hayashi311ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311ColorPickerView.m; sourceTree = "<group>"; };
-		46E87BFC146F46C600BC1608 /* Hayashi311ColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hayashi311ColorUtil.h; sourceTree = "<group>"; };
-		46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311ColorUtil.m; sourceTree = "<group>"; };
-		46E87C01146F519F00BC1608 /* Hayashi311ColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hayashi311ColorPickerViewController.h; sourceTree = "<group>"; };
-		46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311ColorPickerViewController.m; sourceTree = "<group>"; };
-		DA877C2D14527BD000A0754C /* hayashi311ColorPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hayashi311ColorPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46E87BF8146F46C600BC1608 /* Hayashi311CgUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Hayashi311CgUtil.h; path = ../ColorPicker/Hayashi311CgUtil.h; sourceTree = "<group>"; };
+		46E87BF9146F46C600BC1608 /* Hayashi311CgUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311CgUtil.m; path = ../ColorPicker/Hayashi311CgUtil.m; sourceTree = "<group>"; };
+		46E87BFA146F46C600BC1608 /* Hayashi311ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Hayashi311ColorPickerView.h; path = ../ColorPicker/Hayashi311ColorPickerView.h; sourceTree = "<group>"; };
+		46E87BFB146F46C600BC1608 /* Hayashi311ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311ColorPickerView.m; path = ../ColorPicker/Hayashi311ColorPickerView.m; sourceTree = "<group>"; };
+		46E87BFC146F46C600BC1608 /* Hayashi311ColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Hayashi311ColorUtil.h; path = ../ColorPicker/Hayashi311ColorUtil.h; sourceTree = "<group>"; };
+		46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311ColorUtil.m; path = ../ColorPicker/Hayashi311ColorUtil.m; sourceTree = "<group>"; };
+		46E87C01146F519F00BC1608 /* Hayashi311ColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hayashi311ColorPickerViewController.h; path = ../ColorPicker/Hayashi311ColorPickerViewController.h; sourceTree = "<group>"; };
+		46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311ColorPickerViewController.m; path = ../ColorPicker/Hayashi311ColorPickerViewController.m; sourceTree = "<group>"; };
+		DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hayashi311ColorPickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA877C3114527BD000A0754C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA877C3314527BD000A0754C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DA877C3514527BD000A0754C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,8 +72,9 @@
 				46E87BFC146F46C600BC1608 /* Hayashi311ColorUtil.h */,
 				46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */,
 			);
-			path = ColorPicker;
-			sourceTree = SOURCE_ROOT;
+			name = ColorPicker;
+			path = ../../ColorPicker;
+			sourceTree = "<group>";
 		};
 		DA877C2214527BD000A0754C = {
 			isa = PBXGroup;
@@ -87,7 +88,7 @@
 		DA877C2E14527BD000A0754C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA877C2D14527BD000A0754C /* hayashi311ColorPicker.app */,
+				DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,7 +113,8 @@
 				DA877C4914527C2500A0754C /* Classes */,
 				DA877C3814527BD000A0754C /* Supporting Files */,
 			);
-			path = Sample;
+			name = Sample;
+			path = Hayashi311ColorPickerSample;
 			sourceTree = "<group>";
 		};
 		DA877C3814527BD000A0754C /* Supporting Files */ = {
@@ -133,15 +135,14 @@
 				DA877C4E14527E2300A0754C /* SampleTopViewController.m */,
 			);
 			name = Classes;
-			path = Sample;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA877C2C14527BD000A0754C /* hayashi311ColorPicker */ = {
+		DA877C2C14527BD000A0754C /* Hayashi311ColorPickerSample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "hayashi311ColorPicker" */;
+			buildConfigurationList = DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "Hayashi311ColorPickerSample" */;
 			buildPhases = (
 				DA877C2914527BD000A0754C /* Sources */,
 				DA877C2A14527BD000A0754C /* Frameworks */,
@@ -151,9 +152,9 @@
 			);
 			dependencies = (
 			);
-			name = hayashi311ColorPicker;
+			name = Hayashi311ColorPickerSample;
 			productName = hayashi311ColorPicker;
-			productReference = DA877C2D14527BD000A0754C /* hayashi311ColorPicker.app */;
+			productReference = DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -165,7 +166,7 @@
 				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Hayashi Ryota";
 			};
-			buildConfigurationList = DA877C2714527BD000A0754C /* Build configuration list for PBXProject "hayashi311ColorPicker" */;
+			buildConfigurationList = DA877C2714527BD000A0754C /* Build configuration list for PBXProject "Hayashi311ColorPickerSample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -177,7 +178,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA877C2C14527BD000A0754C /* hayashi311ColorPicker */,
+				DA877C2C14527BD000A0754C /* Hayashi311ColorPickerSample */,
 			);
 		};
 /* End PBXProject section */
@@ -269,9 +270,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sample/hayashi311ColorPicker-Prefix.pch";
-				INFOPLIST_FILE = "Sample/hayashi311ColorPicker-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
+				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
+				PRODUCT_NAME = Hayashi311ColorPickerSample;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -280,9 +281,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sample/hayashi311ColorPicker-Prefix.pch";
-				INFOPLIST_FILE = "Sample/hayashi311ColorPicker-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
+				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
+				PRODUCT_NAME = Hayashi311ColorPickerSample;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -290,7 +291,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DA877C2714527BD000A0754C /* Build configuration list for PBXProject "hayashi311ColorPicker" */ = {
+		DA877C2714527BD000A0754C /* Build configuration list for PBXProject "Hayashi311ColorPickerSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA877C4314527BD000A0754C /* Debug */,
@@ -299,7 +300,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "hayashi311ColorPicker" */ = {
+		DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "Hayashi311ColorPickerSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA877C4614527BD000A0754C /* Debug */,

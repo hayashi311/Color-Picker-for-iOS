@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:hayashi311ColorPicker.xcodeproj">
+      location = "self:Hayashi311ColorPickerSample.xcodeproj">
    </FileRef>
 </Workspace>
