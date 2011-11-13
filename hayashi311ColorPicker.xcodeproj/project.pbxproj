@@ -35,7 +35,7 @@
 		DA877C4A14527C5500A0754C /* hayashi311_color_picker_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_picker_view.h; sourceTree = "<group>"; };
 		DA877C4D14527E2300A0754C /* sample_top_view_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sample_top_view_controller.h; sourceTree = "<group>"; };
 		DA877C4E14527E2300A0754C /* sample_top_view_controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sample_top_view_controller.m; sourceTree = "<group>"; };
-		DA877C561452822C00A0754C /* hayashi311_color_picker_view_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_picker_view_controller.h; sourceTree = "<group>"; };
+		DA877C561452822C00A0754C /* hayashi311_color_picker_view_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; path = hayashi311_color_picker_view_controller.h; sourceTree = "<group>"; };
 		DA877C571452822C00A0754C /* hayashi311_color_picker_view_controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_color_picker_view_controller.m; sourceTree = "<group>"; };
 		DA877C691452985500A0754C /* hayashi311_color_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_util.h; sourceTree = "<group>"; };
 		DA877C6C145299B600A0754C /* hayashi311_color_picker_view.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_color_picker_view.m; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 			children = (
 				DA877C4014527BD000A0754C /* AppDelegate.h */,
 				DA877C4114527BD000A0754C /* AppDelegate.m */,
-				DA877C4914527C2500A0754C /* sample */,
+				DA877C4914527C2500A0754C /* Controllers */,
 				DA877C4814527C2000A0754C /* color_picker */,
 				DA877C3814527BD000A0754C /* Supporting Files */,
 			);
@@ -124,7 +124,7 @@
 			path = color_picker;
 			sourceTree = "<group>";
 		};
-		DA877C4914527C2500A0754C /* sample */ = {
+		DA877C4914527C2500A0754C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				DA877C4D14527E2300A0754C /* sample_top_view_controller.h */,
@@ -132,8 +132,9 @@
 				DA877C561452822C00A0754C /* hayashi311_color_picker_view_controller.h */,
 				DA877C571452822C00A0754C /* hayashi311_color_picker_view_controller.m */,
 			);
-			path = sample;
-			sourceTree = "<group>";
+			name = Controllers;
+			path = Sample;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
