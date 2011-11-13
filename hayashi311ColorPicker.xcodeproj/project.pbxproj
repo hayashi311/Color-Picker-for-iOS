@@ -63,7 +63,7 @@
 		DA877C2214527BD000A0754C = {
 			isa = PBXGroup;
 			children = (
-				DA877C3714527BD000A0754C /* hayashi311ColorPicker */,
+				DA877C3714527BD000A0754C /* Sample */,
 				DA877C3014527BD000A0754C /* Frameworks */,
 				DA877C2E14527BD000A0754C /* Products */,
 			);
@@ -88,7 +88,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DA877C3714527BD000A0754C /* hayashi311ColorPicker */ = {
+		DA877C3714527BD000A0754C /* Sample */ = {
 			isa = PBXGroup;
 			children = (
 				DA877C4014527BD000A0754C /* AppDelegate.h */,
@@ -97,7 +97,7 @@
 				DA877C4814527C2000A0754C /* color_picker */,
 				DA877C3814527BD000A0754C /* Supporting Files */,
 			);
-			path = hayashi311ColorPicker;
+			path = Sample;
 			sourceTree = "<group>";
 		};
 		DA877C3814527BD000A0754C /* Supporting Files */ = {
@@ -268,8 +268,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "hayashi311ColorPicker/hayashi311ColorPicker-Prefix.pch";
-				INFOPLIST_FILE = "hayashi311ColorPicker/hayashi311ColorPicker-Info.plist";
+				GCC_PREFIX_HEADER = "Sample/hayashi311ColorPicker-Prefix.pch";
+				INFOPLIST_FILE = "Sample/hayashi311ColorPicker-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -279,8 +279,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "hayashi311ColorPicker/hayashi311ColorPicker-Prefix.pch";
-				INFOPLIST_FILE = "hayashi311ColorPicker/hayashi311ColorPicker-Info.plist";
+				GCC_PREFIX_HEADER = "Sample/hayashi311ColorPicker-Prefix.pch";
+				INFOPLIST_FILE = "Sample/hayashi311ColorPicker-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -305,6 +305,7 @@
 				DA877C4714527BD000A0754C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
