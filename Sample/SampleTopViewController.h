@@ -32,6 +32,6 @@
     
 }
 
-- (void)OpenColorPicker:(id)sender;
+- (void)openColorPicker:(id)sender;
 
 @end

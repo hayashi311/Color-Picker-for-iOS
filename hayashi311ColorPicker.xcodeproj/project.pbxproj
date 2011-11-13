@@ -10,6 +10,7 @@
 		46E87BFE146F46C600BC1608 /* Hayashi311CgUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BF9146F46C600BC1608 /* Hayashi311CgUtil.m */; };
 		46E87BFF146F46C600BC1608 /* Hayashi311ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFB146F46C600BC1608 /* Hayashi311ColorPickerView.m */; };
 		46E87C00146F46C600BC1608 /* Hayashi311ColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */; };
+		46E87C03146F519F00BC1608 /* Hayashi311ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */; };
 		DA877C3214527BD000A0754C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3114527BD000A0754C /* UIKit.framework */; };
 		DA877C3414527BD000A0754C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3314527BD000A0754C /* Foundation.framework */; };
 		DA877C3614527BD000A0754C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3514527BD000A0754C /* CoreGraphics.framework */; };
@@ -17,7 +18,6 @@
 		DA877C3E14527BD000A0754C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C3D14527BD000A0754C /* main.m */; };
 		DA877C4214527BD000A0754C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C4114527BD000A0754C /* AppDelegate.m */; };
 		DA877C4F14527E2300A0754C /* SampleTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C4E14527E2300A0754C /* SampleTopViewController.m */; };
-		DA877C581452822C00A0754C /* Hayashi311ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C571452822C00A0754C /* Hayashi311ColorPickerViewController.m */; };
 		DA877C731452A1C500A0754C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C721452A1C500A0754C /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +28,8 @@
 		46E87BFB146F46C600BC1608 /* Hayashi311ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311ColorPickerView.m; sourceTree = "<group>"; };
 		46E87BFC146F46C600BC1608 /* Hayashi311ColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hayashi311ColorUtil.h; sourceTree = "<group>"; };
 		46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311ColorUtil.m; sourceTree = "<group>"; };
+		46E87C01146F519F00BC1608 /* Hayashi311ColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hayashi311ColorPickerViewController.h; sourceTree = "<group>"; };
+		46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311ColorPickerViewController.m; sourceTree = "<group>"; };
 		DA877C2D14527BD000A0754C /* hayashi311ColorPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hayashi311ColorPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA877C3114527BD000A0754C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA877C3314527BD000A0754C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -40,8 +42,6 @@
 		DA877C4114527BD000A0754C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DA877C4D14527E2300A0754C /* SampleTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTopViewController.h; sourceTree = "<group>"; };
 		DA877C4E14527E2300A0754C /* SampleTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTopViewController.m; sourceTree = "<group>"; };
-		DA877C561452822C00A0754C /* Hayashi311ColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hayashi311ColorPickerViewController.h; sourceTree = "<group>"; };
-		DA877C571452822C00A0754C /* Hayashi311ColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hayashi311ColorPickerViewController.m; sourceTree = "<group>"; };
 		DA877C721452A1C500A0754C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -63,6 +63,8 @@
 		46E87BF7146F46C600BC1608 /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
+				46E87C01146F519F00BC1608 /* Hayashi311ColorPickerViewController.h */,
+				46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */,
 				46E87BF8146F46C600BC1608 /* Hayashi311CgUtil.h */,
 				46E87BF9146F46C600BC1608 /* Hayashi311CgUtil.m */,
 				46E87BFA146F46C600BC1608 /* Hayashi311ColorPickerView.h */,
@@ -129,8 +131,6 @@
 			children = (
 				DA877C4D14527E2300A0754C /* SampleTopViewController.h */,
 				DA877C4E14527E2300A0754C /* SampleTopViewController.m */,
-				DA877C561452822C00A0754C /* Hayashi311ColorPickerViewController.h */,
-				DA877C571452822C00A0754C /* Hayashi311ColorPickerViewController.m */,
 			);
 			name = Classes;
 			path = Sample;
@@ -201,10 +201,10 @@
 				DA877C3E14527BD000A0754C /* main.m in Sources */,
 				DA877C4214527BD000A0754C /* AppDelegate.m in Sources */,
 				DA877C4F14527E2300A0754C /* SampleTopViewController.m in Sources */,
-				DA877C581452822C00A0754C /* Hayashi311ColorPickerViewController.m in Sources */,
 				46E87BFE146F46C600BC1608 /* Hayashi311CgUtil.m in Sources */,
 				46E87BFF146F46C600BC1608 /* Hayashi311ColorPickerView.m in Sources */,
 				46E87C00146F46C600BC1608 /* Hayashi311ColorUtil.m in Sources */,
+				46E87C03146F519F00BC1608 /* Hayashi311ColorPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

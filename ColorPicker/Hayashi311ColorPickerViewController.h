@@ -30,17 +30,44 @@
 @class Hayashi311ColorPickerView;
 
 @protocol Hayashi311ColorPickerDelegate
-- (void)SetSelectedColor:(UIColor*)color;
+- (void)setSelectedColor:(UIColor*)color;
 @end
 
-@interface Hayashi311ColorPickerViewController : UIViewController<UINavigationControllerDelegate>{
+typedef enum {
+    HCPCSaveStyleSaveAlways,
+    HCPCSaveStyleSaveAndCancel
+} HCPCSaveStyle;
+
+@interface Hayashi311ColorPickerViewController : UIViewController {
     id<Hayashi311ColorPickerDelegate> delegate;
-    Hayashi311ColorPickerView* color_picker_view;
+    Hayashi311ColorPickerView* colorPickerView;
+    
+    UIColor *_color;
+    BOOL _fullColor;
+    HCPCSaveStyle _saveStyle;
 }
 
-- (id)initWithDefaultColor:(UIColor*)default_color;
-- (void)SaveColor:(id)sender;
++ (Hayashi311ColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color;
++ (Hayashi311ColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color;
++ (Hayashi311ColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color;
++ (Hayashi311ColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color;
+
+/** Initialize controller with selected color. 
+ * @param defaultColor selected color
+ * @param fullColor If YES, browseable full color. If NO color was limited.
+ * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
+ */
+- (id)initWithColor:(UIColor*)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
+
+/** @deprecated use -save: instead of this . */
+- (void)saveColor:(id)sender;
+
+- (void)save;
+- (void)save:(id)sender;
+- (void)cancel:(id)sender;
+
 
 @property (assign) id<Hayashi311ColorPickerDelegate> delegate;
+
 
 @end

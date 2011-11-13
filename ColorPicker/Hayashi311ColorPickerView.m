@@ -39,7 +39,7 @@
 
 @implementation Hayashi311ColorPickerView
 
-- (id)initWithFrame:(CGRect)frame andDefaultColor:(const Hayashi311RGBColor)default_color
+- (id)initWithFrame:(CGRect)frame defaultColor:(const Hayashi311RGBColor)default_color
 {
     self = [super initWithFrame:frame];
     if (self) {

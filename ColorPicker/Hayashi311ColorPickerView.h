@@ -68,7 +68,7 @@
 }
 
 // デフォルトカラーで初期化
-- (id)initWithFrame:(CGRect)frame andDefaultColor:(const Hayashi311RGBColor)default_color;
+- (id)initWithFrame:(CGRect)frame defaultColor:(const Hayashi311RGBColor)default_color;
 
 // 現在選択している色をRGBで返す
 - (Hayashi311RGBColor)RGBColor;
