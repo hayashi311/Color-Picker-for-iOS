@@ -25,7 +25,7 @@
  * $FreeBSD$
  */
 
-#import "hayashi311_color_util.h"
+#import "Hayashi311ColorUtil.h"
 
 void HSVColorFromRGBColor(const Hayashi311RGBColor* rgb,Hayashi311HSVColor* hsv){
     Hayashi311RGBColor rgb255 = {rgb->r * 255.0f,rgb->g * 255.0f,rgb->b * 255.0f};

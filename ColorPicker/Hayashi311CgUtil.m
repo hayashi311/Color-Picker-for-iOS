@@ -25,7 +25,7 @@
  * $FreeBSD$
  */
 
-#import "hayashi311_cg_util.h"
+#import "Hayashi311CgUtil.h"
 
 void Hayashi311SetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius){
     CGFloat lx = CGRectGetMinX(rect);

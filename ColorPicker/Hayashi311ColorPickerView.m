@@ -25,8 +25,8 @@
  * $FreeBSD$
  */
 
-#import "hayashi311_color_picker_view.h"
-#import "hayashi311_cg_util.h"
+#import "Hayashi311ColorPickerView.h"
+#import "Hayashi311CgUtil.h"
 
 @interface Hayashi311ColorPickerView()
 - (void)initColorCursor;

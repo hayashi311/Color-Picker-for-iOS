@@ -27,7 +27,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "hayashi311_color_util.h"
+#import "Hayashi311ColorUtil.h"
 
 @interface Hayashi311ColorPickerView : UIControl{
     

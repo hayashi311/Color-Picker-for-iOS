@@ -25,8 +25,8 @@
  * $FreeBSD$
  */
 
-#import "hayashi311_color_picker_view_controller.h"
-#import "hayashi311_color_picker_view.h"
+#import "Hayashi311ColorPickerViewController.h"
+#import "Hayashi311ColorPickerView.h"
 
 @implementation Hayashi311ColorPickerViewController
 

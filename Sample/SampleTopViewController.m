@@ -26,7 +26,7 @@
  */
 
 
-#import "sample_top_view_controller.h"
+#import "SampleTopViewController.h"
 
 @implementation SampleTopViewController
 
