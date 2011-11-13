@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46E87BFE146F46C600BC1608 /* hayashi311_cg_util.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BF9146F46C600BC1608 /* hayashi311_cg_util.m */; };
+		46E87BFF146F46C600BC1608 /* hayashi311_color_picker_view.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFB146F46C600BC1608 /* hayashi311_color_picker_view.m */; };
+		46E87C00146F46C600BC1608 /* hayashi311_color_util.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFD146F46C600BC1608 /* hayashi311_color_util.m */; };
 		DA877C3214527BD000A0754C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3114527BD000A0754C /* UIKit.framework */; };
 		DA877C3414527BD000A0754C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3314527BD000A0754C /* Foundation.framework */; };
 		DA877C3614527BD000A0754C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3514527BD000A0754C /* CoreGraphics.framework */; };
@@ -15,13 +18,16 @@
 		DA877C4214527BD000A0754C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C4114527BD000A0754C /* AppDelegate.m */; };
 		DA877C4F14527E2300A0754C /* sample_top_view_controller.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C4E14527E2300A0754C /* sample_top_view_controller.m */; };
 		DA877C581452822C00A0754C /* hayashi311_color_picker_view_controller.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C571452822C00A0754C /* hayashi311_color_picker_view_controller.m */; };
-		DA877C6D145299B600A0754C /* hayashi311_color_picker_view.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C6C145299B600A0754C /* hayashi311_color_picker_view.m */; };
-		DA877C6F145299C100A0754C /* hayashi311_color_util.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C6E145299C100A0754C /* hayashi311_color_util.m */; };
 		DA877C731452A1C500A0754C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C721452A1C500A0754C /* QuartzCore.framework */; };
-		DA877C761452ABE800A0754C /* hayashi311_cg_util.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C751452ABE800A0754C /* hayashi311_cg_util.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		46E87BF8146F46C600BC1608 /* hayashi311_cg_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_cg_util.h; sourceTree = "<group>"; };
+		46E87BF9146F46C600BC1608 /* hayashi311_cg_util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_cg_util.m; sourceTree = "<group>"; };
+		46E87BFA146F46C600BC1608 /* hayashi311_color_picker_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_picker_view.h; sourceTree = "<group>"; };
+		46E87BFB146F46C600BC1608 /* hayashi311_color_picker_view.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_color_picker_view.m; sourceTree = "<group>"; };
+		46E87BFC146F46C600BC1608 /* hayashi311_color_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_util.h; sourceTree = "<group>"; };
+		46E87BFD146F46C600BC1608 /* hayashi311_color_util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_color_util.m; sourceTree = "<group>"; };
 		DA877C2D14527BD000A0754C /* hayashi311ColorPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hayashi311ColorPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA877C3114527BD000A0754C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA877C3314527BD000A0754C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -32,17 +38,11 @@
 		DA877C3F14527BD000A0754C /* hayashi311ColorPicker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "hayashi311ColorPicker-Prefix.pch"; sourceTree = "<group>"; };
 		DA877C4014527BD000A0754C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DA877C4114527BD000A0754C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DA877C4A14527C5500A0754C /* hayashi311_color_picker_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_picker_view.h; sourceTree = "<group>"; };
 		DA877C4D14527E2300A0754C /* sample_top_view_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sample_top_view_controller.h; sourceTree = "<group>"; };
 		DA877C4E14527E2300A0754C /* sample_top_view_controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sample_top_view_controller.m; sourceTree = "<group>"; };
-		DA877C561452822C00A0754C /* hayashi311_color_picker_view_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; path = hayashi311_color_picker_view_controller.h; sourceTree = "<group>"; };
+		DA877C561452822C00A0754C /* hayashi311_color_picker_view_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_picker_view_controller.h; sourceTree = "<group>"; };
 		DA877C571452822C00A0754C /* hayashi311_color_picker_view_controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_color_picker_view_controller.m; sourceTree = "<group>"; };
-		DA877C691452985500A0754C /* hayashi311_color_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_color_util.h; sourceTree = "<group>"; };
-		DA877C6C145299B600A0754C /* hayashi311_color_picker_view.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_color_picker_view.m; sourceTree = "<group>"; };
-		DA877C6E145299C100A0754C /* hayashi311_color_util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_color_util.m; sourceTree = "<group>"; };
 		DA877C721452A1C500A0754C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		DA877C741452ABE800A0754C /* hayashi311_cg_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hayashi311_cg_util.h; sourceTree = "<group>"; };
-		DA877C751452ABE800A0754C /* hayashi311_cg_util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hayashi311_cg_util.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +60,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46E87BF7146F46C600BC1608 /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				46E87BF8146F46C600BC1608 /* hayashi311_cg_util.h */,
+				46E87BF9146F46C600BC1608 /* hayashi311_cg_util.m */,
+				46E87BFA146F46C600BC1608 /* hayashi311_color_picker_view.h */,
+				46E87BFB146F46C600BC1608 /* hayashi311_color_picker_view.m */,
+				46E87BFC146F46C600BC1608 /* hayashi311_color_util.h */,
+				46E87BFD146F46C600BC1608 /* hayashi311_color_util.m */,
+			);
+			path = ColorPicker;
+			sourceTree = SOURCE_ROOT;
+		};
 		DA877C2214527BD000A0754C = {
 			isa = PBXGroup;
 			children = (
@@ -91,10 +104,10 @@
 		DA877C3714527BD000A0754C /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				46E87BF7146F46C600BC1608 /* ColorPicker */,
 				DA877C4014527BD000A0754C /* AppDelegate.h */,
 				DA877C4114527BD000A0754C /* AppDelegate.m */,
-				DA877C4914527C2500A0754C /* Controllers */,
-				DA877C4814527C2000A0754C /* color_picker */,
+				DA877C4914527C2500A0754C /* Classes */,
 				DA877C3814527BD000A0754C /* Supporting Files */,
 			);
 			path = Sample;
@@ -111,20 +124,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DA877C4814527C2000A0754C /* color_picker */ = {
-			isa = PBXGroup;
-			children = (
-				DA877C4A14527C5500A0754C /* hayashi311_color_picker_view.h */,
-				DA877C6C145299B600A0754C /* hayashi311_color_picker_view.m */,
-				DA877C691452985500A0754C /* hayashi311_color_util.h */,
-				DA877C6E145299C100A0754C /* hayashi311_color_util.m */,
-				DA877C741452ABE800A0754C /* hayashi311_cg_util.h */,
-				DA877C751452ABE800A0754C /* hayashi311_cg_util.m */,
-			);
-			path = color_picker;
-			sourceTree = "<group>";
-		};
-		DA877C4914527C2500A0754C /* Controllers */ = {
+		DA877C4914527C2500A0754C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				DA877C4D14527E2300A0754C /* sample_top_view_controller.h */,
@@ -132,7 +132,7 @@
 				DA877C561452822C00A0754C /* hayashi311_color_picker_view_controller.h */,
 				DA877C571452822C00A0754C /* hayashi311_color_picker_view_controller.m */,
 			);
-			name = Controllers;
+			name = Classes;
 			path = Sample;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -202,9 +202,9 @@
 				DA877C4214527BD000A0754C /* AppDelegate.m in Sources */,
 				DA877C4F14527E2300A0754C /* sample_top_view_controller.m in Sources */,
 				DA877C581452822C00A0754C /* hayashi311_color_picker_view_controller.m in Sources */,
-				DA877C6D145299B600A0754C /* hayashi311_color_picker_view.m in Sources */,
-				DA877C6F145299C100A0754C /* hayashi311_color_util.m in Sources */,
-				DA877C761452ABE800A0754C /* hayashi311_cg_util.m in Sources */,
+				46E87BFE146F46C600BC1608 /* hayashi311_cg_util.m in Sources */,
+				46E87BFF146F46C600BC1608 /* hayashi311_color_picker_view.m in Sources */,
+				46E87C00146F46C600BC1608 /* hayashi311_color_util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
