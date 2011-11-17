@@ -25,9 +25,46 @@
  * $FreeBSD$
  */
 
-#import "Hayashi311ColorUtil.h"
+/////////////////////////////////////////////////////////////////////////////
+//
+// 0.0f~1.0fの値をとるRGBの構造体です
+//
+/////////////////////////////////////////////////////////////////////////////
 
-// 角丸のパスをセット
-void Hayashi311SetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius);
-// かっこいい角丸の四角を描きます。色付き。
-void Hayashi311DrawSquareColorBatch(CGContextRef context,CGPoint position,Hayashi311RGBColor* color,float size);
+typedef struct{
+    float r;
+    float g;
+    float b;
+} HRRGBColor;
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 0.0f~1.0fの値をとるHSVの構造体です
+//
+/////////////////////////////////////////////////////////////////////////////
+
+typedef struct{
+    float h;
+    float s;
+    float v;
+} HRHSVColor;
+
+// 値のチェックしてません。数値として入れさせるなら自前でチェックして下さい。
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 変換用の関数
+//
+/////////////////////////////////////////////////////////////////////////////
+
+void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*);
+//void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*);
+void RGBColorFromUIColor(const UIColor*,HRRGBColor*);
+
+// 同値チェック
+bool isEqual(const HRHSVColor*,const HRHSVColor*);
+
+
+// 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
+void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturation_lower_limit,float brightness);
+

@@ -27,7 +27,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class Hayashi311ColorPickerView;
+@class HRColorPickerView;
 
 @protocol Hayashi311ColorPickerDelegate
 - (void)setSelectedColor:(UIColor*)color;
@@ -38,19 +38,19 @@ typedef enum {
     HCPCSaveStyleSaveAndCancel
 } HCPCSaveStyle;
 
-@interface Hayashi311ColorPickerViewController : UIViewController {
+@interface HRColorPickerViewController : UIViewController {
     id<Hayashi311ColorPickerDelegate> delegate;
-    Hayashi311ColorPickerView* colorPickerView;
+    HRColorPickerView* colorPickerView;
     
     UIColor *_color;
     BOOL _fullColor;
     HCPCSaveStyle _saveStyle;
 }
 
-+ (Hayashi311ColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color;
-+ (Hayashi311ColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color;
-+ (Hayashi311ColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color;
-+ (Hayashi311ColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color;
++ (HRColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color;
++ (HRColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color;
++ (HRColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color;
++ (HRColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color;
 
 /** Initialize controller with selected color. 
  * @param defaultColor selected color

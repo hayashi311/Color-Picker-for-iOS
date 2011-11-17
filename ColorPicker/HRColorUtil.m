@@ -25,11 +25,11 @@
  * $FreeBSD$
  */
 
-#import "Hayashi311ColorUtil.h"
+#import "HRColorUtil.h"
 
-void HSVColorFromRGBColor(const Hayashi311RGBColor* rgb,Hayashi311HSVColor* hsv){
-    Hayashi311RGBColor rgb255 = {rgb->r * 255.0f,rgb->g * 255.0f,rgb->b * 255.0f};
-    Hayashi311HSVColor hsv255 = {0.0f,0.0f,0.0f};
+void HSVColorFromRGBColor(const HRRGBColor* rgb,HRHSVColor* hsv){
+    HRRGBColor rgb255 = {rgb->r * 255.0f,rgb->g * 255.0f,rgb->b * 255.0f};
+    HRHSVColor hsv255 = {0.0f,0.0f,0.0f};
     
     float max = rgb255.r;
     if (max < rgb255.g) {
@@ -70,13 +70,13 @@ void HSVColorFromRGBColor(const Hayashi311RGBColor* rgb,Hayashi311HSVColor* hsv)
 }
 
 /*
-void RGBColorFromHSVColor(const Hayashi311HSVColor* hsv,Hayashi311RGBColor* rgb){
+void RGBColorFromHSVColor(const HRHSVColor* hsv,HRRGBColor* rgb){
     UIColorには
     [UIColor colorWithHue:<#(CGFloat)#> saturation:<#(CGFloat)#> brightness:<#(CGFloat)#> alpha:<#(CGFloat)#>]
     があるので、必要ならRGBColorFromUIColorと組み合わせて使えばいいです。
 }*/
 
-void RGBColorFromUIColor(const UIColor* ui_color,Hayashi311RGBColor* rgb){
+void RGBColorFromUIColor(const UIColor* ui_color,HRRGBColor* rgb){
     const CGFloat* components = CGColorGetComponents(ui_color.CGColor);
     if(CGColorGetNumberOfComponents(ui_color.CGColor) == 2){
         rgb->r = components[0];
@@ -89,11 +89,11 @@ void RGBColorFromUIColor(const UIColor* ui_color,Hayashi311RGBColor* rgb){
     }
 }
 
-bool isEqual(const Hayashi311HSVColor* hsv1,const Hayashi311HSVColor* hsv2){
+bool isEqual(const HRHSVColor* hsv1,const HRHSVColor* hsv2){
     return (hsv1->h == hsv2->h) && (hsv1->s == hsv2->s) && (hsv1->v == hsv2->v);
 }
 
-void HSVColorAt(Hayashi311HSVColor* hsv,float x,float y,float saturation_upper_limit,float brightness){
+void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturation_upper_limit,float brightness){
     hsv->h = x;
     hsv->s = 1.0f - (y * saturation_upper_limit);
     hsv->v = brightness;

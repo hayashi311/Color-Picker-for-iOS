@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		46E87BFE146F46C600BC1608 /* Hayashi311CgUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BF9146F46C600BC1608 /* Hayashi311CgUtil.m */; };
-		46E87BFF146F46C600BC1608 /* Hayashi311ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFB146F46C600BC1608 /* Hayashi311ColorPickerView.m */; };
-		46E87C00146F46C600BC1608 /* Hayashi311ColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */; };
-		46E87C03146F519F00BC1608 /* Hayashi311ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */; };
+		46E87BFE146F46C600BC1608 /* HRCgUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BF9146F46C600BC1608 /* HRCgUtil.m */; };
+		46E87BFF146F46C600BC1608 /* HRColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFB146F46C600BC1608 /* HRColorPickerView.m */; };
+		46E87C00146F46C600BC1608 /* HRColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFD146F46C600BC1608 /* HRColorUtil.m */; };
+		46E87C03146F519F00BC1608 /* HRColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */; };
 		DA877C3214527BD000A0754C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3114527BD000A0754C /* UIKit.framework */; };
 		DA877C3414527BD000A0754C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3314527BD000A0754C /* Foundation.framework */; };
 		DA877C3614527BD000A0754C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3514527BD000A0754C /* CoreGraphics.framework */; };
@@ -22,14 +22,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		46E87BF8146F46C600BC1608 /* Hayashi311CgUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Hayashi311CgUtil.h; path = ../ColorPicker/Hayashi311CgUtil.h; sourceTree = "<group>"; };
-		46E87BF9146F46C600BC1608 /* Hayashi311CgUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311CgUtil.m; path = ../ColorPicker/Hayashi311CgUtil.m; sourceTree = "<group>"; };
-		46E87BFA146F46C600BC1608 /* Hayashi311ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Hayashi311ColorPickerView.h; path = ../ColorPicker/Hayashi311ColorPickerView.h; sourceTree = "<group>"; };
-		46E87BFB146F46C600BC1608 /* Hayashi311ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311ColorPickerView.m; path = ../ColorPicker/Hayashi311ColorPickerView.m; sourceTree = "<group>"; };
-		46E87BFC146F46C600BC1608 /* Hayashi311ColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Hayashi311ColorUtil.h; path = ../ColorPicker/Hayashi311ColorUtil.h; sourceTree = "<group>"; };
-		46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311ColorUtil.m; path = ../ColorPicker/Hayashi311ColorUtil.m; sourceTree = "<group>"; };
-		46E87C01146F519F00BC1608 /* Hayashi311ColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hayashi311ColorPickerViewController.h; path = ../ColorPicker/Hayashi311ColorPickerViewController.h; sourceTree = "<group>"; };
-		46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hayashi311ColorPickerViewController.m; path = ../ColorPicker/Hayashi311ColorPickerViewController.m; sourceTree = "<group>"; };
+		46E87BF8146F46C600BC1608 /* HRCgUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRCgUtil.h; path = ../ColorPicker/HRCgUtil.h; sourceTree = "<group>"; };
+		46E87BF9146F46C600BC1608 /* HRCgUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRCgUtil.m; path = ../ColorPicker/HRCgUtil.m; sourceTree = "<group>"; };
+		46E87BFA146F46C600BC1608 /* HRColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerView.h; sourceTree = "<group>"; };
+		46E87BFB146F46C600BC1608 /* HRColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerView.m; sourceTree = "<group>"; };
+		46E87BFC146F46C600BC1608 /* HRColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRColorUtil.h; path = ../ColorPicker/HRColorUtil.h; sourceTree = "<group>"; };
+		46E87BFD146F46C600BC1608 /* HRColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRColorUtil.m; path = ../ColorPicker/HRColorUtil.m; sourceTree = "<group>"; };
+		46E87C01146F519F00BC1608 /* HRColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerViewController.h; sourceTree = "<group>"; };
+		46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerViewController.m; sourceTree = "<group>"; };
 		DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hayashi311ColorPickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA877C3114527BD000A0754C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA877C3314527BD000A0754C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,14 +63,14 @@
 		46E87BF7146F46C600BC1608 /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
-				46E87C01146F519F00BC1608 /* Hayashi311ColorPickerViewController.h */,
-				46E87C02146F519F00BC1608 /* Hayashi311ColorPickerViewController.m */,
-				46E87BF8146F46C600BC1608 /* Hayashi311CgUtil.h */,
-				46E87BF9146F46C600BC1608 /* Hayashi311CgUtil.m */,
-				46E87BFA146F46C600BC1608 /* Hayashi311ColorPickerView.h */,
-				46E87BFB146F46C600BC1608 /* Hayashi311ColorPickerView.m */,
-				46E87BFC146F46C600BC1608 /* Hayashi311ColorUtil.h */,
-				46E87BFD146F46C600BC1608 /* Hayashi311ColorUtil.m */,
+				46E87C01146F519F00BC1608 /* HRColorPickerViewController.h */,
+				46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */,
+				46E87BF8146F46C600BC1608 /* HRCgUtil.h */,
+				46E87BF9146F46C600BC1608 /* HRCgUtil.m */,
+				46E87BFA146F46C600BC1608 /* HRColorPickerView.h */,
+				46E87BFB146F46C600BC1608 /* HRColorPickerView.m */,
+				46E87BFC146F46C600BC1608 /* HRColorUtil.h */,
+				46E87BFD146F46C600BC1608 /* HRColorUtil.m */,
 			);
 			name = ColorPicker;
 			path = ../../ColorPicker;
@@ -202,10 +202,10 @@
 				DA877C3E14527BD000A0754C /* main.m in Sources */,
 				DA877C4214527BD000A0754C /* AppDelegate.m in Sources */,
 				DA877C4F14527E2300A0754C /* SampleTopViewController.m in Sources */,
-				46E87BFE146F46C600BC1608 /* Hayashi311CgUtil.m in Sources */,
-				46E87BFF146F46C600BC1608 /* Hayashi311ColorPickerView.m in Sources */,
-				46E87C00146F46C600BC1608 /* Hayashi311ColorUtil.m in Sources */,
-				46E87C03146F519F00BC1608 /* Hayashi311ColorPickerViewController.m in Sources */,
+				46E87BFE146F46C600BC1608 /* HRCgUtil.m in Sources */,
+				46E87BFF146F46C600BC1608 /* HRColorPickerView.m in Sources */,
+				46E87C00146F46C600BC1608 /* HRColorUtil.m in Sources */,
+				46E87C03146F519F00BC1608 /* HRColorPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,13 +25,9 @@
  * $FreeBSD$
  */
 
-#import <UIKit/UIKit.h>
-#import "HRColorPickerViewController.h"
+#import "HRColorUtil.h"
 
-@interface SampleTopViewController : UIViewController<Hayashi311ColorPickerDelegate>{
-    
-}
-
-- (void)openColorPicker:(id)sender;
-
-@end
+// 角丸のパスをセット
+void HRSetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius);
+// かっこいい角丸の四角を描きます。色付き。
+void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* color,float size);

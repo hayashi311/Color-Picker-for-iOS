@@ -25,9 +25,9 @@
  * $FreeBSD$
  */
 
-#import "Hayashi311CgUtil.h"
+#import "HRCgUtil.h"
 
-void Hayashi311SetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius){
+void HRSetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius){
     CGFloat lx = CGRectGetMinX(rect);
     CGFloat cx = CGRectGetMidX(rect);
     CGFloat rx = CGRectGetMaxX(rect);
@@ -43,7 +43,7 @@ void Hayashi311SetRoundedRectanglePath(CGContextRef context,const CGRect rect,CG
     CGContextClosePath(context);
 }
 
-void Hayashi311DrawSquareColorBatch(CGContextRef context,CGPoint position,Hayashi311RGBColor* color,float size){
+void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* color,float size){
     float cx = position.x;
     float cy = position.y;
     
@@ -56,9 +56,9 @@ void Hayashi311DrawSquareColorBatch(CGContextRef context,CGPoint position,Hayash
     CGRect rect_shadow_ellipse = CGRectMake(cx - shadow_r_size, cy - shadow_r_size, shadow_r_size*2, shadow_r_size*2);
     
     CGContextSaveGState(context);
-    Hayashi311SetRoundedRectanglePath(context, rect_back_ellipse,8.0f);
+    HRSetRoundedRectanglePath(context, rect_back_ellipse,8.0f);
     CGContextClip(context);
-    Hayashi311SetRoundedRectanglePath(context, rect_shadow_ellipse,8.0f);
+    HRSetRoundedRectanglePath(context, rect_shadow_ellipse,8.0f);
     CGContextSetLineWidth(context, 5.5f);
     [[UIColor whiteColor] set];
     CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 1.0f), 4.0f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
@@ -68,7 +68,7 @@ void Hayashi311DrawSquareColorBatch(CGContextRef context,CGPoint position,Hayash
     CGContextSaveGState(context);
     CGContextSetRGBFillColor(context, color->r, color->g, color->b, 1.0f);
     CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 0.5f), 0.5f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
-    Hayashi311SetRoundedRectanglePath(context, rect_ellipse,5.0f);
+    HRSetRoundedRectanglePath(context, rect_ellipse,5.0f);
     CGContextDrawPath(context, kCGPathFill);
     CGContextRestoreGState(context);
 }

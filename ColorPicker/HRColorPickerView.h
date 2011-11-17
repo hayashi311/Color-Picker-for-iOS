@@ -27,9 +27,9 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "Hayashi311ColorUtil.h"
+#import "HRColorUtil.h"
 
-@interface Hayashi311ColorPickerView : UIControl{
+@interface HRColorPickerView : UIControl{
     
  @private
     CADisplayLink* display_link_;
@@ -47,8 +47,8 @@
 	CGPoint touch_start_position_;
     
     // 色情報
-    Hayashi311RGBColor default_rgb_color_;
-    Hayashi311HSVColor current_hsv_color_;
+    HRRGBColor default_rgb_color_;
+    HRHSVColor current_hsv_color_;
     
     // カラーマップ上のカーソルの位置
     CGPoint color_cursor_position_;
@@ -68,10 +68,10 @@
 }
 
 // デフォルトカラーで初期化
-- (id)initWithFrame:(CGRect)frame defaultColor:(const Hayashi311RGBColor)default_color;
+- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)default_color;
 
 // 現在選択している色をRGBで返す
-- (Hayashi311RGBColor)RGBColor;
+- (HRRGBColor)RGBColor;
 
 /*
  * releaseを呼ぶ時にはちょっと注意が必要です。

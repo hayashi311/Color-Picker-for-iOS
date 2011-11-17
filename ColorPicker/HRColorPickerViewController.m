@@ -25,32 +25,32 @@
  * $FreeBSD$
  */
 
-#import "Hayashi311ColorPickerViewController.h"
-#import "Hayashi311ColorPickerView.h"
+#import "HRColorPickerViewController.h"
+#import "HRColorPickerView.h"
 
-@implementation Hayashi311ColorPickerViewController
+@implementation HRColorPickerViewController
 
 @synthesize delegate;
 
 
-+ (Hayashi311ColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color
++ (HRColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[Hayashi311ColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways] autorelease];
+    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways] autorelease];
 }
 
-+ (Hayashi311ColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color
++ (HRColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[Hayashi311ColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAndCancel] autorelease];
+    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAndCancel] autorelease];
 }
 
-+ (Hayashi311ColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color
++ (HRColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[Hayashi311ColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAlways] autorelease];
+    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAlways] autorelease];
 }
 
-+ (Hayashi311ColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color
++ (HRColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[Hayashi311ColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAndCancel] autorelease];
+    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAndCancel] autorelease];
 }
 
 
@@ -76,9 +76,9 @@
 {
     [super viewDidLoad];
     
-    Hayashi311RGBColor rgbColor;
+    HRRGBColor rgbColor;
     RGBColorFromUIColor(_color, &rgbColor);
-    colorPickerView = [[Hayashi311ColorPickerView alloc] initWithFrame:[self.view bounds] 
+    colorPickerView = [[HRColorPickerView alloc] initWithFrame:[self.view bounds] 
                                                          defaultColor:rgbColor];
     if (_fullColor) {
         [colorPickerView setBrightnessLowerLimit:0.0f];
@@ -113,7 +113,7 @@
 - (void)save
 {
     if (self.delegate) {
-        Hayashi311RGBColor rgb_color = [colorPickerView RGBColor];
+        HRRGBColor rgb_color = [colorPickerView RGBColor];
         [self.delegate setSelectedColor:[UIColor colorWithRed:rgb_color.r green:rgb_color.g blue:rgb_color.b alpha:1.0f]];
     }
     [self.navigationController popViewControllerAnimated:YES];

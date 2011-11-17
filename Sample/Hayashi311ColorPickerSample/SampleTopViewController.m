@@ -31,19 +31,19 @@
 @implementation SampleTopViewController
 
 - (void)openColorPicker:(id)sender{
-    Hayashi311ColorPickerViewController* controller;
+    HRColorPickerViewController* controller;
     switch ([sender tag]) {
     case 0:
-        controller = [Hayashi311ColorPickerViewController colorPickerViewControllerWithColor:[self.view backgroundColor]];
+        controller = [HRColorPickerViewController colorPickerViewControllerWithColor:[self.view backgroundColor]];
         break;
     case 1:
-        controller = [Hayashi311ColorPickerViewController cancelableColorPickerViewControllerWithColor:[self.view backgroundColor]];
+        controller = [HRColorPickerViewController cancelableColorPickerViewControllerWithColor:[self.view backgroundColor]];
         break;
     case 2:
-        controller = [Hayashi311ColorPickerViewController fullColorPickerViewControllerWithColor:[self.view backgroundColor]];
+        controller = [HRColorPickerViewController fullColorPickerViewControllerWithColor:[self.view backgroundColor]];
         break;
     case 3:
-        controller = [Hayashi311ColorPickerViewController cancelableFullColorPickerViewControllerWithColor:[self.view backgroundColor]];
+        controller = [HRColorPickerViewController cancelableFullColorPickerViewControllerWithColor:[self.view backgroundColor]];
         break;
 
     default:

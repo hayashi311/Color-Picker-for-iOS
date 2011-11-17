@@ -25,10 +25,10 @@
  * $FreeBSD$
  */
 
-#import "Hayashi311ColorPickerView.h"
-#import "Hayashi311CgUtil.h"
+#import "HRColorPickerView.h"
+#import "HRCgUtil.h"
 
-@interface Hayashi311ColorPickerView()
+@interface HRColorPickerView()
 - (void)initColorCursor;
 - (void)LoopStart;
 - (void)Loop:(id)sender;
@@ -37,9 +37,9 @@
 - (void)SetCurrentTouchPointInView:(UITouch *)touch;
 @end
 
-@implementation Hayashi311ColorPickerView
+@implementation HRColorPickerView
 
-- (id)initWithFrame:(CGRect)frame defaultColor:(const Hayashi311RGBColor)default_color
+- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)default_color
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -107,8 +107,8 @@
     color_cursor_position_.y = (int)(new_position.y/pixel_size_) * pixel_size_ + pixel_size_/2.0f;
 }
 
-- (Hayashi311RGBColor)RGBColor{
-    Hayashi311RGBColor rgb_color;
+- (HRRGBColor)RGBColor{
+    HRRGBColor rgb_color;
     UIColor* color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.s brightness:current_hsv_color_.v alpha:1.0f];
     RGBColorFromUIColor(color_from_hsv,&rgb_color);
     return rgb_color;
@@ -142,7 +142,7 @@
             }
             
             int pixel_count = color_map_frame_.size.height/pixel_size_;
-            Hayashi311HSVColor new_hsv = current_hsv_color_;
+            HRHSVColor new_hsv = current_hsv_color_;
             
             CGPoint new_position = CGPointMake(touch_position.x - color_map_frame_.origin.x, touch_position.y - color_map_frame_.origin.y);
             /*
@@ -192,7 +192,7 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    Hayashi311RGBColor current_rgb_color = [self RGBColor];
+    HRRGBColor current_rgb_color = [self RGBColor];
     
     /////////////////////////////////////////////////////////////////////////////
     //
@@ -202,7 +202,7 @@
     
     CGContextSaveGState(context);
     
-    Hayashi311SetRoundedRectanglePath(context, brightness_picker_frame_, 5.0f);
+    HRSetRoundedRectanglePath(context, brightness_picker_frame_, 5.0f);
     CGContextClip(context);
     
     CGGradientRef gradient;
@@ -211,8 +211,8 @@
     CGFloat locations[2] = { 0.0, 1.0 };
     colorSpace = CGColorSpaceCreateDeviceRGB();
     
-    Hayashi311RGBColor dark_color;
-    Hayashi311RGBColor light_color;
+    HRRGBColor dark_color;
+    HRRGBColor light_color;
     UIColor* dark_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.v brightness:brightness_lower_limit_ alpha:1.0f];
     UIColor* light_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.s brightness:1.0f alpha:1.0f];
     
@@ -236,7 +236,7 @@
     CGGradientRelease(gradient);
     
     // 輝度の内側の影
-    Hayashi311SetRoundedRectanglePath(context, brightness_picker_shadow_frame_, 5.0f);
+    HRSetRoundedRectanglePath(context, brightness_picker_shadow_frame_, 5.0f);
     CGContextSetLineWidth(context, 10.0f);
     CGContextSetShadow(context, CGSizeMake(0.0f, 0.0f), 10.0f);
     CGContextDrawPath(context, kCGPathStroke);
@@ -282,7 +282,7 @@
         float pixel_y = (float)j/(pixel_count-1); // Y(彩度)は0.0f~1.0f
         for (int i = 0; i < pixel_count; ++i) {
             float pixel_x = (float)i/pixel_count; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-            Hayashi311HSVColor pixel_hsv;
+            HRHSVColor pixel_hsv;
             HSVColorAt(&pixel_hsv, pixel_x, pixel_y, saturation_upper_limit_, current_hsv_color_.v);
             CGContextSetFillColorWithColor(context, [UIColor colorWithHue:pixel_hsv.h saturation:pixel_hsv.s brightness:pixel_hsv.v alpha:1.0f].CGColor);
             
@@ -301,7 +301,7 @@
     /////////////////////////////////////////////////////////////////////////////
     
     CGContextSaveGState(context);
-    Hayashi311DrawSquareColorBatch(context, CGPointMake(CGRectGetMidX(current_color_frame_), CGRectGetMidY(current_color_frame_)), &current_rgb_color, current_color_frame_.size.width/2.0f);
+    HRDrawSquareColorBatch(context, CGPointMake(CGRectGetMidX(current_color_frame_), CGRectGetMidY(current_color_frame_)), &current_rgb_color, current_color_frame_.size.width/2.0f);
     CGContextRestoreGState(context);
     
     /////////////////////////////////////////////////////////////////////////////
