@@ -44,11 +44,11 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
     // テンプレートからの変更点↓
-    SampleTopViewController* sample_top_view_controller = [[SampleTopViewController alloc] init];
-    navigation_controller = [[UINavigationController alloc] initWithRootViewController:sample_top_view_controller];
+    SampleTopViewController* sampleTopViewController = [[SampleTopViewController alloc] init];
+    navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
     
-    [sample_top_view_controller release];
-    [self.window addSubview:navigation_controller.view];
+    [sampleTopViewController release];
+    [self.window addSubview:navigationController.view];
     
     // テンプレートからの変更点↑
     

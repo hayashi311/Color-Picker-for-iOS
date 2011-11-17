@@ -62,9 +62,9 @@ void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*);
 void RGBColorFromUIColor(const UIColor*,HRRGBColor*);
 
 // 同値チェック
-bool isEqual(const HRHSVColor*,const HRHSVColor*);
+bool HRHSVColorEqualToColor(const HRHSVColor*,const HRHSVColor*);
 
 
 // 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
-void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturation_lower_limit,float brightness);
+void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturationLowerLimit,float brightness);
 

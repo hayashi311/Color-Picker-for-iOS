@@ -32,43 +32,43 @@
 @interface HRColorPickerView : UIControl{
     
  @private
-    CADisplayLink* display_link_;
-	bool animating_;
+    CADisplayLink* _displayLink;
+	bool _animating;
     
     // 入力関係
-    bool is_tap_start_;
-    bool is_tapped_;
-	bool was_drag_start_;
-    bool is_drag_start_;
-	bool is_dragging_;
-	bool is_drag_end_;
+    bool _isTapStart;
+    bool _isTapped;
+	bool _wasDragStart;
+    bool _isDragStart;
+	bool _isDragging;
+	bool _isDragEnd;
     
-	CGPoint active_touch_position_;
-	CGPoint touch_start_position_;
+	CGPoint _activeTouchPosition;
+	CGPoint _touchStartPosition;
     
     // 色情報
-    HRRGBColor default_rgb_color_;
-    HRHSVColor current_hsv_color_;
+    HRRGBColor _defaultRgbColor;
+    HRHSVColor _currentHsvColor;
     
     // カラーマップ上のカーソルの位置
-    CGPoint color_cursor_position_;
+    CGPoint _colorCursorPosition;
     
     // パーツの配置
-    CGRect current_color_frame_;
-    CGRect brightness_picker_frame_;
-    CGRect brightness_picker_touch_frame_;
-    CGRect brightness_picker_shadow_frame_;
-    CGRect color_map_frame_;
-    CGRect color_map_side_frame_;
-    float pixel_size_;
-    float brightness_lower_limit_;
-    float saturation_upper_limit_;
+    CGRect _currentColorFrame;
+    CGRect _brightnessPickerFrame;
+    CGRect _brightnessPickerTouchFrame;
+    CGRect _brightnessPickerShadowFrame;
+    CGRect _colorMapFrame;
+    CGRect _colorMapSideFrame;
+    float _pixelSize;
+    float _brightnessLowerLimit;
+    float _saturationUpperLimit;
     
-    bool show_color_cursor_;
+    bool _showColorCursor;
 }
 
 // デフォルトカラーで初期化
-- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)default_color;
+- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor;
 
 // 現在選択している色をRGBで返す
 - (HRRGBColor)RGBColor;

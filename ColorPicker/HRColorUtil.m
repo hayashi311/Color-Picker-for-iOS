@@ -76,9 +76,9 @@ void RGBColorFromHSVColor(const HRHSVColor* hsv,HRRGBColor* rgb){
     があるので、必要ならRGBColorFromUIColorと組み合わせて使えばいいです。
 }*/
 
-void RGBColorFromUIColor(const UIColor* ui_color,HRRGBColor* rgb){
-    const CGFloat* components = CGColorGetComponents(ui_color.CGColor);
-    if(CGColorGetNumberOfComponents(ui_color.CGColor) == 2){
+void RGBColorFromUIColor(const UIColor* uiColor,HRRGBColor* rgb){
+    const CGFloat* components = CGColorGetComponents(uiColor.CGColor);
+    if(CGColorGetNumberOfComponents(uiColor.CGColor) == 2){
         rgb->r = components[0];
         rgb->g = components[0];
         rgb->b = components[0];
@@ -89,12 +89,12 @@ void RGBColorFromUIColor(const UIColor* ui_color,HRRGBColor* rgb){
     }
 }
 
-bool isEqual(const HRHSVColor* hsv1,const HRHSVColor* hsv2){
+bool HRHSVColorEqualToColor(const HRHSVColor* hsv1,const HRHSVColor* hsv2){
     return (hsv1->h == hsv2->h) && (hsv1->s == hsv2->s) && (hsv1->v == hsv2->v);
 }
 
-void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturation_upper_limit,float brightness){
+void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturationUpperLimit,float brightness){
     hsv->h = x;
-    hsv->s = 1.0f - (y * saturation_upper_limit);
+    hsv->s = 1.0f - (y * saturationUpperLimit);
     hsv->v = brightness;
 }

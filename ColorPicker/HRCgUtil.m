@@ -47,18 +47,18 @@ void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* co
     float cx = position.x;
     float cy = position.y;
     
-    float r_size = size;
-    float back_r_size = r_size + 3.0f;
-    float shadow_r_size = back_r_size + 3.0f;
+    float rRize = size;
+    float backRSize = rRize + 3.0f;
+    float shadowRSize = backRSize + 3.0f;
     
-    CGRect rect_ellipse = CGRectMake(cx - r_size, cy - r_size, r_size*2, r_size*2);
-    CGRect rect_back_ellipse = CGRectMake(cx - back_r_size, cy - back_r_size, back_r_size*2, back_r_size*2);
-    CGRect rect_shadow_ellipse = CGRectMake(cx - shadow_r_size, cy - shadow_r_size, shadow_r_size*2, shadow_r_size*2);
+    CGRect rectEllipse = CGRectMake(cx - rRize, cy - rRize, rRize*2, rRize*2);
+    CGRect rectBackEllipse = CGRectMake(cx - backRSize, cy - backRSize, backRSize*2, backRSize*2);
+    CGRect rectShadowEllipse = CGRectMake(cx - shadowRSize, cy - shadowRSize, shadowRSize*2, shadowRSize*2);
     
     CGContextSaveGState(context);
-    HRSetRoundedRectanglePath(context, rect_back_ellipse,8.0f);
+    HRSetRoundedRectanglePath(context, rectBackEllipse,8.0f);
     CGContextClip(context);
-    HRSetRoundedRectanglePath(context, rect_shadow_ellipse,8.0f);
+    HRSetRoundedRectanglePath(context, rectShadowEllipse,8.0f);
     CGContextSetLineWidth(context, 5.5f);
     [[UIColor whiteColor] set];
     CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 1.0f), 4.0f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
@@ -68,7 +68,7 @@ void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* co
     CGContextSaveGState(context);
     CGContextSetRGBFillColor(context, color->r, color->g, color->b, 1.0f);
     CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 0.5f), 0.5f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
-    HRSetRoundedRectanglePath(context, rect_ellipse,5.0f);
+    HRSetRoundedRectanglePath(context, rectEllipse,5.0f);
     CGContextDrawPath(context, kCGPathFill);
     CGContextRestoreGState(context);
 }
