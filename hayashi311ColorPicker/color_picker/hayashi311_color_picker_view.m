@@ -213,7 +213,7 @@
     
     Hayashi311RGBColor dark_color;
     Hayashi311RGBColor light_color;
-    UIColor* dark_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.v brightness:brightness_lower_limit_ alpha:1.0f];
+    UIColor* dark_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.s brightness:brightness_lower_limit_ alpha:1.0f];
     UIColor* light_color_from_hsv = [UIColor colorWithHue:current_hsv_color_.h saturation:current_hsv_color_.s brightness:1.0f alpha:1.0f];
     
     RGBColorFromUIColor(dark_color_from_hsv, &dark_color);
