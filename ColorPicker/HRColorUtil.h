@@ -25,9 +25,6 @@
  * $FreeBSD$
  */
 
-#ifndef hayashi311ColorPicker_hayashi311_color_util_h
-#define hayashi311ColorPicker_hayashi311_color_util_h
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // 0.0f~1.0fの値をとるRGBの構造体です
@@ -38,7 +35,7 @@ typedef struct{
     float r;
     float g;
     float b;
-} Hayashi311RGBColor;
+} HRRGBColor;
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -50,7 +47,7 @@ typedef struct{
     float h;
     float s;
     float v;
-} Hayashi311HSVColor;
+} HRHSVColor;
 
 // 値のチェックしてません。数値として入れさせるなら自前でチェックして下さい。
 
@@ -60,15 +57,14 @@ typedef struct{
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void HSVColorFromRGBColor(const Hayashi311RGBColor*,Hayashi311HSVColor*);
-//void RGBColorFromHSVColor(const Hayashi311HSVColor*,Hayashi311RGBColor*);
-void RGBColorFromUIColor(const UIColor*,Hayashi311RGBColor*);
+void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*);
+//void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*);
+void RGBColorFromUIColor(const UIColor*,HRRGBColor*);
 
 // 同値チェック
-bool isEqual(const Hayashi311HSVColor*,const Hayashi311HSVColor*);
+bool HRHSVColorEqualToColor(const HRHSVColor*,const HRHSVColor*);
 
 
 // 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
-void HSVColorAt(Hayashi311HSVColor* hsv,float x,float y,float saturation_lower_limit,float brightness);
+void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturationLowerLimit,float brightness);
 
-#endif

@@ -26,21 +26,12 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "HRColorPickerViewController.h"
 
-@class Hayashi311ColorPickerView;
-
-@protocol Hayashi311ColorPickerDelegate
-- (void)SetSelectedColor:(UIColor*)color;
-@end
-
-@interface Hayashi311ColorPickerViewController : UIViewController<UINavigationControllerDelegate>{
-    id<Hayashi311ColorPickerDelegate> delegate;
-    Hayashi311ColorPickerView* color_picker_view;
+@interface SampleTopViewController : UIViewController<Hayashi311ColorPickerDelegate>{
+    
 }
 
-- (id)initWithDefaultColor:(UIColor*)default_color;
-- (void)SaveColor:(id)sender;
-
-@property (assign) id<Hayashi311ColorPickerDelegate> delegate;
+- (void)openColorPicker:(id)sender;
 
 @end

@@ -25,9 +25,9 @@
  * $FreeBSD$
  */
 
-#import "hayashi311_color_util.h"
+#import "HRColorUtil.h"
 
 // 角丸のパスをセット
-void Hayashi311SetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius);
+void HRSetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius);
 // かっこいい角丸の四角を描きます。色付き。
-void Hayashi311DrawSquareColorBatch(CGContextRef context,CGPoint position,Hayashi311RGBColor* color,float size);
+void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* color,float size);

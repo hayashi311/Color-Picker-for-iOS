@@ -26,35 +26,32 @@
  */
 
 
-#import "sample_top_view_controller.h"
+#import "SampleTopViewController.h"
 
 @implementation SampleTopViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        UIButton* color_picker_button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [color_picker_button setFrame:CGRectMake(10.0f, 30.0f, 300.0f, 50.0f)];
-        [color_picker_button setTitle:@"Color Picker by Hayashi311  ->" forState:UIControlStateNormal];
-        [color_picker_button addTarget:self action:@selector(OpenColorPicker:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:color_picker_button];
-        
-        [self.view setBackgroundColor:[UIColor cyanColor]];
+- (void)openColorPicker:(id)sender{
+    HRColorPickerViewController* controller;
+    switch ([sender tag]) {
+    case 0:
+        controller = [HRColorPickerViewController colorPickerViewControllerWithColor:[self.view backgroundColor]];
+        break;
+    case 1:
+        controller = [HRColorPickerViewController cancelableColorPickerViewControllerWithColor:[self.view backgroundColor]];
+        break;
+    case 2:
+        controller = [HRColorPickerViewController fullColorPickerViewControllerWithColor:[self.view backgroundColor]];
+        break;
+    case 3:
+        controller = [HRColorPickerViewController cancelableFullColorPickerViewControllerWithColor:[self.view backgroundColor]];
+        break;
+
+    default:
+        return;
+        break;
     }
-    return self;
-}
-
-- (void)OpenColorPicker:(id)sender{
-    Hayashi311ColorPickerViewController* color_picker_controller = [[Hayashi311ColorPickerViewController alloc] initWithDefaultColor:[self.view backgroundColor]];
-    [color_picker_controller setDelegate:self];
-    [[self navigationController] pushViewController:color_picker_controller animated:YES];
-    [[self navigationController] setDelegate:color_picker_controller];
-    [color_picker_controller release];
-}
-
-- (void)SetSelectedColor:(UIColor*)color{
-    [self.view setBackgroundColor:color];
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,13 +71,34 @@
 }
 */
 
-/*
+- (UIButton *)createButtonWithTitle:(NSString *)title index:(int)index
+{
+    float offsetY = index * 60;
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.tag = index;
+    [button setFrame:CGRectMake(10.0f, 30.0f + offsetY, 300.0f, 50.0f)];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(openColorPicker:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    return button;
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.title = @"Color Picker by Hayashi311";
+    
+    NSString *titles[] = { @"Limited color ->", @"Limited color with Save button ->", @"Full color ->", @"Full color with Save button ->" };
+    
+    int i;
+    for (i = 0; i < sizeof(titles) / sizeof(titles[0]); i++) {
+        [self createButtonWithTitle:titles[i] index:i];
+    }
+
+    [self.view setBackgroundColor:[UIColor cyanColor]];
 }
-*/
 
 - (void)viewDidUnload
 {
@@ -98,5 +116,12 @@
 - (void)dealloc{
     
 }
+
+#pragma mark - Hayashi311ColorPickerDelegate
+
+- (void)setSelectedColor:(UIColor*)color{
+    [self.view setBackgroundColor:color];
+}
+
 
 @end
