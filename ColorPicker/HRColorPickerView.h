@@ -67,7 +67,7 @@
     bool _showColorCursor;
     
     // キャッシュ
-    
+    CGImageRef _brightnessPickerShadowImage;
 }
 
 // デフォルトカラーで初期化

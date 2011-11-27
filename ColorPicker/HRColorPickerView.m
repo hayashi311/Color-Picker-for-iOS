@@ -30,6 +30,7 @@
 
 @interface HRColorPickerView()
 - (void)initColorCursor;
+- (void)createCacheImage;
 - (void)update;
 - (void)clearInput;
 - (void)setCurrentTouchPointInView:(UITouch *)touch;
@@ -74,6 +75,8 @@
         
         _showColorCursor = TRUE;
         
+        _brightnessPickerShadowImage = nil;
+        [self createCacheImage];
     }
     return self;
 }
@@ -102,6 +105,32 @@
     newPosition.y = (1.0f - _currentHsvColor.s) * (1.0f/_saturationUpperLimit) * (float)(pixelCount - 1) * _pixelSize + _colorMapFrame.origin.y + _pixelSize/2.0f;
     _colorCursorPosition.x = (int)(newPosition.x/_pixelSize) * _pixelSize  + _colorMapFrame.origin.x - _pixelSize/2.0f;
     _colorCursorPosition.y = (int)(newPosition.y/_pixelSize) * _pixelSize + _pixelSize/2.0f;
+}
+
+- (void)createCacheImage{
+    // 影のコストは高いので、事前に画像に書き出しておきます
+    
+    if (_brightnessPickerShadowImage != nil) {
+        return;
+    }
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(_brightnessPickerShadowFrame.size.width,
+                                                      _brightnessPickerShadowFrame.size.height),
+                                           FALSE,
+                                           [[UIScreen mainScreen] scale]);
+    CGContextRef brightness_picker_shadow_context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(brightness_picker_shadow_context, 0, _brightnessPickerShadowFrame.size.height);
+    CGContextScaleCTM(brightness_picker_shadow_context, 1.0, -1.0);
+    
+    HRSetRoundedRectanglePath(brightness_picker_shadow_context, 
+                                      CGRectMake(0.0f, 0.0f,
+                                                 _brightnessPickerShadowFrame.size.width,
+                                                 _brightnessPickerShadowFrame.size.height), 5.0f);
+    CGContextSetLineWidth(brightness_picker_shadow_context, 10.0f);
+    CGContextSetShadow(brightness_picker_shadow_context, CGSizeMake(0.0f, 0.0f), 10.0f);
+    CGContextDrawPath(brightness_picker_shadow_context, kCGPathStroke);
+    
+    _brightnessPickerShadowImage = CGBitmapContextCreateImage(brightness_picker_shadow_context);
+    UIGraphicsEndImageContext();
 }
 
 - (HRRGBColor)RGBColor{
@@ -213,10 +242,14 @@
     CGGradientRelease(gradient);
     
     // 明度の内側の影
+    /*
     HRSetRoundedRectanglePath(context, _brightnessPickerShadowFrame, 5.0f);
     CGContextSetLineWidth(context, 10.0f);
     CGContextSetShadow(context, CGSizeMake(0.0f, 0.0f), 10.0f);
     CGContextDrawPath(context, kCGPathStroke);
+    */
+    CGContextDrawImage(context, _brightnessPickerShadowFrame, _brightnessPickerShadowImage);
+    
     
     // 現在の明度を示す
     float pointerSize = 5.0f;
@@ -389,6 +422,7 @@
 
 
 - (void)dealloc{
+    CGImageRelease(_brightnessPickerShadowImage);
     [super dealloc];
 }
 
