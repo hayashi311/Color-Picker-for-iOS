@@ -27,13 +27,18 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import <sys/time.h>
 #import "HRColorUtil.h"
+
+typedef struct timeval timeval;
+
+@class HRBrightnessCursor;
+@class HRColorCursor;
 
 @interface HRColorPickerView : UIControl{
     
  @private
-    CADisplayLink* _displayLink;
-	bool _animating;
+    bool _animating;
     
     // 入力関係
     bool _isTapStart;
@@ -64,8 +69,15 @@
     float _brightnessLowerLimit;
     float _saturationUpperLimit;
     
+    HRBrightnessCursor* _brightnessCursor;
+    HRColorCursor* _colorCursor;
+    
     // キャッシュ
     CGImageRef _brightnessPickerShadowImage;
+    
+    // フレームレート
+    timeval _lastDrawTime;
+    timeval _timeInterval20fps;
 }
 
 // デフォルトカラーで初期化

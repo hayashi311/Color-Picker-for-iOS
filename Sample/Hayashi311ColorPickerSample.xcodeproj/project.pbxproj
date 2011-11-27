@@ -11,6 +11,8 @@
 		46E87BFF146F46C600BC1608 /* HRColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFB146F46C600BC1608 /* HRColorPickerView.m */; };
 		46E87C00146F46C600BC1608 /* HRColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFD146F46C600BC1608 /* HRColorUtil.m */; };
 		46E87C03146F519F00BC1608 /* HRColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */; };
+		DA3CD22E148205F700492DF7 /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */; };
+		DA3CD2321482068B00492DF7 /* HRColorCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD2311482068B00492DF7 /* HRColorCursor.m */; };
 		DA877C3214527BD000A0754C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3114527BD000A0754C /* UIKit.framework */; };
 		DA877C3414527BD000A0754C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3314527BD000A0754C /* Foundation.framework */; };
 		DA877C3614527BD000A0754C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C3514527BD000A0754C /* CoreGraphics.framework */; };
@@ -32,6 +34,10 @@
 		46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerViewController.m; sourceTree = "<group>"; };
 		46FD94B21475604400384FD7 /* Hayashi311ColorPickerSample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hayashi311ColorPickerSample-Info.plist"; sourceTree = "<group>"; };
 		46FD94B31475604400384FD7 /* Hayashi311ColorPickerSample-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Hayashi311ColorPickerSample-Prefix.pch"; sourceTree = "<group>"; };
+		DA3CD22C148205F700492DF7 /* HRBrightnessCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessCursor.h; sourceTree = "<group>"; };
+		DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessCursor.m; sourceTree = "<group>"; };
+		DA3CD2301482068B00492DF7 /* HRColorCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorCursor.h; sourceTree = "<group>"; };
+		DA3CD2311482068B00492DF7 /* HRColorCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorCursor.m; sourceTree = "<group>"; };
 		DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hayashi311ColorPickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA877C3114527BD000A0754C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA877C3314527BD000A0754C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -71,6 +77,10 @@
 				46E87BFB146F46C600BC1608 /* HRColorPickerView.m */,
 				46E87BFC146F46C600BC1608 /* HRColorUtil.h */,
 				46E87BFD146F46C600BC1608 /* HRColorUtil.m */,
+				DA3CD22C148205F700492DF7 /* HRBrightnessCursor.h */,
+				DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */,
+				DA3CD2301482068B00492DF7 /* HRColorCursor.h */,
+				DA3CD2311482068B00492DF7 /* HRColorCursor.m */,
 			);
 			name = ColorPicker;
 			path = ../../ColorPicker;
@@ -206,6 +216,8 @@
 				46E87BFF146F46C600BC1608 /* HRColorPickerView.m in Sources */,
 				46E87C00146F46C600BC1608 /* HRColorUtil.m in Sources */,
 				46E87C03146F519F00BC1608 /* HRColorPickerViewController.m in Sources */,
+				DA3CD22E148205F700492DF7 /* HRBrightnessCursor.m in Sources */,
+				DA3CD2321482068B00492DF7 /* HRColorCursor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
