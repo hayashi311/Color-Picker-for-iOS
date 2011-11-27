@@ -63,7 +63,7 @@
     
     
     [[UIColor colorWithRed:_currentColor.r green:_currentColor.g blue:_currentColor.b alpha:1.0f] set];
-    CGContextFillRect(context, CGRectMake(5.0f, 5.0f, 20.0f, 20.0f));
+    CGContextFillRect(context, CGRectMake(6.0f, 6.0f, 18.0f, 18.0f));
 }
 
 
