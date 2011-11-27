@@ -69,12 +69,76 @@ void HSVColorFromRGBColor(const HRRGBColor* rgb,HRHSVColor* hsv){
     hsv->v = hsv255.v / 255.0f;
 }
 
-/*
+
 void RGBColorFromHSVColor(const HRHSVColor* hsv,HRRGBColor* rgb){
+   /*
     UIColorには
     [UIColor colorWithHue:<#(CGFloat)#> saturation:<#(CGFloat)#> brightness:<#(CGFloat)#> alpha:<#(CGFloat)#>]
-    があるので、必要ならRGBColorFromUIColorと組み合わせて使えばいいです。
-}*/
+    もあります
+    */
+    if(hsv->s == 0.0f)
+    {
+        rgb->r = rgb->g = rgb->b = hsv->v;
+        return;
+    }
+    
+    float h360 = hsv->h * 360.0f;
+    int		i;
+    float	f;
+    float	m;
+    float	n;
+    float	k;
+    
+    i = floor(h360 /60);
+    if(i < 0){
+        i *= -1;
+    }
+    f = h360 / 60.0f - i;
+    m = hsv->v * (1 - hsv->s);
+    n = hsv->v * (1 - f * hsv->s);
+    k = hsv->v * (1 - (1 - f) * hsv->s);
+    
+    switch (i) {
+        case 0:{
+            rgb->r = hsv->v;
+            rgb->g = k;
+            rgb->b = m;
+            break;
+        }
+        case 1:{
+            rgb->r = n;
+            rgb->g = hsv->v;
+            rgb->b = m;
+            break;
+        }
+        case 2:{
+            rgb->r = m;
+            rgb->g = hsv->v;
+            rgb->b = k;
+            break;
+        }
+        case 3:{
+            rgb->r = m;
+            rgb->g = n;
+            rgb->b = hsv->v;
+            break;
+        }
+        case 4:{
+            rgb->r = k;
+            rgb->g = m;
+            rgb->b = hsv->v;
+            break;
+        }
+        case 5:{
+            rgb->r = hsv->v;
+            rgb->g = m;
+            rgb->b = n;
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 void RGBColorFromUIColor(const UIColor* uiColor,HRRGBColor* rgb){
     const CGFloat* components = CGColorGetComponents(uiColor.CGColor);

@@ -58,7 +58,7 @@ typedef struct{
 /////////////////////////////////////////////////////////////////////////////
 
 void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*);
-//void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*);
+void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*);
 void RGBColorFromUIColor(const UIColor*,HRRGBColor*);
 
 // 同値チェック

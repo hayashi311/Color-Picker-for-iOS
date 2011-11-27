@@ -65,6 +65,9 @@
     float _saturationUpperLimit;
     
     bool _showColorCursor;
+    
+    // キャッシュ
+    
 }
 
 // デフォルトカラーで初期化
@@ -73,13 +76,8 @@
 // 現在選択している色をRGBで返す
 - (HRRGBColor)RGBColor;
 
-/*
- * releaseを呼ぶ時にはちょっと注意が必要です。
- * 内部でLoopを呼んでいるのでこれを止めないとdeallocが呼ばれない。
- * releaseの前にBeforeDeallocを呼び出して下さい。
- */
-
-- (void)BeforeDealloc;
+// 後方互換性のため。呼び出す必要はありません。
+- (void)BeforeDealloc; 
 
 @property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit;
 @property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit;

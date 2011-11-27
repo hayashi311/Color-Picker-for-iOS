@@ -30,9 +30,7 @@
 
 @interface HRColorPickerView()
 - (void)initColorCursor;
-- (void)loopStart;
-- (void)loop:(id)sender;
-- (void)loopStop;
+- (void)update;
 - (void)clearInput;
 - (void)setCurrentTouchPointInView:(UITouch *)touch;
 @end
@@ -76,7 +74,6 @@
         
         _showColorCursor = TRUE;
         
-        [self loopStart];
     }
     return self;
 }
@@ -114,18 +111,7 @@
     return rgbColor;
 }
 
-- (void)loopStart{
-	if (!_animating)
-	{
-		_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(Loop:)];
-		[_displayLink setFrameInterval:2];
-		[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-		_animating = TRUE;
-	}
-}
-
-- (void)loop:(id)sender{
-    
+- (void)update{
     if (!_showColorCursor) {
         _showColorCursor = TRUE;
         [self setNeedsDisplay];
@@ -138,7 +124,7 @@
             
             // ドラッグ中は表示させない
             if (_isDragging && !_isDragEnd) {
-                _showColorCursor = FALSE;
+                //_showColorCursor = FALSE;
             }
             
             int pixelCount = _colorMapFrame.size.height/_pixelSize;
@@ -164,7 +150,7 @@
             }
         }else if(CGRectContainsPoint(_brightnessPickerTouchFrame,touchPosition)){
             if (CGRectContainsPoint(_brightnessPickerFrame,touchPosition)) {
-                // 輝度のスライダーの内側
+                // 明度のスライダーの内側
                 _currentHsvColor.v = (1.0f - ((touchPosition.x - _brightnessPickerFrame.origin.x )/ _brightnessPickerFrame.size.width )) * (1.0f - _brightnessLowerLimit) + _brightnessLowerLimit;
             }else{
                 // 左右をタッチした場合
@@ -180,15 +166,6 @@
     [self clearInput];
 }
 
-- (void)loopStop{
-	if (_animating)
-	{
-		[_displayLink invalidate];
-		_displayLink = nil;
-		_animating = FALSE;
-	}
-}
-
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -196,7 +173,7 @@
     
     /////////////////////////////////////////////////////////////////////////////
     //
-    // 輝度
+    // 明度
     //
     /////////////////////////////////////////////////////////////////////////////
     
@@ -213,7 +190,7 @@
     
     HRRGBColor darkColor;
     HRRGBColor lightColor;
-    UIColor* darkColorFromHsv = [UIColor colorWithHue:_currentHsvColor.h saturation:_currentHsvColor.v brightness:_brightnessLowerLimit alpha:1.0f];
+    UIColor* darkColorFromHsv = [UIColor colorWithHue:_currentHsvColor.h saturation:_currentHsvColor.s brightness:_brightnessLowerLimit alpha:1.0f];
     UIColor* lightColorFromHsv = [UIColor colorWithHue:_currentHsvColor.h saturation:_currentHsvColor.s brightness:1.0f alpha:1.0f];
     
     RGBColorFromUIColor(darkColorFromHsv, &darkColor);
@@ -235,13 +212,13 @@
     CGColorSpaceRelease(colorSpace);
     CGGradientRelease(gradient);
     
-    // 輝度の内側の影
+    // 明度の内側の影
     HRSetRoundedRectanglePath(context, _brightnessPickerShadowFrame, 5.0f);
     CGContextSetLineWidth(context, 10.0f);
     CGContextSetShadow(context, CGSizeMake(0.0f, 0.0f), 10.0f);
     CGContextDrawPath(context, kCGPathStroke);
     
-    // 現在の輝度を示す
+    // 現在の明度を示す
     float pointerSize = 5.0f;
     float tappointX = (1.0f - (_currentHsvColor.v - _brightnessLowerLimit)/(1.0f - _brightnessLowerLimit)) * _brightnessPickerFrame.size.width + _brightnessPickerFrame.origin.x;
     
@@ -277,18 +254,17 @@
     float height;
     int pixelCount = _colorMapFrame.size.height/_pixelSize;
     
+    HRHSVColor pixelHsv;
+    HRRGBColor pixelRgb;
     for (int j = 0; j < pixelCount; ++j) {
         height =  _pixelSize * j + _colorMapFrame.origin.y;
         float pixelY = (float)j/(pixelCount-1); // Y(彩度)は0.0f~1.0f
         for (int i = 0; i < pixelCount; ++i) {
             float pixelX = (float)i/pixelCount; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-            HRHSVColor pixelHsv;
             HSVColorAt(&pixelHsv, pixelX, pixelY, _saturationUpperLimit, _currentHsvColor.v);
-            CGContextSetFillColorWithColor(context, [UIColor colorWithHue:pixelHsv.h saturation:pixelHsv.s brightness:pixelHsv.v alpha:1.0f].CGColor);
-            
-            // CGContextAddRect(context, CGRectMake(_pixelSize*i+_colorMapFrame.origin.x, height, _pixelSize-2.0f, _pixelSize-2.0f));
-            CGContextAddRect(context, CGRectMake(_pixelSize*i+_colorMapFrame.origin.x, height, _pixelSize-2.0f, _pixelSize-2.0f));
-            CGContextDrawPath(context, kCGPathFill);
+            RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
+            CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
+            CGContextFillRect(context, CGRectMake(_pixelSize*i+_colorMapFrame.origin.x, height, _pixelSize-2.0f, _pixelSize-2.0f));
         }
     }
     
@@ -368,6 +344,7 @@
         _isTapStart = TRUE;
         _touchStartPosition.x = _activeTouchPosition.x;
         _touchStartPosition.y = _activeTouchPosition.y;
+        [self update];
     }
 }
 
@@ -380,6 +357,7 @@
             _isDragStart = TRUE;
         }
         [self setCurrentTouchPointInView:[touches anyObject]];
+        [self update];
     }
 }
 
@@ -395,7 +373,7 @@
     }
     _isDragging = FALSE;
     [self setCurrentTouchPointInView:touch];
-    
+    [self update];
 }
 
 - (void)setCurrentTouchPointInView:(UITouch *)touch{
@@ -406,7 +384,7 @@
 }
 
 - (void)BeforeDealloc{
-    [self loopStop];
+    
 }
 
 
