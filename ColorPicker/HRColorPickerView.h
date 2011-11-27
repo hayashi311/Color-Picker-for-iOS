@@ -64,8 +64,6 @@
     float _brightnessLowerLimit;
     float _saturationUpperLimit;
     
-    bool _showColorCursor;
-    
     // キャッシュ
     CGImageRef _brightnessPickerShadowImage;
 }

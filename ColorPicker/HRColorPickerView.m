@@ -73,8 +73,6 @@
         [self setBackgroundColor:[UIColor colorWithWhite:0.99f alpha:1.0f]];
         [self setMultipleTouchEnabled:FALSE];
         
-        _showColorCursor = TRUE;
-        
         _brightnessPickerShadowImage = nil;
         [self createCacheImage];
     }
@@ -141,20 +139,10 @@
 }
 
 - (void)update{
-    if (!_showColorCursor) {
-        _showColorCursor = TRUE;
-        [self setNeedsDisplay];
-    }
     
     if (_isDragging || _isDragStart || _isDragEnd || _isTapped) {
         CGPoint touchPosition = _activeTouchPosition;
         if (CGRectContainsPoint(_colorMapFrame,touchPosition)) {
-            // カラーマップ
-            
-            // ドラッグ中は表示させない
-            if (_isDragging && !_isDragEnd) {
-                //_showColorCursor = FALSE;
-            }
             
             int pixelCount = _colorMapFrame.size.height/_pixelSize;
             HRHSVColor newHsv = _currentHsvColor;
@@ -241,15 +229,8 @@
     CGColorSpaceRelease(colorSpace);
     CGGradientRelease(gradient);
     
-    // 明度の内側の影
-    /*
-    HRSetRoundedRectanglePath(context, _brightnessPickerShadowFrame, 5.0f);
-    CGContextSetLineWidth(context, 10.0f);
-    CGContextSetShadow(context, CGSizeMake(0.0f, 0.0f), 10.0f);
-    CGContextDrawPath(context, kCGPathStroke);
-    */
+    // 明度の内側の影 (キャッシュした画像を表示するだけ)
     CGContextDrawImage(context, _brightnessPickerShadowFrame, _brightnessPickerShadowImage);
-    
     
     // 現在の明度を示す
     float pointerSize = 5.0f;
@@ -277,8 +258,6 @@
     CGContextSaveGState(context);
     
     [[UIColor colorWithWhite:0.9f alpha:1.0f] set];
-    //[[UIColor lightTextColor] set];
-    //CGContextSetShadow(context, CGSizeMake(0.0f, 0.0f), 4.0f);
     CGContextAddRect(context, _colorMapSideFrame);
     CGContextDrawPath(context, kCGPathStroke);
     CGContextRestoreGState(context);
@@ -333,26 +312,24 @@
     //
     /////////////////////////////////////////////////////////////////////////////
     
-    if (_showColorCursor) {
-        float cursorSize = _pixelSize + 2.0f;
-        float cursorBackSize = cursorSize + 8.0f;
-        // 隙間分引く
-        CGRect cursorBackRect = CGRectMake(_colorCursorPosition.x - cursorBackSize/2.0f -1.0f, _colorCursorPosition.y - cursorBackSize/2.0f -1.0f, cursorBackSize, cursorBackSize);
-        CGRect cursorRect = CGRectMake(_colorCursorPosition.x - cursorSize/2.0f -1.0f, _colorCursorPosition.y - cursorSize/2.0f -1.0f, cursorSize, cursorSize);
-        
-        CGContextSaveGState(context);
-        CGContextAddRect(context, cursorBackRect);
-        [[UIColor whiteColor] set];
-        CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), 3.0f);
-        CGContextDrawPath(context, kCGPathFill);
-        CGContextRestoreGState(context);
-        
-        CGContextSaveGState(context);
-        CGContextAddRect(context, cursorRect);
-        [[UIColor colorWithRed:currentRgbColor.r green:currentRgbColor.g blue:currentRgbColor.b alpha:1.0f] set];
-        CGContextDrawPath(context, kCGPathFill);
-        CGContextRestoreGState(context);
-    }
+    float cursorSize = _pixelSize + 2.0f;
+    float cursorBackSize = cursorSize + 8.0f;
+    // 隙間分引く
+    CGRect cursorBackRect = CGRectMake(_colorCursorPosition.x - cursorBackSize/2.0f -1.0f, _colorCursorPosition.y - cursorBackSize/2.0f -1.0f, cursorBackSize, cursorBackSize);
+    CGRect cursorRect = CGRectMake(_colorCursorPosition.x - cursorSize/2.0f -1.0f, _colorCursorPosition.y - cursorSize/2.0f -1.0f, cursorSize, cursorSize);
+    
+    CGContextSaveGState(context);
+    CGContextAddRect(context, cursorBackRect);
+    [[UIColor whiteColor] set];
+    CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), 3.0f);
+    CGContextDrawPath(context, kCGPathFill);
+    CGContextRestoreGState(context);
+    
+    CGContextSaveGState(context);
+    CGContextAddRect(context, cursorRect);
+    [[UIColor colorWithRed:currentRgbColor.r green:currentRgbColor.g blue:currentRgbColor.b alpha:1.0f] set];
+    CGContextDrawPath(context, kCGPathFill);
+    CGContextRestoreGState(context);
 }
 
 
