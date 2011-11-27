@@ -97,6 +97,13 @@
     return self;
 }
 
+
+- (HRRGBColor)RGBColor{
+    HRRGBColor rgbColor;
+    RGBColorFromHSVColor(&_currentHsvColor, &rgbColor);
+    return rgbColor;
+}
+
 - (float)BrightnessLowerLimit{
     return _brightnessLowerLimit;
 }
@@ -114,6 +121,12 @@
     _saturationUpperLimit = saturationUpperLimit;
     [self updateColorCursor];
 }
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// プライベート
+//
+/////////////////////////////////////////////////////////////////////////////
 
 - (void)createCacheImage{
     // 影のコストは高いので、事前に画像に書き出しておきます
@@ -141,13 +154,8 @@
     UIGraphicsEndImageContext();
 }
 
-- (HRRGBColor)RGBColor{
-    HRRGBColor rgbColor;
-    RGBColorFromHSVColor(&_currentHsvColor, &rgbColor);
-    return rgbColor;
-}
-
 - (void)update{
+    // タッチのイベントの度、更新されます
     if (_isDragging || _isDragStart || _isDragEnd || _isTapped) {
         CGPoint touchPosition = _activeTouchPosition;
         if (CGRectContainsPoint(_colorMapFrame,touchPosition)) {
@@ -198,6 +206,7 @@
 }
 
 - (void)updateColorCursor{
+    // カラーマップのカーソルの移動＆色の更新
     int pixelCount = _colorMapFrame.size.height/_pixelSize;
     CGPoint newPosition;
     newPosition.x = _currentHsvColor.h * (float)pixelCount * _pixelSize + _colorMapFrame.origin.x + _pixelSize/2.0f;
@@ -212,7 +221,7 @@
 }
 
 - (void)setNeedsDisplay20FPS{
-    // 描画は20FPS
+    // 描画を20FPSに制限します
     timeval now,diff;
     gettimeofday(&now, NULL);
     timersub(&now, &_lastDrawTime, &diff);
