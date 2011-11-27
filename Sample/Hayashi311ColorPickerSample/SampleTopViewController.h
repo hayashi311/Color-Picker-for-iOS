@@ -28,7 +28,7 @@
 #import <UIKit/UIKit.h>
 #import "HRColorPickerViewController.h"
 
-@interface SampleTopViewController : UIViewController<Hayashi311ColorPickerDelegate>{
+@interface SampleTopViewController : UIViewController<HRColorPickerDelegate>{
     
 }
 

@@ -29,7 +29,7 @@
 
 @class HRColorPickerView;
 
-@protocol Hayashi311ColorPickerDelegate
+@protocol HRColorPickerDelegate
 - (void)setSelectedColor:(UIColor*)color;
 @end
 
@@ -39,7 +39,7 @@ typedef enum {
 } HCPCSaveStyle;
 
 @interface HRColorPickerViewController : UIViewController {
-    id<Hayashi311ColorPickerDelegate> delegate;
+    id<HRColorPickerDelegate> delegate;
     HRColorPickerView* colorPickerView;
     
     UIColor *_color;
@@ -67,7 +67,7 @@ typedef enum {
 - (void)cancel:(id)sender;
 
 
-@property (assign) id<Hayashi311ColorPickerDelegate> delegate;
+@property (assign) id<HRColorPickerDelegate> delegate;
 
 
 @end
