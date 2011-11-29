@@ -77,7 +77,7 @@ typedef struct timeval timeval;
     
     // フレームレート
     timeval _lastDrawTime;
-    timeval _timeInterval20fps;
+    timeval _timeInterval15fps;
 }
 
 // デフォルトカラーで初期化

@@ -37,7 +37,7 @@
 - (void)updateColorCursor;
 - (void)clearInput;
 - (void)setCurrentTouchPointInView:(UITouch *)touch;
-- (void)setNeedsDisplay20FPS;
+- (void)setNeedsDisplay15FPS;
 @end
 
 @implementation HRColorPickerView
@@ -91,8 +91,8 @@
         // フレームレートの調整
         gettimeofday(&_lastDrawTime, NULL);
         
-        _timeInterval20fps.tv_sec = 0.0;
-        _timeInterval20fps.tv_usec = 1000000.0/20.0;
+        _timeInterval15fps.tv_sec = 0.0;
+        _timeInterval15fps.tv_usec = 1000000.0/15.0;
     }
     return self;
 }
@@ -175,7 +175,7 @@
                 _colorCursorPosition.x = (int)(newPosition.x/_pixelSize) * _pixelSize  + _colorMapFrame.origin.x + _pixelSize/2.0f;
                 _colorCursorPosition.y = (int)(newPosition.y/_pixelSize) * _pixelSize + _colorMapFrame.origin.y + _pixelSize/2.0f;
                 
-                [self setNeedsDisplay20FPS];
+                [self setNeedsDisplay15FPS];
             }
             [self updateColorCursor];
         }else if(CGRectContainsPoint(_brightnessPickerTouchFrame,touchPosition)){
@@ -192,7 +192,7 @@
             }
             [self updateBrightnessCursor];
             [self updateColorCursor];
-            [self setNeedsDisplay20FPS];
+            [self setNeedsDisplay15FPS];
         }
     }
     [self clearInput];
@@ -220,12 +220,12 @@
                                                               _colorCursorPosition.y - _colorMapFrame.origin.y);
 }
 
-- (void)setNeedsDisplay20FPS{
+- (void)setNeedsDisplay15FPS{
     // 描画を20FPSに制限します
     timeval now,diff;
     gettimeofday(&now, NULL);
     timersub(&now, &_lastDrawTime, &diff);
-    if (timercmp(&diff, &_timeInterval20fps, >)) {
+    if (timercmp(&diff, &_timeInterval15fps, >)) {
         _lastDrawTime = now;
         [self setNeedsDisplay];
     }else{
@@ -395,7 +395,7 @@
     _isDragging = FALSE;
     [self setCurrentTouchPointInView:touch];
     [self update];
-    [NSTimer scheduledTimerWithTimeInterval:1.0/20.0 target:self selector:@selector(setNeedsDisplay20FPS) userInfo:nil repeats:FALSE];
+    [NSTimer scheduledTimerWithTimeInterval:1.0/20.0 target:self selector:@selector(setNeedsDisplay15FPS) userInfo:nil repeats:FALSE];
 }
 
 - (void)setCurrentTouchPointInView:(UITouch *)touch{

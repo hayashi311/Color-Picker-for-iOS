@@ -5,3 +5,11 @@
     * ライブラリのprefixeをHayashi311からHRに変更。(林さんと相談して決めた)
     * HRColorPickerViewControllerに保存とキャンセルボタンでキャンセルできるスタイルを追加。
     * HRColorPickerViewControllerインスタンスを得るクラスメソッドを追加。
+
+* 2011.11.27
+    * ループを使わないように変更
+    * 明度のスライダーのデザインを変更
+    * [パフォーマンスの改善](http://yomoapp.tumblr.com/post/13394241420/ios)
+
+* 2011.11.30
+		* 20FPSでカラーマップを描画していたのを15FPSに変更 → カーソル部分が完璧に60FPSで動作して体感速度があがった
