@@ -42,8 +42,43 @@
 
 @implementation HRColorPickerView
 
+@synthesize delegate;
+
++ (HRColorPickerStyle)defaultStyle
+{
+    HRColorPickerStyle style;
+    style.width = 320.0f;
+    style.headerHeight = 106.0f;
+    style.colorMapTileSize = 15.0f;
+    style.colorMapSizeWidth = 20;
+    style.colorMapSizeHeight = 20;
+    style.brightnessLowerLimit = 0.4f;
+    style.saturationUpperLimit = 0.95f;
+    return style;
+}
+
++ (HRColorPickerStyle)fullColorStyle{
+    HRColorPickerStyle style = [HRColorPickerView defaultStyle];
+    style.brightnessLowerLimit = 0.0f;
+    style.saturationUpperLimit = 1.0f;
+    return style;
+}
+
++ (CGSize)sizeWithStyle:(HRColorPickerStyle)style
+{
+    CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
+    float colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
+    return CGSizeMake(style.width, style.headerHeight + colorMapSize.height + colorMapSpace);
+}
+
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor
 {
+    return [self initWithStyle:[HRColorPickerView defaultStyle] defaultColor:defaultColor];
+}
+
+- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
+    CGSize size = [HRColorPickerView sizeWithStyle:style];
+    CGRect frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
     self = [super initWithFrame:frame];
     if (self) {
         _defaultRgbColor = defaultColor;
@@ -53,20 +88,36 @@
         HSVColorFromRGBColor(&_defaultRgbColor, &_currentHsvColor);
         
         // パーツの配置
-        _currentColorFrame = CGRectMake(10.0f, 30.0f, 40.0f, 40.0f);
-        _brightnessPickerFrame = CGRectMake(120.0f, 30.0f, 190.0f, 40.0f);
-        _brightnessPickerTouchFrame = CGRectMake(100.0f, 30.0f, 230.0f, 40.0f);
-        _brightnessPickerShadowFrame = CGRectMake(120.0f-5.0f, 30.0f-5.0f, 190.0f+10.0f, 40.0f+10.0f);
-        _colorMapFrame = CGRectMake(11.0f, 106.0f, 300.0f, 300.0f);
-        _colorMapSideFrame = CGRectMake(10.0f, 105.0f, 300.0f, 300.0f);
-        _pixelSize = 15.0f;
-        _brightnessLowerLimit = 0.4f;
-        _saturationUpperLimit = 0.95f;
+        CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
+        float colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
+        float headerPartsOriginY = (style.headerHeight - 40.0f)/2.0f;
+        _currentColorFrame = CGRectMake(10.0f, headerPartsOriginY, 40.0f, 40.0f);
+        _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
+        _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
+                                                 headerPartsOriginY,
+                                                 _brightnessPickerFrame.size.width + 20.0f,
+                                                 _brightnessPickerFrame.size.height);
+        _brightnessPickerShadowFrame = CGRectMake(_brightnessPickerFrame.origin.x-5.0f,
+                                                  headerPartsOriginY-5.0f,
+                                                  _brightnessPickerFrame.size.width+10.0f,
+                                                  _brightnessPickerFrame.size.height+10.0f);
+        
+        _colorMapFrame = CGRectMake(colorMapSpace + 1.0f, style.headerHeight, colorMapSize.width, colorMapSize.height);
+        
+        _colorMapSideFrame = CGRectMake(_colorMapFrame.origin.x - 1.0f,
+                                        _colorMapFrame.origin.y - 1.0f,
+                                        _colorMapFrame.size.width,
+                                        _colorMapFrame.size.height);
+        
+        _tileSize = style.colorMapTileSize;
+        _brightnessLowerLimit = style.brightnessLowerLimit;
+        _saturationUpperLimit = style.saturationUpperLimit;
         
         _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(_brightnessPickerFrame.origin.x, _brightnessPickerFrame.origin.y + _brightnessPickerFrame.size.height/2.0f)];
         
-        // 色の隙間分ずらす
-        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(_colorMapFrame.origin.x-1.0f, _colorMapFrame.origin.y-1.0f)];
+        // タイルの中心にくるようにずらす
+        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(_colorMapFrame.origin.x - (30.0f - _tileSize)/2.0f - 1.0f,
+                                                                        _colorMapFrame.origin.y - (30.0f - _tileSize)/2.0f - 1.0f)];
         [self addSubview:_brightnessCursor];
         [self addSubview:_colorCursor];
         
@@ -93,6 +144,8 @@
         
         _timeInterval15fps.tv_sec = 0.0;
         _timeInterval15fps.tv_usec = 1000000.0/15.0;
+        
+        _delegateHasSELColorWasChanged = FALSE;
     }
     return self;
 }
@@ -160,21 +213,19 @@
         CGPoint touchPosition = _activeTouchPosition;
         if (CGRectContainsPoint(_colorMapFrame,touchPosition)) {
             
-            int pixelCount = _colorMapFrame.size.height/_pixelSize;
+            int pixelCountX = _colorMapFrame.size.width/_tileSize;
+            int pixelCountY = _colorMapFrame.size.height/_tileSize;
             HRHSVColor newHsv = _currentHsvColor;
             
             CGPoint newPosition = CGPointMake(touchPosition.x - _colorMapFrame.origin.x, touchPosition.y - _colorMapFrame.origin.y);
             
-            float pixelX = (int)((newPosition.x)/_pixelSize)/(float)pixelCount; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-            float pixelY = (int)((newPosition.y)/_pixelSize)/(float)(pixelCount-1); // Y(彩度)は0.0f~1.0f
+            float pixelX = (int)((newPosition.x)/_tileSize)/(float)pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+            float pixelY = (int)((newPosition.y)/_tileSize)/(float)(pixelCountY-1); // Y(彩度)は0.0f~1.0f
             
             HSVColorAt(&newHsv, pixelX, pixelY, _saturationUpperLimit, _currentHsvColor.v);
             
             if (!HRHSVColorEqualToColor(&newHsv,&_currentHsvColor)) {
                 _currentHsvColor = newHsv;
-                _colorCursorPosition.x = (int)(newPosition.x/_pixelSize) * _pixelSize  + _colorMapFrame.origin.x + _pixelSize/2.0f;
-                _colorCursorPosition.y = (int)(newPosition.y/_pixelSize) * _pixelSize + _colorMapFrame.origin.y + _pixelSize/2.0f;
-                
                 [self setNeedsDisplay15FPS];
             }
             [self updateColorCursor];
@@ -207,17 +258,20 @@
 
 - (void)updateColorCursor{
     // カラーマップのカーソルの移動＆色の更新
-    int pixelCount = _colorMapFrame.size.height/_pixelSize;
+    
+    int pixelCountX = _colorMapFrame.size.width/_tileSize;
+    int pixelCountY = _colorMapFrame.size.height/_tileSize;
     CGPoint newPosition;
-    newPosition.x = _currentHsvColor.h * (float)pixelCount * _pixelSize + _colorMapFrame.origin.x + _pixelSize/2.0f;
-    newPosition.y = (1.0f - _currentHsvColor.s) * (1.0f/_saturationUpperLimit) * (float)(pixelCount - 1) * _pixelSize + _colorMapFrame.origin.y + _pixelSize/2.0f;
-    _colorCursorPosition.x = (int)(newPosition.x/_pixelSize) * _pixelSize  + _colorMapFrame.origin.x - _pixelSize/2.0f;
-    _colorCursorPosition.y = (int)(newPosition.y/_pixelSize) * _pixelSize + _pixelSize/2.0f;
+    newPosition.x = _currentHsvColor.h * (float)pixelCountX * _tileSize + _tileSize/2.0f;
+    newPosition.y = (1.0f - _currentHsvColor.s) * (1.0f/_saturationUpperLimit) * (float)(pixelCountY - 1) * _tileSize + _tileSize/2.0f;
+    _colorCursorPosition.x = (int)(newPosition.x/_tileSize) * _tileSize;
+    _colorCursorPosition.y = (int)(newPosition.y/_tileSize) * _tileSize;
     
     HRRGBColor currentRgbColor = [self RGBColor];
     [_colorCursor setColorRed:currentRgbColor.r andGreen:currentRgbColor.g andBlue:currentRgbColor.b];
-    _colorCursor.transform = CGAffineTransformMakeTranslation(_colorCursorPosition.x - _colorMapFrame.origin.x,
-                                                              _colorCursorPosition.y - _colorMapFrame.origin.y);
+    
+    _colorCursor.transform = CGAffineTransformMakeTranslation(_colorCursorPosition.x,_colorCursorPosition.y);
+     
 }
 
 - (void)setNeedsDisplay15FPS{
@@ -228,6 +282,9 @@
     if (timercmp(&diff, &_timeInterval15fps, >)) {
         _lastDrawTime = now;
         [self setNeedsDisplay];
+        if (_delegateHasSELColorWasChanged) {
+            [delegate colorWasChanged:self];
+        }
     }else{
         return;
     }
@@ -300,19 +357,20 @@
     
     CGContextSaveGState(context);
     float height;
-    int pixelCount = _colorMapFrame.size.height/_pixelSize;
+    int pixelCountX = _colorMapFrame.size.width/_tileSize;
+    int pixelCountY = _colorMapFrame.size.height/_tileSize;
     
     HRHSVColor pixelHsv;
     HRRGBColor pixelRgb;
-    for (int j = 0; j < pixelCount; ++j) {
-        height =  _pixelSize * j + _colorMapFrame.origin.y;
-        float pixelY = (float)j/(pixelCount-1); // Y(彩度)は0.0f~1.0f
-        for (int i = 0; i < pixelCount; ++i) {
-            float pixelX = (float)i/pixelCount; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+    for (int j = 0; j < pixelCountY; ++j) {
+        height =  _tileSize * j + _colorMapFrame.origin.y;
+        float pixelY = (float)j/(pixelCountY-1); // Y(彩度)は0.0f~1.0f
+        for (int i = 0; i < pixelCountX; ++i) {
+            float pixelX = (float)i/pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
             HSVColorAt(&pixelHsv, pixelX, pixelY, _saturationUpperLimit, _currentHsvColor.v);
             RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
             CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
-            CGContextFillRect(context, CGRectMake(_pixelSize*i+_colorMapFrame.origin.x, height, _pixelSize-2.0f, _pixelSize-2.0f));
+            CGContextFillRect(context, CGRectMake(_tileSize*i+_colorMapFrame.origin.x, height, _tileSize-2.0f, _tileSize-2.0f));
         }
     }
     
@@ -403,6 +461,15 @@
 	point = [touch locationInView:self];
     _activeTouchPosition.x = point.x;
     _activeTouchPosition.y = point.y;
+}
+
+- (void)setDelegate:(NSObject<HRColorPickerViewDelegate>*)picker_delegate{
+    delegate = picker_delegate;
+    _delegateHasSELColorWasChanged = FALSE;
+    // 微妙に重いのでメソッドを持っているかどうかの判定をキャッシュ
+    if ([delegate respondsToSelector:@selector(colorWasChanged:)]) {
+        _delegateHasSELColorWasChanged = TRUE;
+    }
 }
 
 - (void)BeforeDealloc{

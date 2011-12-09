@@ -17,7 +17,8 @@ Color Picker for iOS
   
 修正BSDライセンスです。  
   
-  
+- [サイズの変更](http://yomoapp.tumblr.com/post/13982185581)  
+
 参考： (古い記事です)  
   
 - [カラーピッカーの使用方法](http://yomoapp.tumblr.com/post/11770967899/iphone)

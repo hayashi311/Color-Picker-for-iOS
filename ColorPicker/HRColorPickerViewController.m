@@ -78,14 +78,18 @@
     
     HRRGBColor rgbColor;
     RGBColorFromUIColor(_color, &rgbColor);
-    colorPickerView = [[HRColorPickerView alloc] initWithFrame:[self.view bounds] 
-                                                         defaultColor:rgbColor];
+    
+    HRColorPickerStyle style;
     if (_fullColor) {
-        [colorPickerView setBrightnessLowerLimit:0.0f];
-        [colorPickerView setSaturationUpperLimit:1.0f];
+        style = [HRColorPickerView fullColorStyle];
+    }else{
+        style = [HRColorPickerView defaultStyle];
     }
-    [self setView:colorPickerView];
-
+    
+    colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
+    
+    [self.view addSubview:colorPickerView];
+    
     if (_saveStyle == HCPCSaveStyleSaveAndCancel) {
         UIBarButtonItem *buttonItem;
         

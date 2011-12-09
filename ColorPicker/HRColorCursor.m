@@ -33,7 +33,7 @@
 - (id)initWithPoint:(CGPoint)point
 {
     CGSize size = CGSizeMake(30.0f, 30.0f);
-    CGRect frame = CGRectMake(point.x - size.width/2.0f, point.y - size.height/2.0f, size.width, size.height);
+    CGRect frame = CGRectMake(point.x, point.y, size.width, size.height);
     self = [super initWithFrame:frame];
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];

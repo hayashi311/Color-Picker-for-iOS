@@ -30,13 +30,31 @@
 #import <sys/time.h>
 #import "HRColorUtil.h"
 
+@class HRColorPickerView;
+
+@protocol HRColorPickerViewDelegate
+- (void)colorWasChanged:(HRColorPickerView*)color_picker_view;
+@end
+
 typedef struct timeval timeval;
+
+struct HRColorPickerStyle{
+    float width; // viewの横幅。デフォルトは320.0f;
+    float headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
+    float colorMapTileSize; // カラーマップの中のタイルのサイズ。デフォルトは15.0f;
+    int colorMapSizeWidth; // カラーマップの中にいくつのタイルが並ぶか (not view.width)。デフォルトは20;
+    int colorMapSizeHeight; // 同じく縦にいくつ並ぶか。デフォルトは20;
+    float brightnessLowerLimit; // 明度の下限
+    float saturationUpperLimit; // 彩度の上限
+};
+
+typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @class HRBrightnessCursor;
 @class HRColorCursor;
 
 @interface HRColorPickerView : UIControl{
-    
+    NSObject<HRColorPickerViewDelegate>* delegate;
  @private
     bool _animating;
     
@@ -65,7 +83,7 @@ typedef struct timeval timeval;
     CGRect _brightnessPickerShadowFrame;
     CGRect _colorMapFrame;
     CGRect _colorMapSideFrame;
-    float _pixelSize;
+    float _tileSize;
     float _brightnessLowerLimit;
     float _saturationUpperLimit;
     
@@ -78,9 +96,21 @@ typedef struct timeval timeval;
     // フレームレート
     timeval _lastDrawTime;
     timeval _timeInterval15fps;
+    
+    bool _delegateHasSELColorWasChanged;
 }
 
-// デフォルトカラーで初期化
+// スタイルを取得
++ (HRColorPickerStyle)defaultStyle;
++ (HRColorPickerStyle)fullColorStyle;
+
+// スタイルからviewのサイズを取得
++ (CGSize)sizeWithStyle:(HRColorPickerStyle)style;
+
+// スタイルを指定してデフォルトカラーで初期化
+- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor;
+
+// デフォルトカラーで初期化 (互換性のために残していますが、frameが反映されません)
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor;
 
 // 現在選択している色をRGBで返す
@@ -91,5 +121,6 @@ typedef struct timeval timeval;
 
 @property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit;
 @property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit;
+@property (assign, setter = serDelegate:) NSObject<HRColorPickerViewDelegate>* delegate;
 
 @end
