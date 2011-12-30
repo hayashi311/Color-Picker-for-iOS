@@ -95,7 +95,7 @@
         _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
         _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
                                                  headerPartsOriginY,
-                                                 _brightnessPickerFrame.size.width + 20.0f,
+                                                 _brightnessPickerFrame.size.width + 40.0f,
                                                  _brightnessPickerFrame.size.height);
         _brightnessPickerShadowFrame = CGRectMake(_brightnessPickerFrame.origin.x-5.0f,
                                                   headerPartsOriginY-5.0f,
