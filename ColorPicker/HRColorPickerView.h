@@ -121,6 +121,6 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit;
 @property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit;
-@property (assign, setter = serDelegate:) NSObject<HRColorPickerViewDelegate>* delegate;
+@property (nonatomic, assign) NSObject<HRColorPickerViewDelegate>* delegate;
 
 @end
