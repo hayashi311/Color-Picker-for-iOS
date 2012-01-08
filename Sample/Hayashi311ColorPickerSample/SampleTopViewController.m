@@ -27,8 +27,10 @@
 
 
 #import "SampleTopViewController.h"
+#import "HRColorUtil.h"
 
 @implementation SampleTopViewController
+
 
 - (void)openColorPicker:(id)sender{
     HRColorPickerViewController* controller;
@@ -96,8 +98,13 @@
     for (i = 0; i < sizeof(titles) / sizeof(titles[0]); i++) {
         [self createButtonWithTitle:titles[i] index:i];
     }
-
-    [self.view setBackgroundColor:[UIColor cyanColor]];
+    
+    hexColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 370.0f, 320.0f, 46.0f)];
+    [hexColorLabel setTextAlignment:UITextAlignmentCenter];
+    [hexColorLabel setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.4f]];
+    [self.view addSubview:hexColorLabel];
+    
+    [self setSelectedColor:[UIColor cyanColor]];
 }
 
 - (void)viewDidUnload
@@ -121,6 +128,7 @@
 
 - (void)setSelectedColor:(UIColor*)color{
     [self.view setBackgroundColor:color];
+    [hexColorLabel setText:[NSString stringWithFormat:@"#%06x",HexColorFromUIColor(color)]];
 }
 
 

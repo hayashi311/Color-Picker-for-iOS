@@ -153,6 +153,16 @@ void RGBColorFromUIColor(const UIColor* uiColor,HRRGBColor* rgb){
     }
 }
 
+int HexColorFromRGBColor(const HRRGBColor* rgb){
+    return (int)(rgb->r*255.0f) << 16 | (int)(rgb->g*255.0f) << 8 | (int)(rgb->b*255.0f) << 0;
+}
+
+int HexColorFromUIColor(const UIColor* color){
+    HRRGBColor rgb_color;
+    RGBColorFromUIColor(color, &rgb_color);
+    return HexColorFromRGBColor(&rgb_color);
+}
+
 bool HRHSVColorEqualToColor(const HRHSVColor* hsv1,const HRHSVColor* hsv2){
     return (hsv1->h == hsv2->h) && (hsv1->s == hsv2->s) && (hsv1->v == hsv2->v);
 }

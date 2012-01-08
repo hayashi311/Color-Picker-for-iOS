@@ -29,7 +29,7 @@
 #import "HRColorPickerViewController.h"
 
 @interface SampleTopViewController : UIViewController<HRColorPickerViewControllerDelegate>{
-    
+    UILabel* hexColorLabel;
 }
 
 - (void)openColorPicker:(id)sender;

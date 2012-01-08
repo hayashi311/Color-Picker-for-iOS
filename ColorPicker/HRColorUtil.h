@@ -61,6 +61,12 @@ void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*);
 void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*);
 void RGBColorFromUIColor(const UIColor*,HRRGBColor*);
 
+// 16進数のカラーコードを取得 (例:#ffffff)
+// NSString* hexColorStr = [NSString stringWithFormat:@"#%06x",HexColorFromUIColor([UIColor redColor])]; で文字列に変換されます
+int HexColorFromRGBColor(const HRRGBColor*);
+int HexColorFromUIColor(const UIColor*);
+
+
 // 同値チェック
 bool HRHSVColorEqualToColor(const HRHSVColor*,const HRHSVColor*);
 
