@@ -30,9 +30,25 @@
 
 @implementation HRColorCursor
 
++ (CGSize) cursorSize 
+{
+    return CGSizeMake(30.0, 30.0f);
+}
+
++ (float) outlineSize
+{
+    return 4.0f;
+}
+
++ (float) shadowSize
+{
+    return 2.0f;
+}
+
+
 - (id)initWithPoint:(CGPoint)point
 {
-    CGSize size = CGSizeMake(30.0f, 30.0f);
+    CGSize size = [HRColorCursor cursorSize];
     CGRect frame = CGRectMake(point.x, point.y, size.width, size.height);
     self = [super initWithFrame:frame];
     if (self) {
@@ -53,17 +69,20 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
+    float outlineSize = [HRColorCursor outlineSize];
+    CGSize cursorSize = [HRColorCursor cursorSize];
+    float shadowSize = [HRColorCursor shadowSize];
     
     CGContextSaveGState(context);
-    HRSetRoundedRectanglePath(context, CGRectMake(2.0f, 2.0f, 26.0f, 26.0f), 2.0f);
+    HRSetRoundedRectanglePath(context, CGRectMake(shadowSize, shadowSize, cursorSize.width - shadowSize*2.0f, cursorSize.height - shadowSize*2.0f), 2.0f);
     [[UIColor whiteColor] set];
-    CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), 2.0f);
+    CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), shadowSize);
     CGContextDrawPath(context, kCGPathFill);
     CGContextRestoreGState(context);
     
     
     [[UIColor colorWithRed:_currentColor.r green:_currentColor.g blue:_currentColor.b alpha:1.0f] set];
-    CGContextFillRect(context, CGRectMake(6.0f, 6.0f, 18.0f, 18.0f));
+    CGContextFillRect(context, CGRectMake(outlineSize + shadowSize, outlineSize + shadowSize, cursorSize.width - (outlineSize + shadowSize)*2.0f, cursorSize.height - (outlineSize + shadowSize)*2.0f));
 }
 
 
