@@ -116,8 +116,8 @@
         _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(_brightnessPickerFrame.origin.x, _brightnessPickerFrame.origin.y + _brightnessPickerFrame.size.height/2.0f)];
         
         // タイルの中心にくるようにずらす
-        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(_colorMapFrame.origin.x - (30.0f - _tileSize)/2.0f - 1.0f,
-                                                                        _colorMapFrame.origin.y - (30.0f - _tileSize)/2.0f - 1.0f)];
+        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(_colorMapFrame.origin.x - ([HRColorCursor cursorSize].width - _tileSize)/2.0f - [HRColorCursor shadowSize]/2.0,
+                                                                        _colorMapFrame.origin.y - ([HRColorCursor cursorSize].height - _tileSize)/2.0f - [HRColorCursor shadowSize]/2.0)];
         [self addSubview:_brightnessCursor];
         [self addSubview:_colorCursor];
         
