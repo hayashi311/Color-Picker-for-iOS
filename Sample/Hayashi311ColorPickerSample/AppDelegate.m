@@ -33,21 +33,15 @@
 
 @synthesize window = _window;
 
-- (void)dealloc
-{
-    [_window release];
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // テンプレートからの変更点↓
     SampleTopViewController* sampleTopViewController = [[SampleTopViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
     
-    [sampleTopViewController release];
     [self.window addSubview:navigationController.view];
     
     // テンプレートからの変更点↑
