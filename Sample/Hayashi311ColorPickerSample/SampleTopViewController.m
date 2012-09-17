@@ -121,7 +121,7 @@
 }
 
 - (void)dealloc{
-    
+    [super dealloc];
 }
 
 #pragma mark - Hayashi311ColorPickerDelegate
