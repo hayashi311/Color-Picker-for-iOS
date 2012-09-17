@@ -35,22 +35,22 @@
 
 + (HRColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways] autorelease];
+    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways];
 }
 
 + (HRColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAndCancel] autorelease];
+    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAndCancel];
 }
 
 + (HRColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAlways] autorelease];
+    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAlways];
 }
 
 + (HRColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAndCancel] autorelease];
+    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAndCancel];
 }
 
 
@@ -65,7 +65,7 @@
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        _color = [defaultColor retain];
+        _color = defaultColor;
         _fullColor = fullColor;
         _saveStyle = saveStyle;
     }
@@ -93,10 +93,10 @@
     if (_saveStyle == HCPCSaveStyleSaveAndCancel) {
         UIBarButtonItem *buttonItem;
         
-        buttonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)] autorelease];
+        buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         self.navigationItem.leftBarButtonItem = buttonItem;
         
-        buttonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)] autorelease];
+        buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
         self.navigationItem.rightBarButtonItem = buttonItem;
     }
 }
@@ -167,9 +167,6 @@
     /////////////////////////////////////////////////////////////////////////////
     
     [colorPickerView BeforeDealloc];
-    [colorPickerView release];
-    [_color release];
-    [super dealloc];
 }
 
 @end

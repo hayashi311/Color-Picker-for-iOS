@@ -478,10 +478,7 @@
 
 
 - (void)dealloc{
-    [_brightnessCursor release];
-    [_colorCursor release];
     CGImageRelease(_brightnessPickerShadowImage);
-    [super dealloc];
 }
 
 @end
