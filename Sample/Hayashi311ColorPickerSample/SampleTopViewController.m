@@ -121,6 +121,7 @@
 }
 
 - (void)dealloc{
+    [hexColorLabel release];
     [super dealloc];
 }
 
