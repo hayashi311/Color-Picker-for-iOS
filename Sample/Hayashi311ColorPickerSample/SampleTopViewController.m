@@ -85,11 +85,10 @@
     return button;
 }
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
+- (void)loadView
 {
-    [super viewDidLoad];
-
+    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    
     self.title = @"Color Picker by Hayashi311";
     
     NSString *titles[] = { @"Limited color ->", @"Limited color with Save button ->", @"Full color ->", @"Full color with Save button ->" };
@@ -99,12 +98,23 @@
         [self createButtonWithTitle:titles[i] index:i];
     }
     
-    hexColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 370.0f, 320.0f, 46.0f)];
+    hexColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f,
+                                                              self.view.frame.size.height-46.f,
+                                                              320.f,
+                                                              46.f)];
+    hexColorLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [hexColorLabel setTextAlignment:UITextAlignmentCenter];
     [hexColorLabel setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.4f]];
     [self.view addSubview:hexColorLabel];
     
     [self setSelectedColor:[UIColor cyanColor]];
+}
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
 }
 
 - (void)viewDidUnload
@@ -119,7 +129,6 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
 
 #pragma mark - Hayashi311ColorPickerDelegate
 

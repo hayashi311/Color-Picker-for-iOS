@@ -42,7 +42,7 @@
     SampleTopViewController* sampleTopViewController = [[SampleTopViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
     
-    [self.window addSubview:navigationController.view];
+    [self.window setRootViewController:navigationController];
     
     // テンプレートからの変更点↑
     
