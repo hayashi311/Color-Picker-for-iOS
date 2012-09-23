@@ -54,7 +54,7 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 @class HRColorCursor;
 
 @interface HRColorPickerView : UIControl{
-    NSObject<HRColorPickerViewDelegate>* __weak delegate;
+    NSObject<HRColorPickerViewDelegate>* __unsafe_unretained delegate;
  @private
     bool _animating;
     
@@ -124,6 +124,6 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit;
 @property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit;
-@property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate;
+@property (nonatomic, unsafe_unretained) NSObject<HRColorPickerViewDelegate>* delegate;
 
 @end
