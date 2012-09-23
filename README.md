@@ -24,6 +24,6 @@ Color Picker for iOS
   
 - [サイズの変更](http://yomoapp.tumblr.com/post/13982185581)  
 
-- [without ARC](https://github.com/hayashi311/Color-Picker-for-iOS/tags) not support iPhone5
+- [without ARC Version](https://github.com/hayashi311/Color-Picker-for-iOS/tags) not support iPhone5
 
 
