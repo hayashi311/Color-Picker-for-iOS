@@ -120,10 +120,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc{
-    [hexColorLabel release];
-    [super dealloc];
-}
 
 #pragma mark - Hayashi311ColorPickerDelegate
 
