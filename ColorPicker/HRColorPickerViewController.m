@@ -72,18 +72,21 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void)loadView
 {
-    [super viewDidLoad];
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    frame.size.height -= 44.f;
+    
+    self.view = [[UIView alloc] initWithFrame:frame];
     
     HRRGBColor rgbColor;
     RGBColorFromUIColor(_color, &rgbColor);
     
     HRColorPickerStyle style;
     if (_fullColor) {
-        style = [HRColorPickerView fullColorStyle];
+        style = [HRColorPickerView fitScreenFullColorStyle];
     }else{
-        style = [HRColorPickerView defaultStyle];
+        style = [HRColorPickerView fitScreenStyle];
     }
     
     colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
@@ -99,6 +102,11 @@
         buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
         self.navigationItem.rightBarButtonItem = buttonItem;
     }
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -156,17 +164,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)dealloc{
-    
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // deallocでループを止めることができないので、BeforeDeallocを呼び出して下さい
-    //
-    /////////////////////////////////////////////////////////////////////////////
-    
-    [colorPickerView BeforeDealloc];
 }
 
 @end

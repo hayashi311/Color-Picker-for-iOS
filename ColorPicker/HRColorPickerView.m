@@ -57,18 +57,42 @@
     return style;
 }
 
-+ (HRColorPickerStyle)fullColorStyle{
++ (HRColorPickerStyle)fitScreenStyle
+{
+    CGSize defaultSize = [[UIScreen mainScreen] applicationFrame].size;
+    defaultSize.height -= 44.f;
+    
+    HRColorPickerStyle style = [HRColorPickerView defaultStyle];
+    style.colorMapSizeHeight = (defaultSize.height - style.headerHeight)/style.colorMapTileSize;
+    
+    float colorMapMargin = (style.width - (style.colorMapSizeWidth*style.colorMapTileSize))/2.f;
+    style.headerHeight = defaultSize.height - (style.colorMapSizeHeight*style.colorMapTileSize) - colorMapMargin;
+    
+    return style;
+}
+
++ (HRColorPickerStyle)fullColorStyle
+{
     HRColorPickerStyle style = [HRColorPickerView defaultStyle];
     style.brightnessLowerLimit = 0.0f;
     style.saturationUpperLimit = 1.0f;
     return style;
 }
 
++ (HRColorPickerStyle)fitScreenFullColorStyle
+{
+    HRColorPickerStyle style = [HRColorPickerView fitScreenStyle];
+    style.brightnessLowerLimit = 0.0f;
+    style.saturationUpperLimit = 1.0f;
+    return style;
+}
+
+
 + (CGSize)sizeWithStyle:(HRColorPickerStyle)style
 {
     CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
-    float colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
-    return CGSizeMake(style.width, style.headerHeight + colorMapSize.height + colorMapSpace);
+    float colorMapMargin = (style.width - colorMapSize.width) / 2.0f;
+    return CGSizeMake(style.width, style.headerHeight + colorMapSize.height + colorMapMargin);
 }
 
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor
@@ -79,6 +103,7 @@
 - (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
     CGSize size = [HRColorPickerView sizeWithStyle:style];
     CGRect frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    
     self = [super initWithFrame:frame];
     if (self) {
         _defaultRgbColor = defaultColor;

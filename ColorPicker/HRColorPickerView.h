@@ -104,6 +104,9 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 + (HRColorPickerStyle)defaultStyle;
 + (HRColorPickerStyle)fullColorStyle;
 
++ (HRColorPickerStyle)fitScreenStyle; // iPhone5以降の縦長スクリーンに対応しています。
++ (HRColorPickerStyle)fitScreenFullColorStyle;
+
 // スタイルからviewのサイズを取得
 + (CGSize)sizeWithStyle:(HRColorPickerStyle)style;
 
