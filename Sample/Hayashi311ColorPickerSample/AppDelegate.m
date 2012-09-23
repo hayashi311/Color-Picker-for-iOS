@@ -45,7 +45,6 @@
     [self.window setRootViewController:navigationController];
     
     // テンプレートからの変更点↑
-    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
