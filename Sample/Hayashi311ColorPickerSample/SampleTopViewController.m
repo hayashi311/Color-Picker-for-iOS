@@ -29,7 +29,7 @@
 #import "SampleTopViewController.h"
 #import "HRColorUtil.h"
 
-#if !__has_feature(objc_arc_weak)
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 60000
 #define NSTextAlignmentCenter    UITextAlignmentCenter
 #endif
 
