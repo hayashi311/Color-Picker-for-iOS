@@ -29,6 +29,11 @@
 #import "SampleTopViewController.h"
 #import "HRColorUtil.h"
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 60000
+#define NSTextAlignmentCenter    UITextAlignmentCenter
+#endif
+
+
 @implementation SampleTopViewController
 
 
@@ -103,7 +108,7 @@
                                                               320.f,
                                                               46.f)];
     hexColorLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [hexColorLabel setTextAlignment:UITextAlignmentCenter];
+    [hexColorLabel setTextAlignment:NSTextAlignmentCenter];
     [hexColorLabel setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.4f]];
     [self.view addSubview:hexColorLabel];
     
