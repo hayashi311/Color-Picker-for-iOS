@@ -26,6 +26,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "HRColorPickerMacros.h"
 
 @class HRColorPickerView;
 
@@ -42,7 +43,7 @@ typedef enum {
 } HCPCSaveStyle;
 
 @interface HRColorPickerViewController : UIViewController {
-    id<HRColorPickerViewControllerDelegate> __unsafe_unretained delegate;
+    id<HRColorPickerViewControllerDelegate> __weak delegate;
     HRColorPickerView* colorPickerView;
     
     UIColor *_color;
@@ -70,7 +71,7 @@ typedef enum {
 - (void)cancel:(id)sender;
 
 
-@property (unsafe_unretained) id<HRColorPickerViewControllerDelegate> delegate;
+@property (weak) id<HRColorPickerViewControllerDelegate> delegate;
 
 
 @end
