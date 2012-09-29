@@ -14,11 +14,12 @@ Color Picker for iOS
 
 ![](http://media.tumblr.com/tumblr_lvbojkpoM51qmwe4d.png)
   
-  
+
 - [時間管理アプリYomo AppStore/Free](http://itunes.apple.com/app/id458919566). ビルドが面倒な人はYomoの中のカラーピッカーを試して下さい。
   
 - new BSD License  
-- iOS5~
+- 動作確認済み:iOS4.3~
+- 推奨:iOS5.x~
 - ARC
 - iPhone3GS & 4 & 4S & 5
   
