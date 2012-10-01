@@ -74,8 +74,8 @@
 
 - (void)loadView
 {
-    // CGRect frame = [[UIScreen mainScreen] applicationFrame];
-    // frame.size.height -= 44.f;
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    frame.size.height -= 44.f;
     
     self.view = [[UIView alloc] init];
     
@@ -84,9 +84,9 @@
     
     HRColorPickerStyle style;
     if (_fullColor) {
-        style = [HRColorPickerView fitScreenFullColorStyle];
+        style = [HRColorPickerView fullColorStyle];
     }else{
-        style = [HRColorPickerView fitScreenStyle];
+        style = [HRColorPickerView defaultStyle];
     }
     
     colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
