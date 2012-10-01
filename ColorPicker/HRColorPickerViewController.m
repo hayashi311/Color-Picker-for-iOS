@@ -89,6 +89,8 @@
         style = [HRColorPickerView defaultStyle];
     }
     
+	self.contentSizeForViewInPopover = [HRColorPickerView sizeWithStyle:style];
+	
     colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
     
     [self.view addSubview:colorPickerView];
@@ -152,6 +154,13 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.navigationController) {
+        self.navigationController.contentSizeForViewInPopover = self.contentSizeForViewInPopover;
+    }
+}
 
 - (void)viewDidUnload
 {
