@@ -74,10 +74,10 @@
 
 - (void)loadView
 {
-    CGRect frame = [[UIScreen mainScreen] applicationFrame];
-    frame.size.height -= 44.f;
+    // CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    // frame.size.height -= 44.f;
     
-    self.view = [[UIView alloc] initWithFrame:frame];
+    self.view = [[UIView alloc] init];
     
     HRRGBColor rgbColor;
     RGBColorFromUIColor(_color, &rgbColor);
