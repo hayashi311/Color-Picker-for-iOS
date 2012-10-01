@@ -28,6 +28,8 @@
 #import "HRColorPickerViewController.h"
 #import "HRColorPickerView.h"
 
+#define IS_IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+
 @implementation HRColorPickerViewController
 
 @synthesize delegate;
@@ -84,9 +86,9 @@
     
     HRColorPickerStyle style;
     if (_fullColor) {
-        style = [HRColorPickerView fullColorStyle];
+        style = IS_IPAD ? [HRColorPickerView fullColorStyle] : [HRColorPickerView fitScreenFullColorStyle];
     }else{
-        style = [HRColorPickerView defaultStyle];
+        style = IS_IPAD ? [HRColorPickerView defaultStyle] : [HRColorPickerView fitScreenStyle];
     }
     
 	self.contentSizeForViewInPopover = [HRColorPickerView sizeWithStyle:style];
