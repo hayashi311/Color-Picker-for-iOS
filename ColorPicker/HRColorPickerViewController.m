@@ -28,6 +28,8 @@
 #import "HRColorPickerViewController.h"
 #import "HRColorPickerView.h"
 
+#define IS_IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+
 @implementation HRColorPickerViewController
 
 @synthesize delegate;
@@ -77,18 +79,20 @@
     CGRect frame = [[UIScreen mainScreen] applicationFrame];
     frame.size.height -= 44.f;
     
-    self.view = [[UIView alloc] initWithFrame:frame];
+    self.view = [[UIView alloc] init];
     
     HRRGBColor rgbColor;
     RGBColorFromUIColor(_color, &rgbColor);
     
     HRColorPickerStyle style;
     if (_fullColor) {
-        style = [HRColorPickerView fitScreenFullColorStyle];
+        style = IS_IPAD ? [HRColorPickerView fullColorStyle] : [HRColorPickerView fitScreenFullColorStyle];
     }else{
-        style = [HRColorPickerView fitScreenStyle];
+        style = IS_IPAD ? [HRColorPickerView defaultStyle] : [HRColorPickerView fitScreenStyle];
     }
     
+	self.contentSizeForViewInPopover = [HRColorPickerView sizeWithStyle:style];
+	
     colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
     
     [self.view addSubview:colorPickerView];
@@ -152,6 +156,13 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.navigationController) {
+        self.navigationController.contentSizeForViewInPopover = self.contentSizeForViewInPopover;
+    }
+}
 
 - (void)viewDidUnload
 {
