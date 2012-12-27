@@ -54,6 +54,15 @@
 }
 
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    _color = [UIColor whiteColor];
+    _fullColor = NO;
+    _saveStyle = HCPCSaveStyleSaveAndCancel;
+  }
+  return self;
+}
 
 - (id)initWithDefaultColor:(UIColor *)defaultColor
 {
