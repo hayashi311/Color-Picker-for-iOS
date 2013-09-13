@@ -29,6 +29,7 @@
 #import "HRCgUtil.h"
 #import "HRBrightnessCursor.h"
 #import "HRColorCursor.h"
+#import "HRColorUtil.h"
 
 @interface HRColorPickerView()
 - (void)createCacheImage;
@@ -100,7 +101,7 @@
     return [self initWithStyle:[HRColorPickerView defaultStyle] defaultColor:defaultColor];
 }
 
-- (id)initWithSytle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor{
+- (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor{
     CGSize size = [HRColorPickerView sizeWithStyle:style];
     CGRect frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
 
@@ -181,7 +182,7 @@
 - (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
     UIColor *uiColor = [UIColor colorWithRed:defaultColor.r green:defaultColor.g blue:defaultColor.b alpha:1];
 
-    return [self initWithSytle:style defultUIColor:uiColor];
+    return [self initWithStyle:style defultUIColor:uiColor];
 }
 
 
@@ -189,6 +190,12 @@
     HRRGBColor rgbColor;
     RGBColorFromHSVColor(&_currentHsvColor, &rgbColor);
     return rgbColor;
+}
+
+- (UIColor *)color {
+    HRRGBColor rgbColor;
+    RGBColorFromHSVColor(&_currentHsvColor, &rgbColor);
+    return [UIColor colorWithRed:rgbColor.r green:rgbColor.g blue:rgbColor.b alpha:1.0];
 }
 
 - (float)BrightnessLowerLimit{

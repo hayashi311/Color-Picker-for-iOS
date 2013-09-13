@@ -101,6 +101,8 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
     bool _delegateHasSELColorWasChanged;
 }
 
+@property (nonatomic, readonly) UIColor *color;
+
 // スタイルを取得
 + (HRColorPickerStyle)defaultStyle;
 + (HRColorPickerStyle)fullColorStyle;
@@ -112,14 +114,14 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 + (CGSize)sizeWithStyle:(HRColorPickerStyle)style;
 
 // スタイルを指定してデフォルトカラーで初期化
-- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor;
+- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated));
 
 // デフォルトカラーで初期化 (互換性のために残していますが、frameが反映されません)
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated));
 
-- (id)initWithSytle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
+- (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
 // 現在選択している色をRGBで返す
-- (HRRGBColor)RGBColor;
+- (HRRGBColor)RGBColor __attribute__((deprecated));
 
 // 後方互換性のため。呼び出す必要はありません。
 - (void)BeforeDealloc; 

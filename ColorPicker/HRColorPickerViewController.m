@@ -125,8 +125,7 @@
 - (void)save
 {
     if (self.delegate) {
-        HRRGBColor rgbColor = [colorPickerView RGBColor];
-        [self.delegate setSelectedColor:[UIColor colorWithRed:rgbColor.r green:rgbColor.g blue:rgbColor.b alpha:1.0f]];
+        [self.delegate setSelectedColor:colorPickerView.color];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
