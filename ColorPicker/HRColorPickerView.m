@@ -100,18 +100,19 @@
     return [self initWithStyle:[HRColorPickerView defaultStyle] defaultColor:defaultColor];
 }
 
-- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
+- (id)initWithSytle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor{
     CGSize size = [HRColorPickerView sizeWithStyle:style];
     CGRect frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
-    
+
     self = [super initWithFrame:frame];
     if (self) {
-        _defaultRgbColor = defaultColor;
+        HRRGBColor defaultRgbColor;
+        RGBColorFromUIColor(defaultUIColor, &defaultRgbColor);
         _animating = FALSE;
-        
+
         // RGBのデフォルトカラーをHSVに変換
         HSVColorFromRGBColor(&_defaultRgbColor, &_currentHsvColor);
-        
+
         // パーツの配置
         CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
         float colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
@@ -119,33 +120,33 @@
         _currentColorFrame = CGRectMake(10.0f, headerPartsOriginY, 40.0f, 40.0f);
         _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
         _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
-                                                 headerPartsOriginY,
-                                                 _brightnessPickerFrame.size.width + 40.0f,
-                                                 _brightnessPickerFrame.size.height);
+                headerPartsOriginY,
+                _brightnessPickerFrame.size.width + 40.0f,
+                _brightnessPickerFrame.size.height);
         _brightnessPickerShadowFrame = CGRectMake(_brightnessPickerFrame.origin.x-5.0f,
-                                                  headerPartsOriginY-5.0f,
-                                                  _brightnessPickerFrame.size.width+10.0f,
-                                                  _brightnessPickerFrame.size.height+10.0f);
-        
+                headerPartsOriginY-5.0f,
+                _brightnessPickerFrame.size.width+10.0f,
+                _brightnessPickerFrame.size.height+10.0f);
+
         _colorMapFrame = CGRectMake(colorMapSpace + 1.0f, style.headerHeight, colorMapSize.width, colorMapSize.height);
-        
+
         _colorMapSideFrame = CGRectMake(_colorMapFrame.origin.x - 1.0f,
-                                        _colorMapFrame.origin.y - 1.0f,
-                                        _colorMapFrame.size.width,
-                                        _colorMapFrame.size.height);
-        
+                _colorMapFrame.origin.y - 1.0f,
+                _colorMapFrame.size.width,
+                _colorMapFrame.size.height);
+
         _tileSize = style.colorMapTileSize;
         _brightnessLowerLimit = style.brightnessLowerLimit;
         _saturationUpperLimit = style.saturationUpperLimit;
-        
+
         _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(_brightnessPickerFrame.origin.x, _brightnessPickerFrame.origin.y + _brightnessPickerFrame.size.height/2.0f)];
-        
+
         // タイルの中心にくるようにずらす
         _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(_colorMapFrame.origin.x - ([HRColorCursor cursorSize].width - _tileSize)/2.0f - [HRColorCursor shadowSize]/2.0,
-                                                                        _colorMapFrame.origin.y - ([HRColorCursor cursorSize].height - _tileSize)/2.0f - [HRColorCursor shadowSize]/2.0)];
+                _colorMapFrame.origin.y - ([HRColorCursor cursorSize].height - _tileSize)/2.0f - [HRColorCursor shadowSize]/2.0)];
         [self addSubview:_brightnessCursor];
         [self addSubview:_colorCursor];
-        
+
         // 入力の初期化
         _isTapStart = FALSE;
         _isTapped = FALSE;
@@ -153,26 +154,32 @@
         _isDragStart = FALSE;
         _isDragging = FALSE;
         _isDragEnd = FALSE;
-        
+
         // 諸々初期化
         [self setBackgroundColor:[UIColor colorWithWhite:0.99f alpha:1.0f]];
         [self setMultipleTouchEnabled:FALSE];
-        
+
         _brightnessPickerShadowImage = nil;
         [self createCacheImage];
-        
+
         [self updateBrightnessCursor];
         [self updateColorCursor];
-        
+
         // フレームレートの調整
         gettimeofday(&_lastDrawTime, NULL);
-        
+
         _timeInterval15fps.tv_sec = 0.0;
         _timeInterval15fps.tv_usec = 1000000.0/15.0;
-        
+
         _delegateHasSELColorWasChanged = FALSE;
     }
     return self;
+
+}
+
+- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
+    UIColor *uiColor = [UIColor colorWithRed:defaultColor.r green:defaultColor.g blue:defaultColor.b alpha:1];
+    return [self initWithSytle:style defultUIColor:uiColor];
 }
 
 
