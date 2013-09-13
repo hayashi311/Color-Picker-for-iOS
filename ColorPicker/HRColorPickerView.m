@@ -193,9 +193,10 @@
 }
 
 - (UIColor *)color {
-    HRRGBColor rgbColor;
-    RGBColorFromHSVColor(&_currentHsvColor, &rgbColor);
-    return [UIColor colorWithRed:rgbColor.r green:rgbColor.g blue:rgbColor.b alpha:1.0];
+    return [UIColor colorWithHue:_currentHsvColor.h
+                      saturation:_currentHsvColor.s
+                      brightness:_currentHsvColor.v
+                           alpha:1];
 }
 
 - (float)BrightnessLowerLimit{
