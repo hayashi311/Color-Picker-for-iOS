@@ -41,7 +41,10 @@
     // テンプレートからの変更点↓
     SampleTopViewController* sampleTopViewController = [[SampleTopViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
-    
+
+    navigationController.navigationBar.translucent = NO;
+    navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+
     [self.window setRootViewController:navigationController];
     
     // テンプレートからの変更点↑
