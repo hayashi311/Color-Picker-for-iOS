@@ -72,7 +72,6 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 	CGPoint _touchStartPosition;
     
     // 色情報
-    HRRGBColor _defaultRgbColor;
     HRHSVColor _currentHsvColor;
     
     // カラーマップ上のカーソルの位置

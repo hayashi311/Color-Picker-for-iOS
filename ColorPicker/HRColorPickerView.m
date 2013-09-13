@@ -110,8 +110,9 @@
         RGBColorFromUIColor(defaultUIColor, &defaultRgbColor);
         _animating = FALSE;
 
+
         // RGBのデフォルトカラーをHSVに変換
-        HSVColorFromRGBColor(&_defaultRgbColor, &_currentHsvColor);
+        HSVColorFromRGBColor(&defaultRgbColor, &_currentHsvColor);
 
         // パーツの配置
         CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
@@ -179,6 +180,7 @@
 
 - (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
     UIColor *uiColor = [UIColor colorWithRed:defaultColor.r green:defaultColor.g blue:defaultColor.b alpha:1];
+
     return [self initWithSytle:style defultUIColor:uiColor];
 }
 
