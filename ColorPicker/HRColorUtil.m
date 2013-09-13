@@ -89,7 +89,7 @@ void RGBColorFromHSVColor(const HRHSVColor* hsv,HRRGBColor* rgb){
     float	n;
     float	k;
     
-    i = floor(h360 /60);
+    i = (int) floor(h360 /60);
     if(i < 0){
         i *= -1;
     }

@@ -35,7 +35,7 @@ typedef struct{
     float r;
     float g;
     float b;
-} HRRGBColor;
+} HRRGBColor __attribute__((deprecated));
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -47,7 +47,7 @@ typedef struct{
     float h;
     float s;
     float v;
-} HRHSVColor;
+} HRHSVColor __attribute__((deprecated));
 
 // 値のチェックしてません。数値として入れさせるなら自前でチェックして下さい。
 
@@ -57,20 +57,20 @@ typedef struct{
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*);
-void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*);
-void RGBColorFromUIColor(const UIColor*,HRRGBColor*);
+void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*) __attribute__((deprecated));
+void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*) __attribute__((deprecated));
+void RGBColorFromUIColor(const UIColor*,HRRGBColor*) __attribute__((deprecated));
 
 // 16進数のカラーコードを取得 (例:#ffffff)
 // NSString* hexColorStr = [NSString stringWithFormat:@"#%06x",HexColorFromUIColor([UIColor redColor])]; で文字列に変換されます
-int HexColorFromRGBColor(const HRRGBColor*);
-int HexColorFromUIColor(const UIColor*);
+int HexColorFromRGBColor(const HRRGBColor*) __attribute__((deprecated));
+int HexColorFromUIColor(const UIColor*) __attribute__((deprecated));
 
 
 // 同値チェック
-bool HRHSVColorEqualToColor(const HRHSVColor*,const HRHSVColor*);
+bool HRHSVColorEqualToColor(const HRHSVColor*,const HRHSVColor*) __attribute__((deprecated));
 
 
 // 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
-void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturationLowerLimit,float brightness);
+void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturationLowerLimit,float brightness) __attribute__((deprecated));
 

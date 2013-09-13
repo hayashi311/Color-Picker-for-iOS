@@ -33,6 +33,7 @@
 
 @class HRColorPickerView;
 
+__attribute__((deprecated))
 @protocol HRColorPickerViewDelegate
 - (void)colorWasChanged:(HRColorPickerView*)color_picker_view;
 @end
@@ -115,8 +116,9 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 - (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor;
 
 // デフォルトカラーで初期化 (互換性のために残していますが、frameが反映されません)
-- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor;
+- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated));
 
+- (id)initWithSytle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
 // 現在選択している色をRGBで返す
 - (HRRGBColor)RGBColor;
 
