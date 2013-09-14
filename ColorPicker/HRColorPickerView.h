@@ -69,6 +69,7 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 @property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate;
 
 
+
 #pragma - deprecated
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
 

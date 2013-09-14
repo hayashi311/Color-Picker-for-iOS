@@ -54,17 +54,16 @@
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self setUserInteractionEnabled:FALSE];
-        _currentColor.r = _currentColor.g = _currentColor.b = 1.0f;
+        self.cursorColor = [UIColor whiteColor];
     }
     return self;
 }
 
-- (void)setColorRed:(float)red andGreen:(float)green andBlue:(float)blue{
-    _currentColor.r = red;
-    _currentColor.g = green;
-    _currentColor.b = blue;
+- (void)setCursorColor:(UIColor *)cursorColor {
+    _cursorColor = cursorColor;
     [self setNeedsDisplay];
 }
+
 
 - (void)drawRect:(CGRect)rect
 {
@@ -80,8 +79,7 @@
     CGContextDrawPath(context, kCGPathFill);
     CGContextRestoreGState(context);
     
-    
-    [[UIColor colorWithRed:_currentColor.r green:_currentColor.g blue:_currentColor.b alpha:1.0f] set];
+    [self.cursorColor set];
     CGContextFillRect(context, CGRectMake(outlineSize + shadowSize, outlineSize + shadowSize, cursorSize.width - (outlineSize + shadowSize)*2.0f, cursorSize.height - (outlineSize + shadowSize)*2.0f));
 }
 
