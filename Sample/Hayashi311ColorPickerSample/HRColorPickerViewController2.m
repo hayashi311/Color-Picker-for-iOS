@@ -25,34 +25,18 @@
  * $FreeBSD$
  */
 
-#import "HRColorPickerViewController.h"
+#import "HRColorPickerViewController2.h"
 #import "HRColorPickerView.h"
 
-@implementation HRColorPickerViewController
+@implementation HRColorPickerViewController2
 
 @synthesize delegate;
 
 
-+ (HRColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color
++ (HRColorPickerViewController2 *)colorPickerViewControllerWithColor:(UIColor *)color
 {
-    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways];
+    return [[HRColorPickerViewController2 alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways];
 }
-
-+ (HRColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color
-{
-    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAndCancel];
-}
-
-+ (HRColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color
-{
-    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAlways];
-}
-
-+ (HRColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color
-{
-    return [[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAndCancel];
-}
-
 
 
 - (id)initWithDefaultColor:(UIColor *)defaultColor
@@ -78,10 +62,7 @@
     frame.size.height -= 44.f;
     
     self.view = [[UIView alloc] initWithFrame:frame];
-    
-    HRRGBColor rgbColor;
-    RGBColorFromUIColor(_color, &rgbColor);
-    
+
     HRColorPickerStyle style;
     if (_fullColor) {
         style = [HRColorPickerView fitScreenFullColorStyle];
@@ -89,7 +70,7 @@
         style = [HRColorPickerView fitScreenStyle];
     }
     
-    colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
+    colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defultUIColor:_color];
     
     [self.view addSubview:colorPickerView];
     
