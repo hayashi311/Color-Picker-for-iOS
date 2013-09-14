@@ -72,10 +72,6 @@ void HSVColorFromRGBColor(const HRRGBColor* rgb,HRHSVColor* hsv){
 void HSVColorFromUIColor(UIColor* uiColor,HRHSVColor* hsv) {
     float alpha;
     [uiColor getHue:&hsv->h saturation:&hsv->s brightness:&hsv->v alpha:&alpha];
-//
-//    hsv->h = hsv255.h / 360.0f;
-//    hsv->s = hsv255.s / 255.0f;
-//    hsv->v = hsv255.v / 255.0f;
 }
 
 
