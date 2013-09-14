@@ -26,15 +26,15 @@
  */
 
 #import "HRColorPickerView.h"
+#import <sys/time.h>
 #import "HRCgUtil.h"
 #import "HRBrightnessCursor.h"
 #import "HRColorCursor.h"
-#import "HRColorUtil.h"
+
+typedef struct timeval timeval;
 
 @interface HRColorPickerView(){
     NSObject<HRColorPickerViewDelegate>* __weak delegate;
-@private
-    bool _animating;
 
     // 入力関係
     bool _isTapStart;
@@ -109,7 +109,7 @@
     defaultSize.height -= 44.f;
     
     HRColorPickerStyle style = [HRColorPickerView defaultStyle];
-    style.colorMapSizeHeight = (defaultSize.height - style.headerHeight)/style.colorMapTileSize;
+    style.colorMapSizeHeight = (int) ((defaultSize.height - style.headerHeight)/style.colorMapTileSize);
     
     float colorMapMargin = (style.width - (style.colorMapSizeWidth*style.colorMapTileSize))/2.f;
     style.headerHeight = defaultSize.height - (style.colorMapSizeHeight*style.colorMapTileSize) - colorMapMargin;
@@ -147,13 +147,9 @@
 
     self = [super initWithFrame:frame];
     if (self) {
-        HRRGBColor defaultRgbColor;
-        RGBColorFromUIColor(defaultUIColor, &defaultRgbColor);
-        _animating = FALSE;
-
 
         // RGBのデフォルトカラーをHSVに変換
-        HSVColorFromRGBColor(&defaultRgbColor, &_currentHsvColor);
+        HSVColorFromUIColor(defaultUIColor, &_currentHsvColor);
 
         // パーツの配置
         CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
@@ -210,8 +206,8 @@
         // フレームレートの調整
         gettimeofday(&_lastDrawTime, NULL);
 
-        _timeInterval15fps.tv_sec = 0.0;
-        _timeInterval15fps.tv_usec = 1000000.0/15.0;
+        _timeInterval15fps.tv_sec = (__darwin_time_t) 0.0;
+        _timeInterval15fps.tv_usec = (__darwin_suseconds_t) (1000000.0/15.0);
 
         _delegateHasSELColorWasChanged = FALSE;
     }
@@ -269,8 +265,8 @@
         CGPoint touchPosition = _activeTouchPosition;
         if (CGRectContainsPoint(_colorMapFrame,touchPosition)) {
             
-            int pixelCountX = _colorMapFrame.size.width/_tileSize;
-            int pixelCountY = _colorMapFrame.size.height/_tileSize;
+            int pixelCountX = (int) (_colorMapFrame.size.width/_tileSize);
+            int pixelCountY = (int) (_colorMapFrame.size.height/_tileSize);
             HRHSVColor newHsv = _currentHsvColor;
             
             CGPoint newPosition = CGPointMake(touchPosition.x - _colorMapFrame.origin.x, touchPosition.y - _colorMapFrame.origin.y);
@@ -315,8 +311,8 @@
 - (void)updateColorCursor{
     // カラーマップのカーソルの移動＆色の更新
     
-    int pixelCountX = _colorMapFrame.size.width/_tileSize;
-    int pixelCountY = _colorMapFrame.size.height/_tileSize;
+    int pixelCountX = (int) (_colorMapFrame.size.width/_tileSize);
+    int pixelCountY = (int) (_colorMapFrame.size.height/_tileSize);
     CGPoint newPosition;
     newPosition.x = _currentHsvColor.h * (float)pixelCountX * _tileSize + _tileSize/2.0f;
     newPosition.y = (1.0f - _currentHsvColor.s) * (1.0f/_saturationUpperLimit) * (float)(pixelCountY - 1) * _tileSize + _tileSize/2.0f;
@@ -349,8 +345,7 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    HRRGBColor currentRgbColor = [self RGBColor];
-    
+
     /////////////////////////////////////////////////////////////////////////////
     //
     // 明度
@@ -413,8 +408,8 @@
     
     CGContextSaveGState(context);
     float height;
-    int pixelCountX = _colorMapFrame.size.width/_tileSize;
-    int pixelCountY = _colorMapFrame.size.height/_tileSize;
+    int pixelCountX = (int) (_colorMapFrame.size.width/_tileSize);
+    int pixelCountY = (int) (_colorMapFrame.size.height/_tileSize);
     
     HRHSVColor pixelHsv;
     HRRGBColor pixelRgb;
@@ -439,7 +434,7 @@
     /////////////////////////////////////////////////////////////////////////////
     
     CGContextSaveGState(context);
-    HRDrawSquareColorBatch(context, CGPointMake(CGRectGetMidX(_currentColorFrame), CGRectGetMidY(_currentColorFrame)), &currentRgbColor, _currentColorFrame.size.width/2.0f);
+    HRDrawSquareColorBatch(context, CGPointMake(CGRectGetMidX(_currentColorFrame), CGRectGetMidY(_currentColorFrame)), self.color, _currentColorFrame.size.width/2.0f);
     CGContextRestoreGState(context);
     
     /////////////////////////////////////////////////////////////////////////////
@@ -447,14 +442,17 @@
     // RGBのパーセント表示
     //
     /////////////////////////////////////////////////////////////////////////////
-    
+
+    float red, green, blue, alpha;
+    [self.color getRed:&red green:&green blue:&blue alpha:&alpha];
+
     [[UIColor darkGrayColor] set];
     
     float textHeight = 20.0f;
     float textCenter = CGRectGetMidY(_currentColorFrame) - 5.0f;
-    [[NSString stringWithFormat:@"R:%3d%%",(int)(currentRgbColor.r*100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x+_currentColorFrame.size.width+10.0f, textCenter - textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
-    [[NSString stringWithFormat:@"G:%3d%%",(int)(currentRgbColor.g*100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x+_currentColorFrame.size.width+10.0f, textCenter) withFont:[UIFont boldSystemFontOfSize:12.0f]];
-    [[NSString stringWithFormat:@"B:%3d%%",(int)(currentRgbColor.b*100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x+_currentColorFrame.size.width+10.0f, textCenter + textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
+    [[NSString stringWithFormat:@"R:%3d%%",(int)(red*100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x+_currentColorFrame.size.width+10.0f, textCenter - textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
+    [[NSString stringWithFormat:@"G:%3d%%",(int)(green*100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x+_currentColorFrame.size.width+10.0f, textCenter) withFont:[UIFont boldSystemFontOfSize:12.0f]];
+    [[NSString stringWithFormat:@"B:%3d%%",(int)(blue*100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x+_currentColorFrame.size.width+10.0f, textCenter + textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
 }
 
 

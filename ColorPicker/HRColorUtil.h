@@ -58,6 +58,7 @@ typedef struct{
 /////////////////////////////////////////////////////////////////////////////
 
 void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*) __attribute__((deprecated));
+void HSVColorFromUIColor(UIColor*,HRHSVColor*) __attribute__((deprecated));
 void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*) __attribute__((deprecated));
 void RGBColorFromUIColor(const UIColor*,HRRGBColor*) __attribute__((deprecated));
 

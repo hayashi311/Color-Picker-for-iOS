@@ -26,6 +26,7 @@
  */
 
 #import "HRCgUtil.h"
+#import "HRColorUtil.h"
 
 void HRSetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius){
     CGFloat lx = CGRectGetMinX(rect);
@@ -43,18 +44,19 @@ void HRSetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat ra
     CGContextClosePath(context);
 }
 
-void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* color,float size){
+__attribute__((overloadable))
+void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,UIColor* color,float size){
     float cx = position.x;
     float cy = position.y;
-    
-    float rRize = size;
-    float backRSize = rRize + 3.0f;
+
+    float rSize = size;
+    float backRSize = rSize + 3.0f;
     float shadowRSize = backRSize + 3.0f;
-    
-    CGRect rectEllipse = CGRectMake(cx - rRize, cy - rRize, rRize*2, rRize*2);
+
+    CGRect rectEllipse = CGRectMake(cx - rSize, cy - rSize, rSize *2, rSize *2);
     CGRect rectBackEllipse = CGRectMake(cx - backRSize, cy - backRSize, backRSize*2, backRSize*2);
     CGRect rectShadowEllipse = CGRectMake(cx - shadowRSize, cy - shadowRSize, shadowRSize*2, shadowRSize*2);
-    
+
     CGContextSaveGState(context);
     HRSetRoundedRectanglePath(context, rectBackEllipse,8.0f);
     CGContextClip(context);
@@ -64,11 +66,16 @@ void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* co
     CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 1.0f), 4.0f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
     CGContextDrawPath(context, kCGPathStroke);
     CGContextRestoreGState(context);
-    
+
     CGContextSaveGState(context);
-    CGContextSetRGBFillColor(context, color->r, color->g, color->b, 1.0f);
+    CGContextSetFillColorWithColor(context, color.CGColor);
     CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 0.5f), 0.5f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
     HRSetRoundedRectanglePath(context, rectEllipse,5.0f);
     CGContextDrawPath(context, kCGPathFill);
     CGContextRestoreGState(context);
+}
+
+__attribute__((deprecated, overloadable))
+void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* color,float size){
+    UIColor *uiColor = [UIColor colorWithRed:color->r green:color->g blue:color->b alpha:1];
 }

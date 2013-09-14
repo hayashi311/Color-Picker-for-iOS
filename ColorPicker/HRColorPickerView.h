@@ -26,8 +26,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
-#import <sys/time.h>
 #import "HRColorUtil.h"
 
 @class HRColorPickerView;
@@ -36,8 +34,6 @@ __attribute__((deprecated))
 @protocol HRColorPickerViewDelegate
 - (void)colorWasChanged:(HRColorPickerView*)color_picker_view;
 @end
-
-typedef struct timeval timeval;
 
 struct HRColorPickerStyle{
     float width; // viewの横幅。デフォルトは320.0f;
@@ -74,7 +70,6 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 
 #pragma - deprecated
-
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
 
 // スタイルを指定してデフォルトカラーで初期化

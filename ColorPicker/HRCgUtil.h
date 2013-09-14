@@ -29,5 +29,8 @@
 
 // 角丸のパスをセット
 void HRSetRoundedRectanglePath(CGContextRef context,const CGRect rect,CGFloat radius);
+
 // かっこいい角丸の四角を描きます。色付き。
-void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* color,float size);
+void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,UIColor* color,float size) __attribute__((overloadable));
+
+void HRDrawSquareColorBatch(CGContextRef context,CGPoint position,HRRGBColor* color,float size) __attribute__((deprecated, overloadable));
