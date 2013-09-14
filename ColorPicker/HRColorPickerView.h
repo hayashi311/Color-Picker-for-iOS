@@ -29,7 +29,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <sys/time.h>
 #import "HRColorUtil.h"
-#import "HRColorPickerMacros.h"
 
 @class HRColorPickerView;
 
@@ -55,53 +54,7 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 @class HRBrightnessCursor;
 @class HRColorCursor;
 
-@interface HRColorPickerView : UIControl{
-    NSObject<HRColorPickerViewDelegate>* __weak delegate;
- @private
-    bool _animating;
-    
-    // 入力関係
-    bool _isTapStart;
-    bool _isTapped;
-	bool _wasDragStart;
-    bool _isDragStart;
-	bool _isDragging;
-	bool _isDragEnd;
-    
-	CGPoint _activeTouchPosition;
-	CGPoint _touchStartPosition;
-    
-    // 色情報
-    HRHSVColor _currentHsvColor;
-    
-    // カラーマップ上のカーソルの位置
-    CGPoint _colorCursorPosition;
-    
-    // パーツの配置
-    CGRect _currentColorFrame;
-    CGRect _brightnessPickerFrame;
-    CGRect _brightnessPickerTouchFrame;
-    CGRect _brightnessPickerShadowFrame;
-    CGRect _colorMapFrame;
-    CGRect _colorMapSideFrame;
-    float _tileSize;
-    float _brightnessLowerLimit;
-    float _saturationUpperLimit;
-    
-    HRBrightnessCursor* _brightnessCursor;
-    HRColorCursor* _colorCursor;
-    
-    // キャッシュ
-    CGImageRef _brightnessPickerShadowImage;
-    
-    // フレームレート
-    timeval _lastDrawTime;
-    timeval _timeInterval15fps;
-    
-    bool _delegateHasSELColorWasChanged;
-}
-
-@property (nonatomic, readonly) UIColor *color;
+@interface HRColorPickerView : UIControl
 
 // スタイルを取得
 + (HRColorPickerStyle)defaultStyle;
@@ -113,21 +66,25 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 // スタイルからviewのサイズを取得
 + (CGSize)sizeWithStyle:(HRColorPickerStyle)style;
 
+- (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
+
+@property (nonatomic, readonly) UIColor *color;
+
+@property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate;
+
+
+#pragma - deprecated
+
+- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
+
 // スタイルを指定してデフォルトカラーで初期化
 - (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated));
 
-// デフォルトカラーで初期化 (互換性のために残していますが、frameが反映されません)
-- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated));
+- (HRRGBColor)RGBColor __attribute__((deprecated)); // colorを使ってください
 
-- (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
-// 現在選択している色をRGBで返す
-- (HRRGBColor)RGBColor __attribute__((deprecated));
+- (void)BeforeDealloc __attribute__((deprecated)); // 呼び出す必要はありません。
 
-// 後方互換性のため。呼び出す必要はありません。
-- (void)BeforeDealloc; 
-
-@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit;
-@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit;
-@property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate;
+@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit __attribute__((deprecated));
+@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit __attribute__((deprecated));
 
 @end

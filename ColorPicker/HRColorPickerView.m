@@ -31,7 +31,52 @@
 #import "HRColorCursor.h"
 #import "HRColorUtil.h"
 
-@interface HRColorPickerView()
+@interface HRColorPickerView(){
+    NSObject<HRColorPickerViewDelegate>* __weak delegate;
+@private
+    bool _animating;
+
+    // 入力関係
+    bool _isTapStart;
+    bool _isTapped;
+    bool _wasDragStart;
+    bool _isDragStart;
+    bool _isDragging;
+    bool _isDragEnd;
+
+    CGPoint _activeTouchPosition;
+    CGPoint _touchStartPosition;
+
+    // 色情報
+    HRHSVColor _currentHsvColor;
+
+    // カラーマップ上のカーソルの位置
+    CGPoint _colorCursorPosition;
+
+    // パーツの配置
+    CGRect _currentColorFrame;
+    CGRect _brightnessPickerFrame;
+    CGRect _brightnessPickerTouchFrame;
+    CGRect _brightnessPickerShadowFrame;
+    CGRect _colorMapFrame;
+    CGRect _colorMapSideFrame;
+    float _tileSize;
+    float _brightnessLowerLimit;
+    float _saturationUpperLimit;
+
+    HRBrightnessCursor* _brightnessCursor;
+    HRColorCursor* _colorCursor;
+
+    // キャッシュ
+    CGImageRef _brightnessPickerShadowImage;
+
+    // フレームレート
+    timeval _lastDrawTime;
+    timeval _timeInterval15fps;
+
+    bool _delegateHasSELColorWasChanged;
+}
+
 - (void)createCacheImage;
 - (void)update;
 - (void)updateBrightnessCursor;
@@ -94,11 +139,6 @@
     CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
     float colorMapMargin = (style.width - colorMapSize.width) / 2.0f;
     return CGSizeMake(style.width, style.headerHeight + colorMapSize.height + colorMapMargin);
-}
-
-- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor
-{
-    return [self initWithStyle:[HRColorPickerView defaultStyle] defaultColor:defaultColor];
 }
 
 - (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor{
@@ -179,18 +219,8 @@
 
 }
 
-- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
-    UIColor *uiColor = [UIColor colorWithRed:defaultColor.r green:defaultColor.g blue:defaultColor.b alpha:1];
-
-    return [self initWithStyle:style defultUIColor:uiColor];
-}
 
 
-- (HRRGBColor)RGBColor{
-    HRRGBColor rgbColor;
-    RGBColorFromHSVColor(&_currentHsvColor, &rgbColor);
-    return rgbColor;
-}
 
 - (UIColor *)color {
     return [UIColor colorWithHue:_currentHsvColor.h
@@ -199,23 +229,7 @@
                            alpha:1];
 }
 
-- (float)BrightnessLowerLimit{
-    return _brightnessLowerLimit;
-}
 
-- (void)setBrightnessLowerLimit:(float)brightnessUnderLimit{
-    _brightnessLowerLimit = brightnessUnderLimit;
-    [self updateBrightnessCursor];
-}
-
-- (float)SaturationUpperLimit{
-    return _brightnessLowerLimit;
-}
-
-- (void)setSaturationUpperLimit:(float)saturationUpperLimit{
-    _saturationUpperLimit = saturationUpperLimit;
-    [self updateColorCursor];
-}
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -514,13 +528,59 @@
     }
 }
 
-- (void)BeforeDealloc{
-    // 何も実行しません
-}
-
 
 - (void)dealloc{
     CGImageRelease(_brightnessPickerShadowImage);
+}
+
+#pragma - deprecated
+/////////////////////////////////////////////////////////////////////////////
+//
+// deprecated
+//
+/////////////////////////////////////////////////////////////////////////////
+
+
+- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor
+{
+    return [self initWithStyle:[HRColorPickerView defaultStyle] defaultColor:defaultColor];
+}
+
+
+- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor{
+    UIColor *uiColor = [UIColor colorWithRed:defaultColor.r green:defaultColor.g blue:defaultColor.b alpha:1];
+
+    return [self initWithStyle:style defultUIColor:uiColor];
+}
+
+- (HRRGBColor)RGBColor{
+    HRRGBColor rgbColor;
+    RGBColorFromHSVColor(&_currentHsvColor, &rgbColor);
+    return rgbColor;
+}
+
+
+- (void)BeforeDealloc{
+    // 何も実行しません
+    NSAssert(NO, @"Deprecated");
+}
+
+- (float)BrightnessLowerLimit{
+    return _brightnessLowerLimit;
+}
+
+- (void)setBrightnessLowerLimit:(float)brightnessUnderLimit{
+    _brightnessLowerLimit = brightnessUnderLimit;
+    [self updateBrightnessCursor];
+}
+
+- (float)SaturationUpperLimit{
+    return _brightnessLowerLimit;
+}
+
+- (void)setSaturationUpperLimit:(float)saturationUpperLimit{
+    _saturationUpperLimit = saturationUpperLimit;
+    [self updateColorCursor];
 }
 
 @end

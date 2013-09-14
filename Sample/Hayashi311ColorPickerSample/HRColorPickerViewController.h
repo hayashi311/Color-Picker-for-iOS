@@ -26,7 +26,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "HRColorPickerMacros.h"
 
 @class HRColorPickerView;
 

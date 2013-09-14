@@ -26,7 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		469979ED16129765002DBB63 /* HRColorPickerMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HRColorPickerMacros.h; sourceTree = "<group>"; };
 		46E87BF8146F46C600BC1608 /* HRCgUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRCgUtil.h; path = ../ColorPicker/HRCgUtil.h; sourceTree = "<group>"; };
 		46E87BF9146F46C600BC1608 /* HRCgUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRCgUtil.m; path = ../ColorPicker/HRCgUtil.m; sourceTree = "<group>"; };
 		46E87BFA146F46C600BC1608 /* HRColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerView.h; sourceTree = "<group>"; };
@@ -85,7 +84,6 @@
 				DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */,
 				DA3CD2301482068B00492DF7 /* HRColorCursor.h */,
 				DA3CD2311482068B00492DF7 /* HRColorCursor.m */,
-				469979ED16129765002DBB63 /* HRColorPickerMacros.h */,
 			);
 			name = ColorPicker;
 			path = ../../ColorPicker;
@@ -297,7 +295,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
 				WRAPPER_EXTENSION = app;
 			};
@@ -310,7 +308,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
 				WRAPPER_EXTENSION = app;
 			};
