@@ -13,6 +13,7 @@
 @interface HRColorMapView (){
     UIColor *_color;
     CGFloat _brightness;
+    CGFloat _saturationUpperLimit;
 }
 
 @property (atomic, strong) CALayer *colorMapLayer; // brightness 1.0
@@ -22,6 +23,11 @@
 
 @implementation HRColorMapView
 @synthesize color = _color;
+@synthesize saturationUpperLimit = _saturationUpperLimit;
+
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame {
+    return [[HRColorMapView alloc] initWithFrame:frame];
+}
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -164,6 +170,7 @@
 
     [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
+
 
 
 @end

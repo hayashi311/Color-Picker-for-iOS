@@ -31,6 +31,7 @@
 #import "HRBrightnessCursor.h"
 #import "HRColorCursor.h"
 #import "HRColorMapView.h"
+#import "HRBrightnessSlider.h"
 #import "HRColorUtil.h"
 
 typedef struct timeval timeval;
@@ -69,9 +70,6 @@ typedef struct timeval timeval;
     HRBrightnessCursor *_brightnessCursor;
     HRColorCursor *_colorCursor;
 
-    // キャッシュ
-    CGImageRef _brightnessPickerShadowImage;
-
     // フレームレート
     timeval _lastDrawTime;
     timeval _timeInterval15fps;
@@ -79,9 +77,9 @@ typedef struct timeval timeval;
     bool _delegateHasSELColorWasChanged;
 
     HRColorMapView *_colorMapView;
+    HRBrightnessSlider *_brightnessSlider;
 }
 
-- (void)createCacheImage;
 - (void)update;
 - (void)updateBrightnessCursor;
 - (void)updateColorCursor;
@@ -150,7 +148,7 @@ typedef struct timeval timeval;
         // RGBのデフォルトカラーをHSVに変換
         HSVColorFromUIColor(defaultUIColor, &_currentHsvColor);
 
-        // パーツの配置
+        // UIの配置
         CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
         float colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
         float headerPartsOriginY = (style.headerHeight - 40.0f) / 2.0f;
@@ -164,6 +162,15 @@ typedef struct timeval timeval;
                 headerPartsOriginY - 5.0f,
                 _brightnessPickerFrame.size.width + 10.0f,
                 _brightnessPickerFrame.size.height + 10.0f);
+
+        _brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:_brightnessPickerTouchFrame];
+        _brightnessSlider.color = defaultUIColor;
+        _brightnessSlider.brightnessLowerLimit = style.brightnessLowerLimit;
+        [_brightnessSlider addTarget:self
+                          action:@selector(brightnessChanged:)
+                forControlEvents:UIControlEventEditingChanged];
+
+        [self addSubview:_brightnessSlider];
 
         _colorMapFrame = CGRectMake(colorMapSpace + 1.0f, style.headerHeight, colorMapSize.width, colorMapSize.height);
 
@@ -204,8 +211,6 @@ typedef struct timeval timeval;
         [self setBackgroundColor:[UIColor colorWithWhite:0.99f alpha:1.0f]];
         [self setMultipleTouchEnabled:FALSE];
 
-        _brightnessPickerShadowImage = nil;
-        [self createCacheImage];
 
         [self updateBrightnessCursor];
         [self updateColorCursor];
@@ -230,8 +235,16 @@ typedef struct timeval timeval;
 }
 
 
-- (void)colorMapColorChanged:(HRColorMapView *)colorMapView {
+- (void)brightnessChanged:(UIControl<HRBrightnessSlider> *)slider {
+    _currentHsvColor.v = slider.brightness;
+    _colorMapView.brightness = _currentHsvColor.v;
+    [self updateColorCursor];
+    [self setNeedsDisplay15FPS];
+}
+
+- (void)colorMapColorChanged:(UIControl<HRColorMapView> *)colorMapView {
     HSVColorFromUIColor(colorMapView.color, &_currentHsvColor);
+    _brightnessSlider.color = colorMapView.color;
     [self updateColorCursor];
     [self setNeedsDisplay15FPS];
 }
@@ -243,31 +256,7 @@ typedef struct timeval timeval;
 //
 /////////////////////////////////////////////////////////////////////////////
 
-- (void)createCacheImage {
-    // 影のコストは高いので、事前に画像に書き出しておきます
 
-    if (_brightnessPickerShadowImage != nil) {
-        return;
-    }
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(_brightnessPickerShadowFrame.size.width,
-            _brightnessPickerShadowFrame.size.height),
-            FALSE,
-            [[UIScreen mainScreen] scale]);
-    CGContextRef brightness_picker_shadow_context = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(brightness_picker_shadow_context, 0, _brightnessPickerShadowFrame.size.height);
-    CGContextScaleCTM(brightness_picker_shadow_context, 1.0, -1.0);
-
-    HRSetRoundedRectanglePath(brightness_picker_shadow_context,
-            CGRectMake(0.0f, 0.0f,
-                    _brightnessPickerShadowFrame.size.width,
-                    _brightnessPickerShadowFrame.size.height), 5.0f);
-    CGContextSetLineWidth(brightness_picker_shadow_context, 10.0f);
-    CGContextSetShadow(brightness_picker_shadow_context, CGSizeMake(0.0f, 0.0f), 10.0f);
-    CGContextDrawPath(brightness_picker_shadow_context, kCGPathStroke);
-
-    _brightnessPickerShadowImage = CGBitmapContextCreateImage(brightness_picker_shadow_context);
-    UIGraphicsEndImageContext();
-}
 
 - (void)update {
     // タッチのイベントの度、更新されます
@@ -314,9 +303,9 @@ typedef struct timeval timeval;
 }
 
 - (void)updateBrightnessCursor {
-    // 明度スライダーの移動
-    float brightnessCursorX = (1.0f - (_currentHsvColor.v - _brightnessLowerLimit) / (1.0f - _brightnessLowerLimit)) * _brightnessPickerFrame.size.width + _brightnessPickerFrame.origin.x;
-    _brightnessCursor.transform = CGAffineTransformMakeTranslation(brightnessCursorX - _brightnessPickerFrame.origin.x, 0.0f);
+//    // 明度スライダーの移動
+//    float brightnessCursorX = (1.0f - (_currentHsvColor.v - _brightnessLowerLimit) / (1.0f - _brightnessLowerLimit)) * _brightnessPickerFrame.size.width + _brightnessPickerFrame.origin.x;
+//    _brightnessCursor.transform = CGAffineTransformMakeTranslation(brightnessCursorX - _brightnessPickerFrame.origin.x, 0.0f);
 
 }
 
@@ -353,88 +342,8 @@ typedef struct timeval timeval;
 }
 
 - (void)drawRect:(CGRect)rect {
+
     CGContextRef context = UIGraphicsGetCurrentContext();
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // 明度
-    //
-    /////////////////////////////////////////////////////////////////////////////
-
-    CGContextSaveGState(context);
-
-    HRSetRoundedRectanglePath(context, _brightnessPickerFrame, 5.0f);
-    CGContextClip(context);
-
-    CGGradientRef gradient;
-    CGColorSpaceRef colorSpace;
-    size_t numLocations = 2;
-    CGFloat locations[2] = {0.0, 1.0};
-    colorSpace = CGColorSpaceCreateDeviceRGB();
-
-    HRRGBColor darkColor;
-    HRRGBColor lightColor;
-    UIColor *darkColorFromHsv = [UIColor colorWithHue:_currentHsvColor.h saturation:_currentHsvColor.s brightness:_brightnessLowerLimit alpha:1.0f];
-    UIColor *lightColorFromHsv = [UIColor colorWithHue:_currentHsvColor.h saturation:_currentHsvColor.s brightness:1.0f alpha:1.0f];
-
-    RGBColorFromUIColor(darkColorFromHsv, &darkColor);
-    RGBColorFromUIColor(lightColorFromHsv, &lightColor);
-
-    CGFloat gradientColor[] = {
-            darkColor.r, darkColor.g, darkColor.b, 1.0f,
-            lightColor.r, lightColor.g, lightColor.b, 1.0f,
-    };
-
-    gradient = CGGradientCreateWithColorComponents(colorSpace, gradientColor,
-            locations, numLocations);
-
-    CGPoint startPoint = CGPointMake(_brightnessPickerFrame.origin.x + _brightnessPickerFrame.size.width, _brightnessPickerFrame.origin.y);
-    CGPoint endPoint = CGPointMake(_brightnessPickerFrame.origin.x, _brightnessPickerFrame.origin.y);
-    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-
-    // GradientとColorSpaceを開放する
-    CGColorSpaceRelease(colorSpace);
-    CGGradientRelease(gradient);
-
-    // 明度の内側の影 (キャッシュした画像を表示するだけ)
-    CGContextDrawImage(context, _brightnessPickerShadowFrame, _brightnessPickerShadowImage);
-
-    CGContextRestoreGState(context);
-
-
-//    /////////////////////////////////////////////////////////////////////////////
-//    //
-//    // カラーマップ
-//    //
-//    /////////////////////////////////////////////////////////////////////////////
-//
-//    CGContextSaveGState(context);
-//
-//    [[UIColor colorWithWhite:0.9f alpha:1.0f] set];
-//    CGContextAddRect(context, _colorMapSideFrame);
-//    CGContextDrawPath(context, kCGPathStroke);
-//    CGContextRestoreGState(context);
-//
-//    CGContextSaveGState(context);
-//    float height;
-//    int pixelCountX = (int) (_colorMapFrame.size.width/_tileSize);
-//    int pixelCountY = (int) (_colorMapFrame.size.height/_tileSize);
-//
-//    HRHSVColor pixelHsv;
-//    HRRGBColor pixelRgb;
-//    for (int j = 0; j < pixelCountY; ++j) {
-//        height =  _tileSize * j + _colorMapFrame.origin.y;
-//        float pixelY = (float)j/(pixelCountY-1); // Y(彩度)は0.0f~1.0f
-//        for (int i = 0; i < pixelCountX; ++i) {
-//            float pixelX = (float)i/pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-//            HSVColorAt(&pixelHsv, pixelX, pixelY, _saturationUpperLimit, _currentHsvColor.v);
-//            RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
-//            CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
-//            CGContextFillRect(context, CGRectMake(_tileSize*i+_colorMapFrame.origin.x, height, _tileSize-2.0f, _tileSize-2.0f));
-//        }
-//    }
-//
-//    CGContextRestoreGState(context);
 
     /////////////////////////////////////////////////////////////////////////////
     //
@@ -536,10 +445,6 @@ typedef struct timeval timeval;
 }
 
 
-- (void)dealloc {
-    CGImageRelease(_brightnessPickerShadowImage);
-}
-
 #pragma - deprecated
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -551,7 +456,6 @@ typedef struct timeval timeval;
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor {
     return [self initWithStyle:[HRColorPickerView defaultStyle] defaultColor:defaultColor];
 }
-
 
 - (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor {
     UIColor *uiColor = [UIColor colorWithRed:defaultColor.r green:defaultColor.g blue:defaultColor.b alpha:1];

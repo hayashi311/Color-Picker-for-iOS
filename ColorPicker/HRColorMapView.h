@@ -9,13 +9,20 @@
 #import <Foundation/Foundation.h>
 
 @protocol HRColorMapView
+
+@required
 @property (nonatomic, readonly) UIColor *color;
 @property (nonatomic) CGFloat brightness;
+
+@optional
+@property (nonatomic) float saturationUpperLimit;
+
 @end
 
 @interface HRColorMapView : UIControl<HRColorMapView>
 
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
+
 @property (nonatomic) NSInteger tileSize;
-@property (nonatomic) float saturationUpperLimit;
 
 @end
