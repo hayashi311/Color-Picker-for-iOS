@@ -189,12 +189,14 @@ typedef struct timeval timeval;
     _colorMapView.brightness = _currentHsvColor.v;
     _colorMapView.color = self.color;
     _colorInfoView.color = self.color;
+    [self sendCallBack];
 }
 
 - (void)colorMapColorChanged:(UIControl <HRColorMapView> *)colorMapView {
     HSVColorFromUIColor(colorMapView.color, &_currentHsvColor);
     _brightnessSlider.color = colorMapView.color;
     _colorInfoView.color = self.color;
+    [self sendCallBack];
 }
 
 - (void)sendCallBack {

@@ -71,7 +71,12 @@
     }
     
     colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defultUIColor:_color];
-    
+
+//    Please uncomment. If you want to catch the color change event.
+    [colorPickerView addTarget:self
+                        action:@selector(colorWasChanged:)
+              forControlEvents:UIControlEventEditingChanged];
+
     [self.view addSubview:colorPickerView];
     
     if (_saveStyle == HCPCSaveStyleSaveAndCancel) {
@@ -83,6 +88,10 @@
         buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
         self.navigationItem.rightBarButtonItem = buttonItem;
     }
+}
+
+- (void)colorWasChanged:(HRColorPickerView*)colorWasChanged {
+    NSLog(@"colorWasChanged %@", colorWasChanged.color);
 }
 
 - (void)viewDidLoad
