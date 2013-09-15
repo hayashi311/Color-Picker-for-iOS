@@ -9,11 +9,13 @@
 #import "HRColorMapView.h"
 #import "HRColorUtil.h"
 #import "UIImage+CoreGraphics.h"
+#import "HRColorCursor.h"
 
 @interface HRColorMapView (){
     UIColor *_color;
     CGFloat _brightness;
     CGFloat _saturationUpperLimit;
+    HRColorCursor *_colorCursor;
 }
 
 @property (atomic, strong) CALayer *colorMapLayer; // brightness 1.0
@@ -36,13 +38,19 @@
         self.saturationUpperLimit = .95;
         self.brightness = 0.5;
 
+        // タイルの中心にくるようにずらす
+        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
+                ([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0)];
+        [self addSubview:_colorCursor];
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [self createColorMapLayer];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.layer addSublayer:self.colorMapBackgroundLayer];
-                [self.layer addSublayer:self.colorMapLayer];
+                [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
+                [self.layer insertSublayer:self.colorMapLayer atIndex:1];
             });
         });
+
 
         UITapGestureRecognizer *tapGestureRecognizer;
         tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -115,7 +123,6 @@
     return _brightness;
 }
 
-
 - (void)setBrightness:(CGFloat)brightness {
 
     _brightness = brightness;
@@ -125,7 +132,6 @@
     self.colorMapLayer.opacity = _brightness;
     [CATransaction commit];
 }
-
 
 - (void)handleTap:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -152,8 +158,8 @@
     int pixelCountX = (int) (self.frame.size.width/_tileSize);
     int pixelCountY = (int) (self.frame.size.height/_tileSize);
 
-    float pixelX = (int)((tapPoint.x)/_tileSize)/(float)pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-    float pixelY = (int)((tapPoint.y)/_tileSize)/(float)(pixelCountY-1); // Y(彩度)は0.0f~1.0f
+    float pixelX = (int)((tapPoint.x)/_tileSize)/(float)pixelCountX; // X(色相)
+    float pixelY = (int)((tapPoint.y)/_tileSize)/(float)(pixelCountY-1); // Y(彩度)
 
     float h, s, v, a;
     [self.color getHue:&h saturation:&s brightness:&v alpha:&a];
@@ -165,9 +171,28 @@
                                         saturation:selectedHSVColor.s
                                         brightness:selectedHSVColor.v
                                              alpha:1.0];
-
     _color = selectedColor;
+    [self updateColorCursor];
     [self sendActionsForControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)updateColorCursor {
+    // カラーマップのカーソルの移動＆色の更新
+
+    CGPoint colorCursorPosition = CGPointZero;
+    HRHSVColor hsvColor;
+    HSVColorFromUIColor(self.color, &hsvColor);
+
+    int pixelCountX = (int) (self.frame.size.width / _tileSize);
+    int pixelCountY = (int) (self.frame.size.height / _tileSize);
+    CGPoint newPosition;
+    newPosition.x = hsvColor.h * (float) pixelCountX * _tileSize + _tileSize / 2.0f;
+    newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (float) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
+    colorCursorPosition.x = (int) (newPosition.x / _tileSize - 1) * _tileSize;
+    colorCursorPosition.y = (int) (newPosition.y / _tileSize - 1) * _tileSize;
+
+    _colorCursor.cursorColor = self.color;
+    _colorCursor.transform = CGAffineTransformMakeTranslation(colorCursorPosition.x, colorCursorPosition.y);
 }
 
 @end

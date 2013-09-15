@@ -59,6 +59,10 @@
 
 - (void)setColor:(UIColor *)color {
     _color = color;
+    float brightness;
+    [_color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
+    _brightness = brightness;
+    [self updateCursor];
     [self setNeedsDisplay];
 }
 
