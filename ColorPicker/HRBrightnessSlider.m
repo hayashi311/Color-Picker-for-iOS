@@ -115,29 +115,24 @@
 
 - (void)update:(CGPoint)tapPoint {
     CGFloat selectedBrightness = 0;
-    if (tapPoint.x < 20) {
-        selectedBrightness = 1;
-    } else if (self.frame.size.width - tapPoint.x < 20) {
-        selectedBrightness = self.brightnessLowerLimit;
-    } else {
-        selectedBrightness = (1.0f - (tapPoint.x / self.frame.size.width)) * (1.0f - self.brightnessLowerLimit) + self.brightnessLowerLimit;
-    }
+    CGPoint tapPointInSlider = CGPointMake(tapPoint.x - _sliderFrame.origin.x, tapPoint.y);
+    tapPointInSlider.x = MIN(tapPointInSlider.x, _sliderFrame.size.width);
+    tapPointInSlider.x = MAX(tapPointInSlider.x, 0);
+
+    selectedBrightness = 1.0 - tapPointInSlider.x/_sliderFrame.size.width;
+    selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit) + self.brightnessLowerLimit;
     _brightness = selectedBrightness;
 
     [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)updateCursor {
-    // float brightnessCursorX = (1.0f - (b - self.brightnessLowerLimit / (1.0f - self.brightnessLowerLimit))) * self.frame.size.width;
     float brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
-
     _brightnessCursor.center = CGPointMake(brightnessCursorX * _sliderFrame.size.width + _sliderFrame.origin.x, _brightnessCursor.center.y);
-
 }
 
 
 - (void)drawRect:(CGRect)rect {
-
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     CGContextSaveGState(context);
