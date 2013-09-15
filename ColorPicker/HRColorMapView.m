@@ -39,8 +39,9 @@
         self.brightness = 0.5;
 
         // タイルの中心にくるようにずらす
-        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
-                ([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0)];
+        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(-([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
+                -([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0)];
+        //_colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointZero];
         [self addSubview:_colorCursor];
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -51,7 +52,6 @@
                 [self.layer insertSublayer:self.colorMapLayer atIndex:1];
             });
         });
-
 
         UITapGestureRecognizer *tapGestureRecognizer;
         tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -167,9 +167,6 @@
     float pixelX = (int)((tapPoint.x)/_tileSize)/(float)pixelCountX; // X(色相)
     float pixelY = (int)((tapPoint.y)/_tileSize)/(float)(pixelCountY-1); // Y(彩度)
 
-    float h, s, v, a;
-    [self.color getHue:&h saturation:&s brightness:&v alpha:&a];
-
     HRHSVColor selectedHSVColor;
     HSVColorAt(&selectedHSVColor, pixelX, pixelY, self.saturationUpperLimit, self.brightness);
 
@@ -198,8 +195,13 @@
 
     newPosition.x = hue * (float) pixelCountX * _tileSize + _tileSize / 2.0f;
     newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (float) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
-    colorCursorPosition.x = (int) (newPosition.x / _tileSize - 1) * _tileSize;
-    colorCursorPosition.y = (int) (newPosition.y / _tileSize - 1) * _tileSize;
+    colorCursorPosition.x = (int) (newPosition.x / _tileSize) * _tileSize;
+    colorCursorPosition.y = (int) (newPosition.y / _tileSize) * _tileSize;
+
+    NSLog(@"newPosition.x %f  %f  %f", hue, newPosition.x, (newPosition.x / _tileSize - 1));
+
+    NSLog(@"colorCursorPosition.x %f", colorCursorPosition.x);
+
     _colorCursor.cursorColor = self.color;
     _colorCursor.transform = CGAffineTransformMakeTranslation(colorCursorPosition.x, colorCursorPosition.y);
 }
