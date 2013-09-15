@@ -161,6 +161,9 @@
 
 
 - (void)update: (CGPoint)tapPoint {
+    if (!CGRectContainsPoint((CGRect){.origin = CGPointZero, .size = self.frame.size}, tapPoint)){
+        return;
+    }
     int pixelCountX = (int) (self.frame.size.width/_tileSize);
     int pixelCountY = (int) (self.frame.size.height/_tileSize);
 
