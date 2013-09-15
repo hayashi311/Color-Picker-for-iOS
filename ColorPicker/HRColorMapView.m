@@ -11,7 +11,7 @@
 #import "UIImage+CoreGraphics.h"
 #import "HRColorCursor.h"
 
-@interface HRColorMapView (){
+@interface HRColorMapView () {
     UIColor *_color;
     CGFloat _brightness;
     CGFloat _saturationUpperLimit;
@@ -133,7 +133,7 @@
 
     _brightness = brightness;
     [CATransaction begin];
-    [CATransaction setValue:(id)kCFBooleanTrue
+    [CATransaction setValue:(id) kCFBooleanTrue
                      forKey:kCATransactionDisableActions];
     self.colorMapLayer.opacity = _brightness;
     [CATransaction commit];
@@ -141,7 +141,7 @@
 
 - (void)handleTap:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        if (sender.numberOfTouches <= 0){
+        if (sender.numberOfTouches <= 0) {
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
@@ -151,7 +151,7 @@
 
 - (void)handlePan:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
-        if (sender.numberOfTouches <= 0){
+        if (sender.numberOfTouches <= 0) {
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
@@ -160,15 +160,15 @@
 }
 
 
-- (void)update: (CGPoint)tapPoint {
-    if (!CGRectContainsPoint((CGRect){.origin = CGPointZero, .size = self.frame.size}, tapPoint)){
+- (void)update:(CGPoint)tapPoint {
+    if (!CGRectContainsPoint((CGRect) {.origin = CGPointZero, .size = self.frame.size}, tapPoint)) {
         return;
     }
-    int pixelCountX = (int) (self.frame.size.width/_tileSize);
-    int pixelCountY = (int) (self.frame.size.height/_tileSize);
+    int pixelCountX = (int) (self.frame.size.width / _tileSize);
+    int pixelCountY = (int) (self.frame.size.height / _tileSize);
 
-    float pixelX = (int)((tapPoint.x)/_tileSize)/(float)pixelCountX; // X(色相)
-    float pixelY = (int)((tapPoint.y)/_tileSize)/(float)(pixelCountY-1); // Y(彩度)
+    float pixelX = (int) ((tapPoint.x) / _tileSize) / (float) pixelCountX; // X(色相)
+    float pixelY = (int) ((tapPoint.y) / _tileSize) / (float) (pixelCountY - 1); // Y(彩度)
 
     HRHSVColor selectedHSVColor;
     HSVColorAt(&selectedHSVColor, pixelX, pixelY, self.saturationUpperLimit, self.brightness);
@@ -200,11 +200,6 @@
     newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (float) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
     colorCursorPosition.x = (int) (newPosition.x / _tileSize) * _tileSize;
     colorCursorPosition.y = (int) (newPosition.y / _tileSize) * _tileSize;
-
-    NSLog(@"newPosition.x %f  %f  %f", hue, newPosition.x, (newPosition.x / _tileSize - 1));
-
-    NSLog(@"colorCursorPosition.x %f", colorCursorPosition.x);
-
     _colorCursor.cursorColor = self.color;
     _colorCursor.transform = CGAffineTransformMakeTranslation(colorCursorPosition.x, colorCursorPosition.y);
 }

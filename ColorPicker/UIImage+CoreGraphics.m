@@ -16,7 +16,7 @@
 }
 
 + (UIImage *)imageWithSize:(CGSize)size opaque:(BOOL)opaque renderer:(renderToContext)renderer {
-    UIImage* image;
+    UIImage *image;
 
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
 
@@ -24,7 +24,7 @@
 
     CGRect imageRect = CGRectMake(0.f, 0.f, size.width, size.height);
 
-    renderer(context,imageRect);
+    renderer(context, imageRect);
 
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

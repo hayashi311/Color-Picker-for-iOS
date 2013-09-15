@@ -27,12 +27,8 @@
 
 #import "HRColorPickerView.h"
 #import <sys/time.h>
-#import "HRCgUtil.h"
-#import "HRBrightnessCursor.h"
-#import "HRColorCursor.h"
 #import "HRColorMapView.h"
 #import "HRBrightnessSlider.h"
-#import "HRColorUtil.h"
 #import "HRColorInfoView.h"
 
 typedef struct timeval timeval;

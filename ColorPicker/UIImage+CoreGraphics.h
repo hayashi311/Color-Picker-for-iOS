@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^renderToContext)(CGContextRef,CGRect);
+typedef void(^renderToContext)(CGContextRef, CGRect);
 
 @interface UIImage (CoreGraphics)
 

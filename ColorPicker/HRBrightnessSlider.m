@@ -119,7 +119,7 @@
     tapPointInSlider.x = MIN(tapPointInSlider.x, _sliderFrame.size.width);
     tapPointInSlider.x = MAX(tapPointInSlider.x, 0);
 
-    selectedBrightness = 1.0 - tapPointInSlider.x/_sliderFrame.size.width;
+    selectedBrightness = 1.0 - tapPointInSlider.x / _sliderFrame.size.width;
     selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit) + self.brightnessLowerLimit;
     _brightness = selectedBrightness;
 

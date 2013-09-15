@@ -9,7 +9,7 @@
 #import "HRColorInfoView.h"
 #import "HRCgUtil.h"
 
-@interface HRColorInfoView(){
+@interface HRColorInfoView () {
     UIColor *_color;
 }
 @end
@@ -65,7 +65,6 @@
     [[NSString stringWithFormat:@"G:%3d%%", (int) (green * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter) withFont:[UIFont boldSystemFontOfSize:12.0f]];
     [[NSString stringWithFormat:@"B:%3d%%", (int) (blue * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter + textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
 }
-
 
 
 @end

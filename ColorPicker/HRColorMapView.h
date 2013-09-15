@@ -19,7 +19,7 @@
 
 @end
 
-@interface HRColorMapView : UIControl<HRColorMapView>
+@interface HRColorMapView : UIControl <HRColorMapView>
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
 

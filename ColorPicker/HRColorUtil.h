@@ -31,7 +31,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-typedef struct{
+typedef struct {
     float r;
     float g;
     float b;
@@ -43,7 +43,7 @@ typedef struct{
 //
 /////////////////////////////////////////////////////////////////////////////
 
-typedef struct{
+typedef struct {
     float h;
     float s;
     float v;
@@ -57,21 +57,21 @@ typedef struct{
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void HSVColorFromRGBColor(const HRRGBColor*,HRHSVColor*) __attribute__((deprecated));
-void HSVColorFromUIColor(UIColor*,HRHSVColor*) __attribute__((deprecated));
-void RGBColorFromHSVColor(const HRHSVColor*,HRRGBColor*) __attribute__((deprecated));
-void RGBColorFromUIColor(const UIColor*,HRRGBColor*) __attribute__((deprecated));
+void HSVColorFromRGBColor(const HRRGBColor *, HRHSVColor *) __attribute__((deprecated));
+void HSVColorFromUIColor(UIColor *, HRHSVColor *) __attribute__((deprecated));
+void RGBColorFromHSVColor(const HRHSVColor *, HRRGBColor *) __attribute__((deprecated));
+void RGBColorFromUIColor(const UIColor *, HRRGBColor *) __attribute__((deprecated));
 
 // 16進数のカラーコードを取得 (例:#ffffff)
 // NSString* hexColorStr = [NSString stringWithFormat:@"#%06x",HexColorFromUIColor([UIColor redColor])]; で文字列に変換されます
-int HexColorFromRGBColor(const HRRGBColor*) __attribute__((deprecated));
-int HexColorFromUIColor(const UIColor*) __attribute__((deprecated));
+int HexColorFromRGBColor(const HRRGBColor *) __attribute__((deprecated));
+int HexColorFromUIColor(const UIColor *) __attribute__((deprecated));
 
 
 // 同値チェック
-bool HRHSVColorEqualToColor(const HRHSVColor*,const HRHSVColor*) __attribute__((deprecated));
+bool HRHSVColorEqualToColor(const HRHSVColor *, const HRHSVColor *) __attribute__((deprecated));
 
 
 // 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
-void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturationLowerLimit,float brightness) __attribute__((deprecated));
+void HSVColorAt(HRHSVColor *hsv, float x, float y, float saturationLowerLimit, float brightness) __attribute__((deprecated));
 

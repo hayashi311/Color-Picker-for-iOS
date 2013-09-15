@@ -32,10 +32,10 @@
 
 __attribute__((deprecated))
 @protocol HRColorPickerViewDelegate
-- (void)colorWasChanged:(HRColorPickerView*)color_picker_view;
+- (void)colorWasChanged:(HRColorPickerView *)color_picker_view;
 @end
 
-struct HRColorPickerStyle{
+struct HRColorPickerStyle {
     float width; // viewの横幅。デフォルトは320.0f;
     float headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
     float colorMapTileSize; // カラーマップの中のタイルのサイズ。デフォルトは15.0f;
@@ -84,6 +84,6 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit __attribute__((deprecated));
 @property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit __attribute__((deprecated));
-@property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate __attribute__((deprecated));
+@property (nonatomic, weak) NSObject <HRColorPickerViewDelegate> *delegate __attribute__((deprecated));
 
 @end

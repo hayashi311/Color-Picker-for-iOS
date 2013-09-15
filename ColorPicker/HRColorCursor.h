@@ -32,9 +32,9 @@
 
 @property (nonatomic, strong) UIColor *cursorColor;
 
-+ (CGSize) cursorSize;
-+ (float) outlineSize;
-+ (float) shadowSize;
++ (CGSize)cursorSize;
++ (float)outlineSize;
++ (float)shadowSize;
 
 - (id)initWithPoint:(CGPoint)point;
 @end

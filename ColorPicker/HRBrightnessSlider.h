@@ -19,10 +19,10 @@
 
 @end
 
-@interface HRBrightnessSlider : UIControl<HRBrightnessSlider> {
+@interface HRBrightnessSlider : UIControl <HRBrightnessSlider> {
     void *_brightnessPickerShadowImage;
 }
 
-+ (HRBrightnessSlider*)brightnessSliderWithFrame:(CGRect)frame;
++ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame;
 
 @end
