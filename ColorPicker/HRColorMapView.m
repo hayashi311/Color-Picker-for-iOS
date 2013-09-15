@@ -129,7 +129,7 @@
 
 - (void)handleTap:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        if (sender. numberOfTouches <= 0){
+        if (sender.numberOfTouches <= 0){
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
@@ -139,7 +139,7 @@
 
 - (void)handlePan:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
-        if (sender. numberOfTouches <= 0){
+        if (sender.numberOfTouches <= 0){
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
@@ -167,10 +167,7 @@
                                              alpha:1.0];
 
     _color = selectedColor;
-
     [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
-
-
 
 @end

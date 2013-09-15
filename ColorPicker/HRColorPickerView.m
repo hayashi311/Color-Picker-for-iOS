@@ -39,17 +39,6 @@ typedef struct timeval timeval;
 @interface HRColorPickerView () {
     NSObject <HRColorPickerViewDelegate> *__weak delegate;
 
-    // 入力関係
-    bool _isTapStart;
-    bool _isTapped;
-    bool _wasDragStart;
-    bool _isDragStart;
-    bool _isDragging;
-    bool _isDragEnd;
-
-    CGPoint _activeTouchPosition;
-    CGPoint _touchStartPosition;
-
     // 色情報
     HRHSVColor _currentHsvColor;
 
@@ -60,14 +49,11 @@ typedef struct timeval timeval;
     CGRect _currentColorFrame;
     CGRect _brightnessPickerFrame;
     CGRect _brightnessPickerTouchFrame;
-    CGRect _brightnessPickerShadowFrame;
     CGRect _colorMapFrame;
-    CGRect _colorMapSideFrame;
     float _tileSize;
     float _brightnessLowerLimit;
     float _saturationUpperLimit;
 
-    HRBrightnessCursor *_brightnessCursor;
     HRColorCursor *_colorCursor;
 
     // フレームレート
@@ -80,11 +66,8 @@ typedef struct timeval timeval;
     HRBrightnessSlider *_brightnessSlider;
 }
 
-- (void)update;
 - (void)updateBrightnessCursor;
 - (void)updateColorCursor;
-- (void)clearInput;
-- (void)setCurrentTouchPointInView:(UITouch *)touch;
 - (void)setNeedsDisplay15FPS;
 @end
 
@@ -158,10 +141,6 @@ typedef struct timeval timeval;
                 headerPartsOriginY,
                 _brightnessPickerFrame.size.width + 40.0f,
                 _brightnessPickerFrame.size.height);
-        _brightnessPickerShadowFrame = CGRectMake(_brightnessPickerFrame.origin.x - 5.0f,
-                headerPartsOriginY - 5.0f,
-                _brightnessPickerFrame.size.width + 10.0f,
-                _brightnessPickerFrame.size.height + 10.0f);
 
         _brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:_brightnessPickerTouchFrame];
         _brightnessSlider.color = defaultUIColor;
@@ -182,35 +161,20 @@ typedef struct timeval timeval;
 
         [self addSubview:_colorMapView];
 
-        _colorMapSideFrame = CGRectMake(_colorMapFrame.origin.x - 1.0f,
-                _colorMapFrame.origin.y - 1.0f,
-                _colorMapFrame.size.width,
-                _colorMapFrame.size.height);
-
         _tileSize = style.colorMapTileSize;
         _brightnessLowerLimit = style.brightnessLowerLimit;
         _saturationUpperLimit = style.saturationUpperLimit;
 
-        _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(_brightnessPickerFrame.origin.x, _brightnessPickerFrame.origin.y + _brightnessPickerFrame.size.height / 2.0f)];
+
 
         // タイルの中心にくるようにずらす
         _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(_colorMapFrame.origin.x - ([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
                 _colorMapFrame.origin.y - ([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0)];
-        [self addSubview:_brightnessCursor];
         [self addSubview:_colorCursor];
-
-        // 入力の初期化
-        _isTapStart = FALSE;
-        _isTapped = FALSE;
-        _wasDragStart = FALSE;
-        _isDragStart = FALSE;
-        _isDragging = FALSE;
-        _isDragEnd = FALSE;
 
         // 諸々初期化
         [self setBackgroundColor:[UIColor colorWithWhite:0.99f alpha:1.0f]];
         [self setMultipleTouchEnabled:FALSE];
-
 
         [self updateBrightnessCursor];
         [self updateColorCursor];
@@ -247,59 +211,6 @@ typedef struct timeval timeval;
     _brightnessSlider.color = colorMapView.color;
     [self updateColorCursor];
     [self setNeedsDisplay15FPS];
-}
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// プライベート
-//
-/////////////////////////////////////////////////////////////////////////////
-
-
-
-- (void)update {
-    // タッチのイベントの度、更新されます
-    if (_isDragging || _isDragStart || _isDragEnd || _isTapped) {
-        CGPoint touchPosition = _activeTouchPosition;
-        if (CGRectContainsPoint(_colorMapFrame, touchPosition)) {
-
-            int pixelCountX = (int) (_colorMapFrame.size.width / _tileSize);
-            int pixelCountY = (int) (_colorMapFrame.size.height / _tileSize);
-            HRHSVColor newHsv = _currentHsvColor;
-
-            CGPoint newPosition = CGPointMake(touchPosition.x - _colorMapFrame.origin.x, touchPosition.y - _colorMapFrame.origin.y);
-
-            float pixelX = (int) ((newPosition.x) / _tileSize) / (float) pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-            float pixelY = (int) ((newPosition.y) / _tileSize) / (float) (pixelCountY - 1); // Y(彩度)は0.0f~1.0f
-
-            HSVColorAt(&newHsv, pixelX, pixelY, _saturationUpperLimit, _currentHsvColor.v);
-
-            if (!HRHSVColorEqualToColor(&newHsv, &_currentHsvColor)) {
-                _currentHsvColor = newHsv;
-                [self setNeedsDisplay15FPS];
-            }
-            [self updateColorCursor];
-        } else if (CGRectContainsPoint(_brightnessPickerTouchFrame, touchPosition)) {
-            if (CGRectContainsPoint(_brightnessPickerFrame, touchPosition)) {
-                // 明度のスライダーの内側
-                _currentHsvColor.v = (1.0f - ((touchPosition.x - _brightnessPickerFrame.origin.x) / _brightnessPickerFrame.size.width)) * (1.0f - _brightnessLowerLimit) + _brightnessLowerLimit;
-            } else {
-                // 左右をタッチした場合
-                if (touchPosition.x < _brightnessPickerFrame.origin.x) {
-                    _currentHsvColor.v = 1.0f;
-                } else if ((_brightnessPickerFrame.origin.x + _brightnessPickerFrame.size.width) < touchPosition.x) {
-                    _currentHsvColor.v = _brightnessLowerLimit;
-                }
-            }
-
-            _colorMapView.brightness = _currentHsvColor.v;
-            [self updateBrightnessCursor];
-            [self updateColorCursor];
-            [self setNeedsDisplay15FPS];
-        }
-    }
-    [self clearInput];
 }
 
 - (void)updateBrightnessCursor {
@@ -371,68 +282,6 @@ typedef struct timeval timeval;
     [[NSString stringWithFormat:@"R:%3d%%", (int) (red * 100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x + _currentColorFrame.size.width + 10.0f, textCenter - textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
     [[NSString stringWithFormat:@"G:%3d%%", (int) (green * 100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x + _currentColorFrame.size.width + 10.0f, textCenter) withFont:[UIFont boldSystemFontOfSize:12.0f]];
     [[NSString stringWithFormat:@"B:%3d%%", (int) (blue * 100)] drawAtPoint:CGPointMake(_currentColorFrame.origin.x + _currentColorFrame.size.width + 10.0f, textCenter + textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
-}
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// 入力
-//
-/////////////////////////////////////////////////////////////////////////////
-
-- (void)clearInput {
-    _isTapStart = FALSE;
-    _isTapped = FALSE;
-    _isDragStart = FALSE;
-    _isDragEnd = FALSE;
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if ([touches count] == 1) {
-        UITouch *touch = [touches anyObject];
-        [self setCurrentTouchPointInView:touch];
-        _wasDragStart = TRUE;
-        _isTapStart = TRUE;
-        _touchStartPosition.x = _activeTouchPosition.x;
-        _touchStartPosition.y = _activeTouchPosition.y;
-        [self update];
-    }
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [touches anyObject];
-    if ([touch tapCount] == 1) {
-        _isDragging = TRUE;
-        if (_wasDragStart) {
-            _wasDragStart = FALSE;
-            _isDragStart = TRUE;
-        }
-        [self setCurrentTouchPointInView:[touches anyObject]];
-        [self update];
-    }
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [touches anyObject];
-
-    if (_isDragging) {
-        _isDragEnd = TRUE;
-    } else {
-        if ([touch tapCount] == 1) {
-            _isTapped = TRUE;
-        }
-    }
-    _isDragging = FALSE;
-    [self setCurrentTouchPointInView:touch];
-    [self update];
-    [NSTimer scheduledTimerWithTimeInterval:1.0 / 20.0 target:self selector:@selector(setNeedsDisplay15FPS) userInfo:nil repeats:FALSE];
-}
-
-- (void)setCurrentTouchPointInView:(UITouch *)touch {
-    CGPoint point;
-    point = [touch locationInView:self];
-    _activeTouchPosition.x = point.x;
-    _activeTouchPosition.y = point.y;
 }
 
 - (void)setDelegate:(NSObject <HRColorPickerViewDelegate> *)picker_delegate {

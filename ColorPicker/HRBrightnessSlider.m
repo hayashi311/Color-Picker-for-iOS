@@ -8,11 +8,15 @@
 
 #import "HRBrightnessSlider.h"
 #import "HRCgUtil.h"
+#import "HRBrightnessCursor.h"
 
 
-@interface HRBrightnessSlider(){
+@interface HRBrightnessSlider () {
+    HRBrightnessCursor *_brightnessCursor;
+
     CGRect _sliderFrame;
     CGRect _shadowFrame;
+    CGFloat _brightness;
     UIColor *_color;
     CGFloat _brightnessLowerLimit;
 }
@@ -20,6 +24,7 @@
 @end
 
 @implementation HRBrightnessSlider
+@synthesize brightness = _brightness;
 @synthesize color = _color;
 @synthesize brightnessLowerLimit = _brightnessLowerLimit;
 
@@ -32,10 +37,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        CGRect frameInView = (CGRect){.origin = CGPointZero, .size = frame.size};
+        self.brightnessLowerLimit = 0;
+        CGRect frameInView = (CGRect) {.origin = CGPointZero, .size = frame.size};
         _sliderFrame = UIEdgeInsetsInsetRect(frameInView, UIEdgeInsetsMake(0, 20, 0, 20));
         _shadowFrame = CGRectInset(frameInView, -5, -5);
-        [self createCacheImage];
+        [self createCacheShadowImage];
+
+        UITapGestureRecognizer *tapGestureRecognizer;
+        tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+        [self addGestureRecognizer:tapGestureRecognizer];
+
+        UIPanGestureRecognizer *panGestureRecognizer;
+        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [self addGestureRecognizer:panGestureRecognizer];
+
+        _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(_sliderFrame.origin.x, _sliderFrame.origin.y + _sliderFrame.size.height / 2.0f)];
+        [self addSubview:_brightnessCursor];
     }
     return self;
 }
@@ -45,7 +62,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)createCacheImage {
+- (void)createCacheShadowImage {
     // 影のコストは高いので、事前に画像に書き出しておきます
 
     if (_brightnessPickerShadowImage != nil) {
@@ -69,16 +86,55 @@
     UIGraphicsEndImageContext();
 }
 
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        if (sender.numberOfTouches <= 0) {
+            return;
+        }
+        CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
+        [self update:tapPoint];
+        [self updateCursor];
+    }
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
+        if (sender.numberOfTouches <= 0) {
+            return;
+        }
+        CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
+        [self update:tapPoint];
+        [self updateCursor];
+    }
+}
+
+
+- (void)update:(CGPoint)tapPoint {
+    CGFloat selectedBrightness = 0;
+    if (tapPoint.x < 20) {
+        selectedBrightness = 1;
+    } else if (self.frame.size.width - tapPoint.x < 20) {
+        selectedBrightness = self.brightnessLowerLimit;
+    } else {
+        selectedBrightness = (1.0f - (tapPoint.x / self.frame.size.width)) * (1.0f - self.brightnessLowerLimit) + self.brightnessLowerLimit;
+    }
+    _brightness = selectedBrightness;
+
+    [self sendActionsForControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)updateCursor {
+    // float brightnessCursorX = (1.0f - (b - self.brightnessLowerLimit / (1.0f - self.brightnessLowerLimit))) * self.frame.size.width;
+    float brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
+
+    _brightnessCursor.center = CGPointMake(brightnessCursorX * _sliderFrame.size.width + _sliderFrame.origin.x, _brightnessCursor.center.y);
+
+}
+
+
 - (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
 
     CGContextRef context = UIGraphicsGetCurrentContext();
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // 明度
-    //
-    /////////////////////////////////////////////////////////////////////////////
 
     CGContextSaveGState(context);
 
