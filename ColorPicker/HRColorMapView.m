@@ -184,7 +184,6 @@
 
 - (void)updateColorCursor {
     // カラーマップのカーソルの移動＆色の更新
-
     CGPoint colorCursorPosition = CGPointZero;
     HRHSVColor hsvColor;
     HSVColorFromUIColor(self.color, &hsvColor);
@@ -192,11 +191,15 @@
     int pixelCountX = (int) (self.frame.size.width / _tileSize);
     int pixelCountY = (int) (self.frame.size.height / _tileSize);
     CGPoint newPosition;
-    newPosition.x = hsvColor.h * (float) pixelCountX * _tileSize + _tileSize / 2.0f;
+    float hue = hsvColor.h;
+    if (hue == 1) {
+        hue = 0;
+    }
+
+    newPosition.x = hue * (float) pixelCountX * _tileSize + _tileSize / 2.0f;
     newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (float) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
     colorCursorPosition.x = (int) (newPosition.x / _tileSize - 1) * _tileSize;
     colorCursorPosition.y = (int) (newPosition.y / _tileSize - 1) * _tileSize;
-
     _colorCursor.cursorColor = self.color;
     _colorCursor.transform = CGAffineTransformMakeTranslation(colorCursorPosition.x, colorCursorPosition.y);
 }
