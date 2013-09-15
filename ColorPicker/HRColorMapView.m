@@ -41,7 +41,6 @@
         // タイルの中心にくるようにずらす
         _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(-([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
                 -([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0)];
-        //_colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointZero];
         [self addSubview:_colorCursor];
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -179,7 +178,8 @@
     HRHSVColor selectedHSVColor;
     HSVColorAt(&selectedHSVColor, pixelX, pixelY, self.saturationUpperLimit, self.brightness);
 
-    UIColor *selectedColor = [UIColor colorWithHue:selectedHSVColor.h
+    UIColor *selectedColor;
+    selectedColor = [UIColor colorWithHue:selectedHSVColor.h
                                         saturation:selectedHSVColor.s
                                         brightness:selectedHSVColor.v
                                              alpha:1.0];

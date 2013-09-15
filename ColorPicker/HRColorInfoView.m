@@ -17,6 +17,11 @@
 @implementation HRColorInfoView
 @synthesize color = _color;
 
+
++ (HRColorInfoView *)colorInfoViewWithFrame:(CGRect)frame {
+    return [[HRColorInfoView alloc] initWithFrame:frame];
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -65,6 +70,7 @@
     [[NSString stringWithFormat:@"G:%3d%%", (int) (green * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter) withFont:[UIFont boldSystemFontOfSize:12.0f]];
     [[NSString stringWithFormat:@"B:%3d%%", (int) (blue * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter + textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
 }
+
 
 
 @end

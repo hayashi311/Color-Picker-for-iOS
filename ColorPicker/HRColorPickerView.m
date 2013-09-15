@@ -100,7 +100,6 @@ typedef struct timeval timeval;
     return style;
 }
 
-
 + (CGSize)sizeWithStyle:(HRColorPickerStyle)style {
     CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
     float colorMapMargin = (style.width - colorMapSize.width) / 2.0f;
@@ -123,7 +122,7 @@ typedef struct timeval timeval;
         float headerPartsOriginY = (style.headerHeight - 40.0f) / 2.0f;
         _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
 
-        self.colorInfoView = [[HRColorInfoView alloc] initWithFrame:CGRectMake(10, headerPartsOriginY - 5, 100, 60)];
+        self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, headerPartsOriginY - 5, 100, 60)];
         self.colorInfoView.color = defaultUIColor;
         [self addSubview:self.colorInfoView];
 
@@ -143,7 +142,7 @@ typedef struct timeval timeval;
 
         _colorMapFrame = CGRectMake(colorMapSpace + 1.0f, style.headerHeight, colorMapSize.width, colorMapSize.height);
 
-        self.colorMapView = [[HRColorMapView alloc] initWithFrame:_colorMapFrame];
+        self.colorMapView = [HRColorMapView colorMapWithFrame:_colorMapFrame];
         self.colorMapView.brightness = _currentHsvColor.v;
         self.colorMapView.color = defaultUIColor;
         [self.colorMapView addTarget:self
