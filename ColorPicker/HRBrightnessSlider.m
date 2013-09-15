@@ -40,7 +40,7 @@
         self.brightnessLowerLimit = 0;
         CGRect frameInView = (CGRect) {.origin = CGPointZero, .size = frame.size};
         _sliderFrame = UIEdgeInsetsInsetRect(frameInView, UIEdgeInsetsMake(0, 20, 0, 20));
-        _shadowFrame = CGRectInset(frameInView, -5, -5);
+        _shadowFrame = CGRectInset(_sliderFrame, -5, -5);
         [self createCacheShadowImage];
 
         UITapGestureRecognizer *tapGestureRecognizer;
