@@ -66,6 +66,7 @@
 
 
 - (void)createColorMapLayer {
+
     CGSize colorMapSize = self.frame.size;
 
     void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
@@ -94,11 +95,6 @@
         }
     };
 
-    self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
-    UIImage *colorMapImage = [UIImage imageWithSize:colorMapSize renderer:renderToContext];
-    self.colorMapLayer.contents = (id) colorMapImage.CGImage;
-
     void(^renderBackgroundToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
 
         float height;
@@ -114,10 +110,21 @@
         }
     };
 
+    [CATransaction begin];
+    [CATransaction setValue:(id) kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+
+    self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
+    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
+    UIImage *colorMapImage = [UIImage imageWithSize:colorMapSize renderer:renderToContext];
+    self.colorMapLayer.contents = (id) colorMapImage.CGImage;
+
+
     self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
     self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
     UIImage *backgroundImage = [UIImage imageWithSize:colorMapSize renderer:renderBackgroundToContext];
     self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
+    [CATransaction commit];
 }
 
 - (void)setColor:(UIColor *)color {
@@ -130,7 +137,6 @@
 }
 
 - (void)setBrightness:(CGFloat)brightness {
-
     _brightness = brightness;
     [CATransaction begin];
     [CATransaction setValue:(id) kCFBooleanTrue

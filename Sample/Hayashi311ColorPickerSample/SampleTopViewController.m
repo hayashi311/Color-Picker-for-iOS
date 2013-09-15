@@ -28,15 +28,17 @@
 
 #import "SampleTopViewController.h"
 #import "HRColorUtil.h"
+#import "HRColorPickerViewController.h"
 #import "HRColorPickerViewController2.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 60000
 #define NSTextAlignmentCenter    UITextAlignmentCenter
 #endif
 
+@interface SampleTopViewController()<HRColorPickerViewControllerDelegate>
+@end
 
 @implementation SampleTopViewController
-
 
 - (void)openColorPicker:(id)sender {
     UIViewController *controller;

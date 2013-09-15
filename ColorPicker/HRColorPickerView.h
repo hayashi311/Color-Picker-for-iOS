@@ -30,6 +30,7 @@
 
 @class HRColorPickerView;
 
+
 __attribute__((deprecated))
 @protocol HRColorPickerViewDelegate
 - (void)colorWasChanged:(HRColorPickerView *)color_picker_view;
@@ -49,6 +50,9 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @class HRBrightnessCursor;
 @class HRColorCursor;
+@protocol HRColorMapView;
+@protocol HRBrightnessSlider;
+@protocol HRColorInfoView;
 
 @interface HRColorPickerView : UIControl
 
@@ -65,6 +69,9 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 - (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
 
 @property (nonatomic, readonly) UIColor *color;
+@property (nonatomic, strong) UIView<HRColorInfoView> *colorInfoView;
+@property (nonatomic, strong) UIControl<HRColorMapView> *colorMapView;
+@property (nonatomic, strong) UIControl<HRBrightnessSlider> *brightnessSlider;
 
 #pragma - Deprecated
 /////////////////////////////////////////////////////////////////////////////

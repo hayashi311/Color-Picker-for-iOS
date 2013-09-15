@@ -73,9 +73,9 @@
     colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defultUIColor:_color];
 
 //    Please uncomment. If you want to catch the color change event.
-    [colorPickerView addTarget:self
-                        action:@selector(colorWasChanged:)
-              forControlEvents:UIControlEventEditingChanged];
+//    [colorPickerView addTarget:self
+//                        action:@selector(colorWasChanged:)
+//              forControlEvents:UIControlEventEditingChanged];
 
     [self.view addSubview:colorPickerView];
     

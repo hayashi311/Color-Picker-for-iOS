@@ -53,13 +53,8 @@ typedef struct timeval timeval;
     timeval _timeInterval15fps;
 
     bool _delegateHasSELColorWasChanged;
-
-    HRColorInfoView *_colorInfoView;
-    HRColorMapView *_colorMapView;
-    HRBrightnessSlider *_brightnessSlider;
 }
 
-- (void)setNeedsDisplay15FPS;
 @end
 
 @implementation HRColorPickerView
@@ -128,34 +123,34 @@ typedef struct timeval timeval;
         float headerPartsOriginY = (style.headerHeight - 40.0f) / 2.0f;
         _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
 
-        _colorInfoView = [[HRColorInfoView alloc] initWithFrame:CGRectMake(10, headerPartsOriginY - 5, 100, 60)];
-        _colorInfoView.color = defaultUIColor;
-        [self addSubview:_colorInfoView];
+        self.colorInfoView = [[HRColorInfoView alloc] initWithFrame:CGRectMake(10, headerPartsOriginY - 5, 100, 60)];
+        self.colorInfoView.color = defaultUIColor;
+        [self addSubview:self.colorInfoView];
 
         _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
                 headerPartsOriginY,
                 _brightnessPickerFrame.size.width + 40.0f,
                 _brightnessPickerFrame.size.height);
 
-        _brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:_brightnessPickerTouchFrame];
-        _brightnessSlider.color = defaultUIColor;
-        _brightnessSlider.brightnessLowerLimit = style.brightnessLowerLimit;
-        [_brightnessSlider addTarget:self
+        self.brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:_brightnessPickerTouchFrame];
+        self.brightnessSlider.color = defaultUIColor;
+        self.brightnessSlider.brightnessLowerLimit = style.brightnessLowerLimit;
+        [self.brightnessSlider addTarget:self
                               action:@selector(brightnessChanged:)
                     forControlEvents:UIControlEventEditingChanged];
 
-        [self addSubview:_brightnessSlider];
+        [self addSubview:self.brightnessSlider];
 
         _colorMapFrame = CGRectMake(colorMapSpace + 1.0f, style.headerHeight, colorMapSize.width, colorMapSize.height);
 
-        _colorMapView = [[HRColorMapView alloc] initWithFrame:_colorMapFrame];
-        _colorMapView.brightness = _currentHsvColor.v;
-        _colorMapView.color = defaultUIColor;
-        [_colorMapView addTarget:self
+        self.colorMapView = [[HRColorMapView alloc] initWithFrame:_colorMapFrame];
+        self.colorMapView.brightness = _currentHsvColor.v;
+        self.colorMapView.color = defaultUIColor;
+        [self.colorMapView addTarget:self
                           action:@selector(colorMapColorChanged:)
                 forControlEvents:UIControlEventEditingChanged];
 
-        [self addSubview:_colorMapView];
+        [self addSubview:self.colorMapView];
 
         _tileSize = style.colorMapTileSize;
 
@@ -186,20 +181,20 @@ typedef struct timeval timeval;
 
 - (void)brightnessChanged:(UIControl <HRBrightnessSlider> *)slider {
     _currentHsvColor.v = slider.brightness;
-    _colorMapView.brightness = _currentHsvColor.v;
-    _colorMapView.color = self.color;
-    _colorInfoView.color = self.color;
-    [self sendCallBack];
+    self.colorMapView.brightness = _currentHsvColor.v;
+    self.colorMapView.color = self.color;
+    self.colorInfoView.color = self.color;
+    [self sendActions];
 }
 
 - (void)colorMapColorChanged:(UIControl <HRColorMapView> *)colorMapView {
     HSVColorFromUIColor(colorMapView.color, &_currentHsvColor);
-    _brightnessSlider.color = colorMapView.color;
-    _colorInfoView.color = self.color;
-    [self sendCallBack];
+    self.brightnessSlider.color = colorMapView.color;
+    self.colorInfoView.color = self.color;
+    [self sendActions];
 }
 
-- (void)sendCallBack {
+- (void)sendActions {
     timeval now, diff;
     gettimeofday(&now, NULL);
     timersub(&now, &_lastDrawTime, &diff);
@@ -213,8 +208,6 @@ typedef struct timeval timeval;
         return;
     }
 }
-
-
 
 #pragma - deprecated
 /////////////////////////////////////////////////////////////////////////////
@@ -247,28 +240,28 @@ typedef struct timeval timeval;
 }
 
 - (float)BrightnessLowerLimit {
-    if ([_brightnessSlider respondsToSelector:@selector(brightnessLowerLimit)]) {
-        return [_brightnessSlider brightnessLowerLimit];
+    if ([self.brightnessSlider respondsToSelector:@selector(brightnessLowerLimit)]) {
+        return [self.brightnessSlider brightnessLowerLimit];
     }
     return 0.0;
 }
 
 - (void)setBrightnessLowerLimit:(float)brightnessUnderLimit {
-    if ([_brightnessSlider respondsToSelector:@selector(setBrightnessLowerLimit:)]) {
-        [_brightnessSlider setBrightnessLowerLimit:brightnessUnderLimit];
+    if ([self.brightnessSlider respondsToSelector:@selector(setBrightnessLowerLimit:)]) {
+        [self.brightnessSlider setBrightnessLowerLimit:brightnessUnderLimit];
     }
 }
 
 - (float)SaturationUpperLimit {
-    if ([_colorMapView respondsToSelector:@selector(saturationUpperLimit)]) {
-        return _colorMapView.saturationUpperLimit;
+    if ([self.colorMapView respondsToSelector:@selector(saturationUpperLimit)]) {
+        return self.colorMapView.saturationUpperLimit;
     }
     return 1.0;
 }
 
 - (void)setSaturationUpperLimit:(float)saturationUpperLimit {
-    if ([_colorMapView respondsToSelector:@selector(setSaturationUpperLimit:)]) {
-        [_colorMapView setSaturationUpperLimit:saturationUpperLimit];
+    if ([self.colorMapView respondsToSelector:@selector(setSaturationUpperLimit:)]) {
+        [self.colorMapView setSaturationUpperLimit:saturationUpperLimit];
     }
 }
 

@@ -47,7 +47,7 @@ typedef struct {
     float h;
     float s;
     float v;
-} HRHSVColor __attribute__((deprecated));
+} HRHSVColor;
 
 // 値のチェックしてません。数値として入れさせるなら自前でチェックして下さい。
 
