@@ -47,6 +47,7 @@
             [self createColorMapLayer];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
+                self.colorMapLayer.opacity = self.brightness;
                 [self.layer insertSublayer:self.colorMapLayer atIndex:1];
             });
         });
@@ -117,6 +118,11 @@
     self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
     UIImage *backgroundImage = [UIImage imageWithSize:colorMapSize renderer:renderBackgroundToContext];
     self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
+}
+
+- (void)setColor:(UIColor *)color {
+    _color = color;
+    [self updateColorCursor];
 }
 
 - (CGFloat)brightness {

@@ -11,7 +11,7 @@
 @protocol HRColorMapView
 
 @required
-@property (nonatomic, readonly) UIColor *color;
+@property (nonatomic, strong) UIColor *color;
 @property (nonatomic) CGFloat brightness;
 
 @optional

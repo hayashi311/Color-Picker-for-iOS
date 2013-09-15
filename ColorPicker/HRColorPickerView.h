@@ -66,11 +66,13 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @property (nonatomic, readonly) UIColor *color;
 
-@property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate;
+#pragma - Deprecated
+/////////////////////////////////////////////////////////////////////////////
+//
+// Deprecated : Old API.
+//
+/////////////////////////////////////////////////////////////////////////////
 
-
-
-#pragma - deprecated
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
 
 // スタイルを指定してデフォルトカラーで初期化
@@ -82,5 +84,6 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit __attribute__((deprecated));
 @property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit __attribute__((deprecated));
+@property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate __attribute__((deprecated));
 
 @end

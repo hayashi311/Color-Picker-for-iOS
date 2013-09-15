@@ -133,6 +133,7 @@ typedef struct timeval timeval;
         _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
 
         _colorInfoView = [[HRColorInfoView alloc] initWithFrame:CGRectMake(10, headerPartsOriginY - 5, 100, 60)];
+        _colorInfoView.color = defaultUIColor;
         [self addSubview:_colorInfoView];
 
         _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
@@ -153,6 +154,7 @@ typedef struct timeval timeval;
 
         _colorMapView = [[HRColorMapView alloc] initWithFrame:_colorMapFrame];
         _colorMapView.brightness = _currentHsvColor.v;
+        _colorMapView.color = defaultUIColor;
         [_colorMapView addTarget:self
                           action:@selector(colorMapColorChanged:)
                 forControlEvents:UIControlEventEditingChanged];
@@ -189,6 +191,7 @@ typedef struct timeval timeval;
 - (void)brightnessChanged:(UIControl <HRBrightnessSlider> *)slider {
     _currentHsvColor.v = slider.brightness;
     _colorMapView.brightness = _currentHsvColor.v;
+    _colorMapView.color = self.color;
     _colorInfoView.color = self.color;
 }
 
@@ -198,30 +201,21 @@ typedef struct timeval timeval;
     _colorInfoView.color = self.color;
 }
 
-- (void)setNeedsDisplay15FPS {
-    // 描画を20FPSに制限します
+- (void)sendCallBack {
     timeval now, diff;
     gettimeofday(&now, NULL);
     timersub(&now, &_lastDrawTime, &diff);
     if (timercmp(&diff, &_timeInterval15fps, >)) {
         _lastDrawTime = now;
-        [self setNeedsDisplay];
         if (_delegateHasSELColorWasChanged) {
             [delegate colorWasChanged:self];
         }
+        [self sendActionsForControlEvents:UIControlEventEditingChanged];
     } else {
         return;
     }
 }
 
-- (void)setDelegate:(NSObject <HRColorPickerViewDelegate> *)picker_delegate {
-    delegate = picker_delegate;
-    _delegateHasSELColorWasChanged = FALSE;
-    // 微妙に重いのでメソッドを持っているかどうかの判定をキャッシュ
-    if ([delegate respondsToSelector:@selector(colorWasChanged:)]) {
-        _delegateHasSELColorWasChanged = TRUE;
-    }
-}
 
 
 #pragma - deprecated
@@ -277,6 +271,15 @@ typedef struct timeval timeval;
 - (void)setSaturationUpperLimit:(float)saturationUpperLimit {
     if ([_colorMapView respondsToSelector:@selector(setSaturationUpperLimit:)]) {
         [_colorMapView setSaturationUpperLimit:saturationUpperLimit];
+    }
+}
+
+- (void)setDelegate:(NSObject <HRColorPickerViewDelegate> *)picker_delegate {
+    delegate = picker_delegate;
+    _delegateHasSELColorWasChanged = FALSE;
+    // 微妙に重いのでメソッドを持っているかどうかの判定をキャッシュ
+    if ([delegate respondsToSelector:@selector(colorWasChanged:)]) {
+        _delegateHasSELColorWasChanged = TRUE;
     }
 }
 
