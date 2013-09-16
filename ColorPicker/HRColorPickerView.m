@@ -112,7 +112,6 @@ typedef struct timeval timeval;
 
     self = [super initWithFrame:frame];
     if (self) {
-
         // RGBのデフォルトカラーをHSVに変換
         HSVColorFromUIColor(defaultUIColor, &_currentHsvColor);
 
@@ -135,24 +134,23 @@ typedef struct timeval timeval;
         self.brightnessSlider.color = defaultUIColor;
         self.brightnessSlider.brightnessLowerLimit = style.brightnessLowerLimit;
         [self.brightnessSlider addTarget:self
-                              action:@selector(brightnessChanged:)
-                    forControlEvents:UIControlEventEditingChanged];
+                                  action:@selector(brightnessChanged:)
+                        forControlEvents:UIControlEventEditingChanged];
 
         [self addSubview:self.brightnessSlider];
 
         _colorMapFrame = CGRectMake(colorMapSpace + 1.0f, style.headerHeight, colorMapSize.width, colorMapSize.height);
 
-        self.colorMapView = [HRColorMapView colorMapWithFrame:_colorMapFrame];
+        self.colorMapView = [HRColorMapView colorMapWithFrame:_colorMapFrame
+                                         saturationUpperLimit:style.saturationUpperLimit];
         self.colorMapView.brightness = _currentHsvColor.v;
         self.colorMapView.color = defaultUIColor;
         [self.colorMapView addTarget:self
-                          action:@selector(colorMapColorChanged:)
-                forControlEvents:UIControlEventEditingChanged];
+                              action:@selector(colorMapColorChanged:)
+                    forControlEvents:UIControlEventEditingChanged];
 
         [self addSubview:self.colorMapView];
-
         _tileSize = style.colorMapTileSize;
-
 
         // 諸々初期化
         [self setBackgroundColor:[UIColor colorWithWhite:0.99f alpha:1.0f]];
@@ -203,8 +201,6 @@ typedef struct timeval timeval;
             [delegate colorWasChanged:self];
         }
         [self sendActionsForControlEvents:UIControlEventEditingChanged];
-    } else {
-        return;
     }
 }
 

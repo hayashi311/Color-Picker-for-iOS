@@ -23,6 +23,8 @@
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
 
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(float)saturationUpperLimit;
+
 @property (nonatomic) NSInteger tileSize;
 
 @end

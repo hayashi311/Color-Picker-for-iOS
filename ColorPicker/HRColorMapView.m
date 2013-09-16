@@ -27,15 +27,75 @@
 @synthesize color = _color;
 @synthesize saturationUpperLimit = _saturationUpperLimit;
 
-+ (HRColorMapView *)colorMapWithFrame:(CGRect)frame {
-    return [[HRColorMapView alloc] initWithFrame:frame];
++ (UIImage *)colorMapImageWithSize:(CGSize)size
+                          tileSize:(float)tileSize
+              saturationUpperLimit:(float)saturationUpperLimit {
+
+    CGSize colorMapSize = size;
+    void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
+
+        float height;
+        int pixelCountX = (int) (rect.size.width / tileSize);
+        int pixelCountY = (int) (rect.size.height / tileSize);
+
+        HRHSVColor pixelHsv;
+        HRRGBColor pixelRgb;
+        for (int j = 0; j < pixelCountY; ++j) {
+            height = tileSize * j + rect.origin.y;
+            float pixelY = (float) j / (pixelCountY - 1); // Y(彩度)は0.0f~1.0f
+            for (int i = 0; i < pixelCountX; ++i) {
+                float pixelX = (float) i / pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+
+                pixelHsv.h = pixelX;
+                pixelHsv.s = 1.0f - (pixelY * saturationUpperLimit);
+                pixelHsv.v = 1.f;
+
+                RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
+                CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
+
+                CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, height, tileSize - 2.0f, tileSize - 2.0f));
+            }
+        }
+    };
+    return [UIImage imageWithSize:colorMapSize renderer:renderToContext];
 }
 
-- (id)initWithFrame:(CGRect)frame {
++ (UIImage *)backgroundImageWithSize:(CGSize)size
+                            tileSize:(float)tileSize {
+
+    CGSize colorMapSize = size;
+    void(^renderBackgroundToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
+
+        float height;
+        int pixelCountX = (int) (rect.size.width / tileSize);
+        int pixelCountY = (int) (rect.size.height / tileSize);
+
+        CGContextSetGrayFillColor(context, 0, 1.0);
+        for (int j = 0; j < pixelCountY; ++j) {
+            height = tileSize * j + rect.origin.y;
+            for (int i = 0; i < pixelCountX; ++i) {
+                CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, height, tileSize - 2.0f, tileSize - 2.0f));
+            }
+        }
+    };
+
+    return [UIImage imageWithSize:colorMapSize
+                         renderer:renderBackgroundToContext];
+}
+
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame {
+    return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:0.95];
+}
+
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(float)saturationUpperLimit{
+    return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:saturationUpperLimit];
+}
+
+- (id)initWithFrame:(CGRect)frame saturationUpperLimit:(float)saturationUpperLimit{
     self = [super initWithFrame:frame];
     if (self) {
         self.tileSize = 15;
-        self.saturationUpperLimit = .95;
+        self.saturationUpperLimit = saturationUpperLimit;
         self.brightness = 0.5;
 
         // タイルの中心にくるようにずらす
@@ -66,48 +126,14 @@
 
 - (void)createColorMapLayer {
 
-    CGSize colorMapSize = self.frame.size;
+    UIImage *colorMapImage;
+    colorMapImage = [HRColorMapView colorMapImageWithSize:self.frame.size
+                                                 tileSize:self.tileSize
+                                     saturationUpperLimit:self.saturationUpperLimit];
 
-    void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
-
-        float height;
-        int pixelCountX = (int) (rect.size.width / self.tileSize);
-        int pixelCountY = (int) (rect.size.height / self.tileSize);
-
-        HRHSVColor pixelHsv;
-        HRRGBColor pixelRgb;
-        for (int j = 0; j < pixelCountY; ++j) {
-            height = self.tileSize * j + rect.origin.y;
-            float pixelY = (float) j / (pixelCountY - 1); // Y(彩度)は0.0f~1.0f
-            for (int i = 0; i < pixelCountX; ++i) {
-                float pixelX = (float) i / pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-
-                pixelHsv.h = pixelX;
-                pixelHsv.s = 1.0f - (pixelY * self.saturationUpperLimit);
-                pixelHsv.v = 1.f;
-
-                RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
-                CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
-
-                CGContextFillRect(context, CGRectMake(self.tileSize * i + rect.origin.x, height, self.tileSize - 2.0f, self.tileSize - 2.0f));
-            }
-        }
-    };
-
-    void(^renderBackgroundToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
-
-        float height;
-        int pixelCountX = (int) (rect.size.width / self.tileSize);
-        int pixelCountY = (int) (rect.size.height / self.tileSize);
-
-        CGContextSetGrayFillColor(context, 0, 1.0);
-        for (int j = 0; j < pixelCountY; ++j) {
-            height = self.tileSize * j + rect.origin.y;
-            for (int i = 0; i < pixelCountX; ++i) {
-                CGContextFillRect(context, CGRectMake(self.tileSize * i + rect.origin.x, height, self.tileSize - 2.0f, self.tileSize - 2.0f));
-            }
-        }
-    };
+    UIImage *backgroundImage;
+    backgroundImage = [HRColorMapView backgroundImageWithSize:self.frame.size
+                                                     tileSize:self.tileSize];
 
     [CATransaction begin];
     [CATransaction setValue:(id) kCFBooleanTrue
@@ -115,14 +141,11 @@
 
     self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
     self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
-    UIImage *colorMapImage = [UIImage imageWithSize:colorMapSize renderer:renderToContext];
     self.colorMapLayer.contents = (id) colorMapImage.CGImage;
-
-
     self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
     self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
-    UIImage *backgroundImage = [UIImage imageWithSize:colorMapSize renderer:renderBackgroundToContext];
     self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
+
     [CATransaction commit];
 }
 
@@ -180,9 +203,9 @@
 
     UIColor *selectedColor;
     selectedColor = [UIColor colorWithHue:selectedHSVColor.h
-                                        saturation:selectedHSVColor.s
-                                        brightness:selectedHSVColor.v
-                                             alpha:1.0];
+                               saturation:selectedHSVColor.s
+                               brightness:selectedHSVColor.v
+                                    alpha:1.0];
     _color = selectedColor;
     [self updateColorCursor];
     [self sendActionsForControlEvents:UIControlEventEditingChanged];

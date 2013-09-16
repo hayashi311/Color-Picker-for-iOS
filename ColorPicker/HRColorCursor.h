@@ -37,4 +37,5 @@
 + (float)shadowSize;
 
 - (id)initWithPoint:(CGPoint)point;
+
 @end
