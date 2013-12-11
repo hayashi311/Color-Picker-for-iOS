@@ -31,10 +31,6 @@
 @class HRColorPickerView;
 
 
-__attribute__((deprecated))
-@protocol HRColorPickerViewDelegate
-- (void)colorWasChanged:(HRColorPickerView *)color_picker_view;
-@end
 
 struct HRColorPickerStyle {
     float width; // viewの横幅。デフォルトは320.0f;
@@ -73,12 +69,19 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 @property (nonatomic, strong) UIControl<HRColorMapView> *colorMapView;
 @property (nonatomic, strong) UIControl<HRBrightnessSlider> *brightnessSlider;
 
+
+@end
+
+
 #pragma - Deprecated
-/////////////////////////////////////////////////////////////////////////////
-//
-// Deprecated : Old API.
-//
-/////////////////////////////////////////////////////////////////////////////
+
+__attribute__((deprecated))
+@protocol HRColorPickerViewDelegate
+- (void)colorWasChanged:(HRColorPickerView *)color_picker_view;
+@end
+
+
+@interface HRColorPickerView(Deprecated)
 
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
 

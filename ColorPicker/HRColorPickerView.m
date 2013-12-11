@@ -50,7 +50,7 @@ typedef struct timeval timeval;
 
     // フレームレート
     timeval _lastDrawTime;
-    timeval _timeInterval15fps;
+    timeval _waitTimeDuration;
 
     bool _delegateHasSELColorWasChanged;
 }
@@ -159,8 +159,8 @@ typedef struct timeval timeval;
         // フレームレートの調整
         gettimeofday(&_lastDrawTime, NULL);
 
-        _timeInterval15fps.tv_sec = (__darwin_time_t) 0.0;
-        _timeInterval15fps.tv_usec = (__darwin_suseconds_t) (1000000.0 / 15.0);
+        _waitTimeDuration.tv_sec = (__darwin_time_t) 0.0;
+        _waitTimeDuration.tv_usec = (__darwin_suseconds_t) (1000000.0 / 15.0);
 
         _delegateHasSELColorWasChanged = FALSE;
     }
@@ -195,7 +195,7 @@ typedef struct timeval timeval;
     timeval now, diff;
     gettimeofday(&now, NULL);
     timersub(&now, &_lastDrawTime, &diff);
-    if (timercmp(&diff, &_timeInterval15fps, >)) {
+    if (timercmp(&diff, &_waitTimeDuration, >)) {
         _lastDrawTime = now;
         if (_delegateHasSELColorWasChanged) {
             [delegate colorWasChanged:self];
