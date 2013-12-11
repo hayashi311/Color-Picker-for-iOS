@@ -108,10 +108,6 @@
     }
 }
 
-- (void)saveColor:(id)sender{
-    [self save];
-}
-
 - (void)save
 {
     if (self.delegate) {
