@@ -66,6 +66,12 @@
     [self setNeedsDisplay];
 }
 
+- (void)setBrightnessLowerLimit:(CGFloat)brightnessLowerLimit {
+    _brightnessLowerLimit = brightnessLowerLimit;
+    [self updateCursor];
+}
+
+
 - (void)createCacheShadowImage {
     // 影のコストは高いので、事前に画像に書き出しておきます
 

@@ -7,6 +7,7 @@
 
 
 #import "HRColorMapView.h"
+#import <QuartzCore/QuartzCore.h>
 #import "HRColorUtil.h"
 #import "UIImage+CoreGraphics.h"
 #import "HRColorCursor.h"

@@ -59,7 +59,6 @@ typedef struct timeval timeval;
 
 @implementation HRColorPickerView
 
-@synthesize delegate;
 
 + (HRColorPickerStyle)defaultStyle {
     HRColorPickerStyle style;
@@ -204,7 +203,13 @@ typedef struct timeval timeval;
     }
 }
 
+@end
+
 #pragma - deprecated
+
+@implementation HRColorPickerView(Deprecated)
+
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // deprecated
@@ -270,3 +275,5 @@ typedef struct timeval timeval;
 }
 
 @end
+
+
