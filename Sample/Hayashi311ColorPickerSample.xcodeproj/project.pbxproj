@@ -273,7 +273,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -289,7 +289,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 			};
 			name = Debug;
 		};
@@ -297,7 +297,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -307,7 +307,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -315,12 +315,14 @@
 		DA877C4614527BD000A0754C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
+				SDKROOT = iphoneos7.1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -328,12 +330,14 @@
 		DA877C4714527BD000A0754C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
+				SDKROOT = iphoneos7.1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
