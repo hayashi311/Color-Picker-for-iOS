@@ -31,9 +31,9 @@
 @class HRColorPickerView;
 
 @interface HRColorPickerViewController2 : UIViewController {
-    id<HRColorPickerViewControllerDelegate> __weak delegate;
-    HRColorPickerView* colorPickerView;
-    
+    id <HRColorPickerViewControllerDelegate> __weak delegate;
+    HRColorPickerView *colorPickerView;
+
     UIColor *_color;
     BOOL _fullColor;
     HCPCSaveStyle _saveStyle;
@@ -46,7 +46,7 @@
  * @param fullColor If YES, browseable full color. If NO color was limited.
  * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
  */
-- (id)initWithColor:(UIColor*)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
+- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
 
 /** @deprecated use -save: instead of this . */
 - (void)saveColor:(id)sender;
@@ -56,7 +56,7 @@
 - (void)cancel:(id)sender;
 
 
-@property (weak) id<HRColorPickerViewControllerDelegate> delegate;
+@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
 
 
 @end

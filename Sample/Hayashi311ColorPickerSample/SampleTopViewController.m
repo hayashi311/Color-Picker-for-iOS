@@ -35,7 +35,7 @@
 #define NSTextAlignmentCenter    UITextAlignmentCenter
 #endif
 
-@interface SampleTopViewController()<HRColorPickerViewControllerDelegate>
+@interface SampleTopViewController () <HRColorPickerViewControllerDelegate>
 @end
 
 @implementation SampleTopViewController

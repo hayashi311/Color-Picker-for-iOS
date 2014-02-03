@@ -27,8 +27,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SampleTopViewController : UIViewController{
-    UILabel* hexColorLabel;
+@interface SampleTopViewController : UIViewController {
+    UILabel *hexColorLabel;
 }
 
 - (void)openColorPicker:(id)sender;

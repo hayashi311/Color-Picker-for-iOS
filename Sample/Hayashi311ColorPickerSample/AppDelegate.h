@@ -27,8 +27,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>{
-    UINavigationController* navigationController;
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    UINavigationController *navigationController;
 }
 
 @property (strong, nonatomic) UIWindow *window;

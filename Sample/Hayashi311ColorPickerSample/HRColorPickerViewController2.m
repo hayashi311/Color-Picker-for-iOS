@@ -33,20 +33,16 @@
 @synthesize delegate;
 
 
-+ (HRColorPickerViewController2 *)colorPickerViewControllerWithColor:(UIColor *)color
-{
++ (HRColorPickerViewController2 *)colorPickerViewControllerWithColor:(UIColor *)color {
     return [[HRColorPickerViewController2 alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways];
 }
 
 
-- (id)initWithDefaultColor:(UIColor *)defaultColor
-{
+- (id)initWithDefaultColor:(UIColor *)defaultColor {
     return [self initWithColor:defaultColor fullColor:NO saveStyle:HCPCSaveStyleSaveAlways];
 }
 
-- (id)initWithColor:(UIColor*)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle
-
-{
+- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _color = defaultColor;
@@ -56,20 +52,19 @@
     return self;
 }
 
-- (void)loadView
-{
+- (void)loadView {
     CGRect frame = [[UIScreen mainScreen] applicationFrame];
     frame.size.height -= 44.f;
-    
+
     self.view = [[UIView alloc] initWithFrame:frame];
 
     HRColorPickerStyle style;
     if (_fullColor) {
         style = [HRColorPickerView fitScreenFullColorStyle];
-    }else{
+    } else {
         style = [HRColorPickerView fitScreenStyle];
     }
-    
+
     colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defultUIColor:_color];
 
 //    Please uncomment. If you want to catch the color change event.
@@ -78,57 +73,51 @@
 //              forControlEvents:UIControlEventEditingChanged];
 
     [self.view addSubview:colorPickerView];
-    
+
     if (_saveStyle == HCPCSaveStyleSaveAndCancel) {
         UIBarButtonItem *buttonItem;
-        
+
         buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         self.navigationItem.leftBarButtonItem = buttonItem;
-        
+
         buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
         self.navigationItem.rightBarButtonItem = buttonItem;
     }
 }
 
-- (void)colorWasChanged:(HRColorPickerView*)colorWasChanged {
+- (void)colorWasChanged:(HRColorPickerView *)colorWasChanged {
     NSLog(@"colorWasChanged %@", colorWasChanged.color);
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+
     if (_saveStyle == HCPCSaveStyleSaveAlways) {
         [self save:self];
     }
 }
 
-- (void)save
-{
+- (void)save {
     if (self.delegate) {
         [self.delegate setSelectedColor:colorPickerView.color];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)save:(id)sender
-{
+- (void)save:(id)sender {
     [self save];
 }
 
-- (void)cancel:(id)sender
-{
+- (void)cancel:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
@@ -138,15 +127,13 @@
 #pragma mark - View lifecycle
 
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
