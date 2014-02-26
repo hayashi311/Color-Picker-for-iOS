@@ -38,14 +38,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     // テンプレートからの変更点↓
-//    SampleTopViewController* sampleTopViewController = [[SampleTopViewController alloc] init];
-//    navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
-//
-//    navigationController.navigationBar.translucent = NO;
-//    navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-//
-    SampleTopViewController *sampleTopViewController = [[SampleTopViewController alloc] init];
-    [self.window setRootViewController:sampleTopViewController];
+    SampleTopViewController* sampleTopViewController = [[SampleTopViewController alloc] init];
+    navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
+
+    navigationController.navigationBar.translucent = NO;
+    navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+
+    [self.window setRootViewController:navigationController];
 
     // テンプレートからの変更点↑
     self.window.backgroundColor = [UIColor whiteColor];
