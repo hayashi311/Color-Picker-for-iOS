@@ -10,37 +10,147 @@
 #import "HRCgUtil.h"
 #import "HRBrightnessCursor.h"
 
+@interface HRBrightnessSlider()
 
-@interface HRBrightnessSlider () {
+@property (nonatomic) CGRect sliderFrame;
+
+@end
+
+
+@interface HRFlatStyleBrightnessSlider : HRBrightnessSlider
+
+@property (nonatomic, readonly) CGFloat brightness;
+@property (nonatomic) UIColor *color;
+@property (nonatomic) CGFloat brightnessLowerLimit;
+
+@end
+
+@interface HROldStyleBrightnessSlider : HRBrightnessSlider
+
+@end
+
+
+@implementation HRBrightnessSlider
+
++ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return [[HROldStyleBrightnessSlider alloc] initWithFrame:frame];
+    }
+    return [[HRFlatStyleBrightnessSlider alloc] initWithFrame:frame];
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        CGRect frameInView = (CGRect) {.origin = CGPointZero, .size = frame.size};
+        self.sliderFrame = UIEdgeInsetsInsetRect(frameInView, UIEdgeInsetsMake(0, 20, 0, 20));
+    }
+    return self;
+}
+
+
+- (CGFloat)brightness {
+    return 0;
+}
+
+- (UIColor *)color {
+    return nil;
+}
+
+- (void)setColor:(UIColor *)color {
+    // Do noting
+}
+
+- (CGFloat)brightnessLowerLimit {
+    return 0;
+}
+
+- (void)setBrightnessLowerLimit:(CGFloat)brightnessLowerLimit {
+    // Do noting
+}
+
+@end
+
+@implementation HRFlatStyleBrightnessSlider {
+    CAGradientLayer *_sliderLayer;
+    CGFloat _brightness;
+    UIColor *_color;
+}
+
+@synthesize color = _color;
+
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _sliderLayer = [[CAGradientLayer alloc] initWithLayer:self.layer];
+        _sliderLayer.frame = (CGRect) {.origin = CGPointZero, .size = frame.size};
+        _sliderLayer.startPoint = CGPointMake(0, .5);
+        _sliderLayer.endPoint = CGPointMake(1, .5);
+
+        //_sliderLayer.locations = @[@0.f, @1.f];
+
+//        _sliderLayer.backgroundColor = [UIColor greenColor].CGColor;
+        [self.layer addSublayer:_sliderLayer];
+
+        self.backgroundColor = [UIColor redColor];
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _sliderLayer.frame = self.sliderFrame;
+}
+
+- (void)setColor:(UIColor *)color {
+    _color = color;
+
+    float brightness;
+    [self.color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
+    _brightness = brightness;
+
+    [CATransaction begin];
+    [CATransaction setValue:(id) kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+
+    HRHSVColor hsvColor;
+    HSVColorFromUIColor(self.color, &hsvColor);
+    UIColor *darkColorFromHsv = [UIColor colorWithHue:hsvColor.h saturation:hsvColor.s brightness:self.brightnessLowerLimit alpha:1.0f];
+    UIColor *lightColorFromHsv = [UIColor colorWithHue:hsvColor.h saturation:hsvColor.s brightness:1.0f alpha:1.0f];
+
+    _sliderLayer.colors = @[(id) lightColorFromHsv.CGColor, (id) darkColorFromHsv.CGColor];
+    _sliderLayer.backgroundColor = self.color.CGColor;
+
+    [CATransaction commit];
+}
+
+@end
+
+
+
+@implementation HROldStyleBrightnessSlider {
+    void *_brightnessPickerShadowImage;
+
     HRBrightnessCursor *_brightnessCursor;
 
-    CGRect _sliderFrame;
     CGRect _shadowFrame;
     CGFloat _brightness;
     UIColor *_color;
     CGFloat _brightnessLowerLimit;
 }
 
-@end
-
-@implementation HRBrightnessSlider
 @synthesize brightness = _brightness;
 @synthesize color = _color;
 @synthesize brightnessLowerLimit = _brightnessLowerLimit;
-
-
-+ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame {
-    return [[HRBrightnessSlider alloc] initWithFrame:frame];
-}
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.brightnessLowerLimit = 0;
-        CGRect frameInView = (CGRect) {.origin = CGPointZero, .size = frame.size};
-        _sliderFrame = UIEdgeInsetsInsetRect(frameInView, UIEdgeInsetsMake(0, 20, 0, 20));
-        _shadowFrame = CGRectInset(_sliderFrame, -5, -5);
+        _shadowFrame = CGRectInset(self.sliderFrame, -5, -5);
+
         [self createCacheShadowImage];
 
         UITapGestureRecognizer *tapGestureRecognizer;
@@ -51,7 +161,7 @@
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self addGestureRecognizer:panGestureRecognizer];
 
-        _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(_sliderFrame.origin.x, _sliderFrame.origin.y + _sliderFrame.size.height / 2.0f)];
+        _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(self.sliderFrame.origin.x, self.sliderFrame.origin.y + self.sliderFrame.size.height / 2.0f)];
         [self addSubview:_brightnessCursor];
     }
     return self;
@@ -121,11 +231,11 @@
 
 - (void)update:(CGPoint)tapPoint {
     CGFloat selectedBrightness = 0;
-    CGPoint tapPointInSlider = CGPointMake(tapPoint.x - _sliderFrame.origin.x, tapPoint.y);
-    tapPointInSlider.x = MIN(tapPointInSlider.x, _sliderFrame.size.width);
+    CGPoint tapPointInSlider = CGPointMake(tapPoint.x - self.sliderFrame.origin.x, tapPoint.y);
+    tapPointInSlider.x = MIN(tapPointInSlider.x, self.sliderFrame.size.width);
     tapPointInSlider.x = MAX(tapPointInSlider.x, 0);
 
-    selectedBrightness = 1.0 - tapPointInSlider.x / _sliderFrame.size.width;
+    selectedBrightness = 1.0 - tapPointInSlider.x / self.sliderFrame.size.width;
     selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit) + self.brightnessLowerLimit;
     _brightness = selectedBrightness;
 
@@ -134,7 +244,7 @@
 
 - (void)updateCursor {
     float brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
-    _brightnessCursor.center = CGPointMake(brightnessCursorX * _sliderFrame.size.width + _sliderFrame.origin.x, _brightnessCursor.center.y);
+    _brightnessCursor.center = CGPointMake(brightnessCursorX * self.sliderFrame.size.width + self.sliderFrame.origin.x, _brightnessCursor.center.y);
 }
 
 
@@ -143,7 +253,7 @@
 
     CGContextSaveGState(context);
 
-    HRSetRoundedRectanglePath(context, _sliderFrame, 5.0f);
+    HRSetRoundedRectanglePath(context, self.sliderFrame, 5.0f);
     CGContextClip(context);
 
     CGGradientRef gradient;
@@ -173,8 +283,8 @@
     gradient = CGGradientCreateWithColorComponents(colorSpace, gradientColor,
             locations, numLocations);
 
-    CGPoint startPoint = CGPointMake(_sliderFrame.origin.x + _sliderFrame.size.width, _sliderFrame.origin.y);
-    CGPoint endPoint = CGPointMake(_sliderFrame.origin.x, _sliderFrame.origin.y);
+    CGPoint startPoint = CGPointMake(self.sliderFrame.origin.x + self.sliderFrame.size.width, self.sliderFrame.origin.y);
+    CGPoint endPoint = CGPointMake(self.sliderFrame.origin.x, self.sliderFrame.origin.y);
     CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
 
     // GradientとColorSpaceを開放する
