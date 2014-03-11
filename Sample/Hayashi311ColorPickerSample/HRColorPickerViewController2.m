@@ -85,8 +85,8 @@
     }
 }
 
-- (void)colorWasChanged:(HRColorPickerView *)colorWasChanged {
-    NSLog(@"colorWasChanged %@", colorWasChanged.color);
+- (void)colorWasChanged:(HRColorPickerView *)pickerView {
+    NSLog(@"colorWasChanged %@", pickerView.color);
 }
 
 - (void)viewDidLoad {

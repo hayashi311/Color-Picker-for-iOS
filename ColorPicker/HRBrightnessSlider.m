@@ -72,12 +72,17 @@
 @end
 
 @implementation HRFlatStyleBrightnessSlider {
+    HRBrightnessCursor *_brightnessCursor;
+
     CAGradientLayer *_sliderLayer;
     CGFloat _brightness;
     UIColor *_color;
+    CGFloat _brightnessLowerLimit;
 }
 
+@synthesize brightness = _brightness;
 @synthesize color = _color;
+@synthesize brightnessLowerLimit = _brightnessLowerLimit;
 
 
 - (id)initWithFrame:(CGRect)frame {
@@ -93,10 +98,23 @@
 //        _sliderLayer.backgroundColor = [UIColor greenColor].CGColor;
         [self.layer addSublayer:_sliderLayer];
 
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor clearColor];
+
+        UITapGestureRecognizer *tapGestureRecognizer;
+        tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+        [self addGestureRecognizer:tapGestureRecognizer];
+
+        UIPanGestureRecognizer *panGestureRecognizer;
+        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [self addGestureRecognizer:panGestureRecognizer];
+
+        _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(self.sliderFrame.origin.x, self.sliderFrame.origin.y + self.sliderFrame.size.height / 2.0f)];
+        [self addSubview:_brightnessCursor];
     }
     return self;
 }
+
+
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -124,6 +142,53 @@
 
     [CATransaction commit];
 }
+
+- (void)setBrightnessLowerLimit:(CGFloat)brightnessLowerLimit {
+    _brightnessLowerLimit = brightnessLowerLimit;
+    [self updateCursor];
+    self.color = _color;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        if (sender.numberOfTouches <= 0) {
+            return;
+        }
+        CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
+        [self update:tapPoint];
+        [self updateCursor];
+    }
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
+        if (sender.numberOfTouches <= 0) {
+            return;
+        }
+        CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
+        [self update:tapPoint];
+        [self updateCursor];
+    }
+}
+
+- (void)update:(CGPoint)tapPoint {
+    CGFloat selectedBrightness = 0;
+    CGPoint tapPointInSlider = CGPointMake(tapPoint.x - self.sliderFrame.origin.x, tapPoint.y);
+    tapPointInSlider.x = MIN(tapPointInSlider.x, self.sliderFrame.size.width);
+    tapPointInSlider.x = MAX(tapPointInSlider.x, 0);
+
+    selectedBrightness = 1.0 - tapPointInSlider.x / self.sliderFrame.size.width;
+    selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit) + self.brightnessLowerLimit;
+    _brightness = selectedBrightness;
+
+    [self sendActionsForControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)updateCursor {
+    float brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
+    _brightnessCursor.center = CGPointMake(brightnessCursorX * self.sliderFrame.size.width + self.sliderFrame.origin.x, _brightnessCursor.center.y);
+}
+
 
 @end
 
