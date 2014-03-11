@@ -322,7 +322,7 @@
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
-				SDKROOT = iphoneos7.1;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -337,7 +337,7 @@
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
-				SDKROOT = iphoneos7.1;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
