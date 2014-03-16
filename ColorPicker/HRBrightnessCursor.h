@@ -29,6 +29,8 @@
 
 @interface HRBrightnessCursor : UIView
 
-- (id)initWithPoint:(CGPoint)point;
++ (HRBrightnessCursor *)brightnessCursor;
+
+@property (nonatomic) CGPoint origin;
 
 @end

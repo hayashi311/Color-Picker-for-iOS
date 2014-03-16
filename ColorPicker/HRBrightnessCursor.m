@@ -28,12 +28,37 @@
 #import "HRBrightnessCursor.h"
 #import "HRCgUtil.h"
 
+
+
+@interface HROldStyleBrightnessCursor : HRBrightnessCursor
+
+@end
+
+
 @implementation HRBrightnessCursor
 
-- (id)initWithPoint:(CGPoint)point {
-    CGSize size = CGSizeMake(18.0f, 40.0f);
-    CGRect frame = CGRectMake(point.x - size.width / 2.0f, point.y - size.height / 2.0f, size.width, size.height);
-    self = [super initWithFrame:frame];
++ (HRBrightnessCursor *)brightnessCursor {
+    return [[HROldStyleBrightnessCursor alloc] init];
+}
+
+- (void)setOrigin:(CGPoint)origin {
+    _origin = origin;
+    CGRect frame = self.frame;
+    frame = CGRectMake(
+            origin.x - frame.size.width / 2.0f,
+            origin.y - frame.size.height / 2.0f,
+            frame.size.width,
+            frame.size.height);
+    self.frame = frame;
+}
+
+
+@end
+
+@implementation HROldStyleBrightnessCursor
+
+- (id)init {
+    self = [super initWithFrame:CGRectMake(0, 0, 18, 40)];
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self setUserInteractionEnabled:FALSE];
@@ -96,3 +121,4 @@
 }
 
 @end
+

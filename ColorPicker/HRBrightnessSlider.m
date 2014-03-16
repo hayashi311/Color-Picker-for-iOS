@@ -10,7 +10,7 @@
 #import "HRCgUtil.h"
 #import "HRBrightnessCursor.h"
 
-@interface HRBrightnessSlider()
+@interface HRBrightnessSlider ()
 
 @property (nonatomic) CGRect sliderFrame;
 
@@ -107,7 +107,10 @@
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self addGestureRecognizer:panGestureRecognizer];
 
-        _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(self.sliderFrame.origin.x, self.sliderFrame.origin.y + self.sliderFrame.size.height / 2.0f)];
+        _brightnessCursor = [HRBrightnessCursor brightnessCursor];
+        _brightnessCursor.origin = CGPointMake(
+                CGRectGetMinX(self.sliderFrame),
+                CGRectGetMidY(self.sliderFrame));
         [self addSubview:_brightnessCursor];
     }
     return self;
@@ -117,7 +120,7 @@
     [super layoutSubviews];
     CGRect frame = self.sliderFrame;
     frame.size.height = 6;
-    frame.origin.y = (CGRectGetHeight(self.frame) - CGRectGetHeight(frame))/2;
+    frame.origin.y = (CGRectGetHeight(self.frame) - CGRectGetHeight(frame)) / 2;
     _sliderLayer.frame = frame;
 }
 
@@ -192,7 +195,6 @@
 @end
 
 
-
 @implementation HROldStyleBrightnessSlider {
     void *_brightnessPickerShadowImage;
 
@@ -225,7 +227,10 @@
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self addGestureRecognizer:panGestureRecognizer];
 
-        _brightnessCursor = [[HRBrightnessCursor alloc] initWithPoint:CGPointMake(self.sliderFrame.origin.x, self.sliderFrame.origin.y + self.sliderFrame.size.height / 2.0f)];
+        _brightnessCursor = [HRBrightnessCursor brightnessCursor];
+        _brightnessCursor.origin = CGPointMake(
+                CGRectGetMinY(self.sliderFrame),
+                CGRectGetMidY(self.sliderFrame));
         [self addSubview:_brightnessCursor];
     }
     return self;
