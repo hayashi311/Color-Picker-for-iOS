@@ -28,7 +28,9 @@
 #import "HRBrightnessCursor.h"
 #import "HRCgUtil.h"
 
+@interface HRFlatStyleBrightnessCursor : HRBrightnessCursor
 
+@end
 
 @interface HROldStyleBrightnessCursor : HRBrightnessCursor
 
@@ -38,7 +40,10 @@
 @implementation HRBrightnessCursor
 
 + (HRBrightnessCursor *)brightnessCursor {
-    return [[HROldStyleBrightnessCursor alloc] init];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return [[HROldStyleBrightnessCursor alloc] init];
+    }
+    return [[HRFlatStyleBrightnessCursor alloc] init];
 }
 
 - (void)setOrigin:(CGPoint)origin {
@@ -52,6 +57,25 @@
     self.frame = frame;
 }
 
+@end
+
+@implementation HRFlatStyleBrightnessCursor
+
+- (id)init {
+    self = [super initWithFrame:CGRectMake(0, 0, 20, 20)];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.userInteractionEnabled = NO;
+        self.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+        self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        self.layer.borderWidth = .5;
+        self.layer.shadowColor = [[UIColor colorWithWhite:0.0f alpha:0.3f] CGColor];
+        self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        self.layer.shadowRadius = 2.;
+        self.layer.cornerRadius = CGRectGetHeight(self.frame) / 2;
+    }
+    return self;
+}
 
 @end
 
@@ -60,8 +84,8 @@
 - (id)init {
     self = [super initWithFrame:CGRectMake(0, 0, 18, 40)];
     if (self) {
-        [self setBackgroundColor:[UIColor clearColor]];
-        [self setUserInteractionEnabled:FALSE];
+        self.backgroundColor = [UIColor clearColor];
+        self.userInteractionEnabled = NO;
     }
     return self;
 }
@@ -82,20 +106,21 @@
     HRSetRoundedRectanglePath(context, CGRectMake(2.0f, 13.0f, 14.0f, 14.0f), 2.0f);
     CGContextClip(context);
 
-    CGFloat top_color = 0.9f;
-    CGFloat bottom_color = 0.98f;
+    CGFloat topColor = 0.9f;
+    CGFloat bottomColor = 0.98f;
     CGFloat alpha = 1.0f;
-    CGFloat gradient_color[] = {
-            top_color, top_color, top_color, alpha,
-            bottom_color, bottom_color, bottom_color, alpha
+    CGFloat gradientColor[] = {
+            topColor, topColor, topColor, alpha,
+            bottomColor, bottomColor, bottomColor, alpha
     };
+
     CGGradientRef gradient;
     CGColorSpaceRef colorSpace;
-    size_t num_locations = 2;
+    size_t numberOfLocations = 2;
     CGFloat locations[2] = {0.0, 1.0};
     colorSpace = CGColorSpaceCreateDeviceRGB();
-    gradient = CGGradientCreateWithColorComponents(colorSpace, gradient_color,
-            locations, num_locations);
+    gradient = CGGradientCreateWithColorComponents(colorSpace, gradientColor,
+            locations, numberOfLocations);
 
     CGPoint startPoint = CGPointMake(self.frame.size.width / 2, 0.0);
     CGPoint endPoint = CGPointMake(self.frame.size.width / 2, self.frame.size.height);
