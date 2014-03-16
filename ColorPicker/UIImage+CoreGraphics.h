@@ -12,8 +12,8 @@ typedef void(^renderToContext)(CGContextRef, CGRect);
 
 @interface UIImage (CoreGraphics)
 
-+ (UIImage *)imageWithSize:(CGSize)size renderer:(renderToContext)renderer;
++ (UIImage *)hr_imageWithSize:(CGSize)size renderer:(renderToContext)renderer;
 
-+ (UIImage *)imageWithSize:(CGSize)size opaque:(BOOL)opaque renderer:(renderToContext)renderer;
++ (UIImage *)hr_imageWithSize:(CGSize)size opaque:(BOOL)opaque renderer:(renderToContext)renderer;
 
 @end

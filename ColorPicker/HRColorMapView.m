@@ -58,7 +58,7 @@
             }
         }
     };
-    return [UIImage imageWithSize:colorMapSize renderer:renderToContext];
+    return [UIImage hr_imageWithSize:colorMapSize renderer:renderToContext];
 }
 
 + (UIImage *)backgroundImageWithSize:(CGSize)size
@@ -80,8 +80,8 @@
         }
     };
 
-    return [UIImage imageWithSize:colorMapSize
-                         renderer:renderBackgroundToContext];
+    return [UIImage hr_imageWithSize:colorMapSize
+                            renderer:renderBackgroundToContext];
 }
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame {

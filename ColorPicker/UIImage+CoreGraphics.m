@@ -11,11 +11,11 @@
 
 @implementation UIImage (CoreGraphics)
 
-+ (UIImage *)imageWithSize:(CGSize)size renderer:(renderToContext)renderer {
-    return [UIImage imageWithSize:size opaque:YES renderer:renderer];
++ (UIImage *)hr_imageWithSize:(CGSize)size renderer:(renderToContext)renderer {
+    return [UIImage hr_imageWithSize:size opaque:YES renderer:renderer];
 }
 
-+ (UIImage *)imageWithSize:(CGSize)size opaque:(BOOL)opaque renderer:(renderToContext)renderer {
++ (UIImage *)hr_imageWithSize:(CGSize)size opaque:(BOOL)opaque renderer:(renderToContext)renderer {
     UIImage *image;
 
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
