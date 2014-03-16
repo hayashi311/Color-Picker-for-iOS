@@ -33,13 +33,13 @@
 
 
 struct HRColorPickerStyle {
-    float width; // viewの横幅。デフォルトは320.0f;
-    float headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
-    float colorMapTileSize; // カラーマップの中のタイルのサイズ。デフォルトは15.0f;
+    CGFloat width; // viewの横幅。デフォルトは320.0f;
+    CGFloat headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
+    CGFloat colorMapTileSize; // カラーマップの中のタイルのサイズ。デフォルトは15.0f;
     int colorMapSizeWidth; // カラーマップの中にいくつのタイルが並ぶか (not view.width)。デフォルトは20;
     int colorMapSizeHeight; // 同じく縦にいくつ並ぶか。デフォルトは20;
-    float brightnessLowerLimit; // 明度の下限
-    float saturationUpperLimit; // 彩度の上限
+    CGFloat brightnessLowerLimit; // 明度の下限
+    CGFloat saturationUpperLimit; // 彩度の上限
 };
 
 typedef struct HRColorPickerStyle HRColorPickerStyle;
@@ -92,8 +92,8 @@ __attribute__((deprecated))
 
 - (void)BeforeDealloc __attribute__((deprecated)); // 呼び出す必要はありません。
 
-@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit __attribute__((deprecated));
-@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit __attribute__((deprecated));
+@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) CGFloat BrightnessLowerLimit __attribute__((deprecated));
+@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) CGFloat SaturationUpperLimit __attribute__((deprecated));
 @property (nonatomic, weak) NSObject <HRColorPickerViewDelegate> *delegate __attribute__((deprecated));
 
 @end

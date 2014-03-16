@@ -31,7 +31,7 @@ void HSVColorFromRGBColor(const HRRGBColor *rgb, HRHSVColor *hsv) {
     HRRGBColor rgb255 = {rgb->r * 255.0f, rgb->g * 255.0f, rgb->b * 255.0f};
     HRHSVColor hsv255 = {0.0f, 0.0f, 0.0f};
 
-    float max = rgb255.r;
+    CGFloat max = rgb255.r;
     if (max < rgb255.g) {
         max = rgb255.g;
     }
@@ -40,7 +40,7 @@ void HSVColorFromRGBColor(const HRRGBColor *rgb, HRHSVColor *hsv) {
     }
     hsv255.v = max;
 
-    float min = rgb255.r;
+    CGFloat min = rgb255.r;
     if (min > rgb255.g) {
         min = rgb255.g;
     }
@@ -62,7 +62,7 @@ void HSVColorFromRGBColor(const HRRGBColor *rgb, HRHSVColor *hsv) {
             h = 60 * (rgb255.r - rgb255.g) / (double) (max - min) + 240;
         }
         if (h < 0) h += 360;
-        hsv255.h = (float) h;
+        hsv255.h = (CGFloat) h;
     }
     hsv->h = hsv255.h / 360.0f;
     hsv->s = hsv255.s / 255.0f;
@@ -70,7 +70,7 @@ void HSVColorFromRGBColor(const HRRGBColor *rgb, HRHSVColor *hsv) {
 }
 
 void HSVColorFromUIColor(UIColor *uiColor, HRHSVColor *hsv) {
-    float alpha;
+    CGFloat alpha;
     [uiColor getHue:&hsv->h saturation:&hsv->s brightness:&hsv->v alpha:&alpha];
 }
 
@@ -86,12 +86,12 @@ void RGBColorFromHSVColor(const HRHSVColor *hsv, HRRGBColor *rgb) {
         return;
     }
 
-    float h360 = hsv->h * 360.0f;
+    CGFloat h360 = hsv->h * 360.0f;
     int i;
-    float f;
-    float m;
-    float n;
-    float k;
+    CGFloat f;
+    CGFloat m;
+    CGFloat n;
+    CGFloat k;
 
     i = (int) floor(h360 / 60);
     if (i < 0) {
@@ -171,7 +171,7 @@ bool HRHSVColorEqualToColor(const HRHSVColor *hsv1, const HRHSVColor *hsv2) {
     return (hsv1->h == hsv2->h) && (hsv1->s == hsv2->s) && (hsv1->v == hsv2->v);
 }
 
-void HSVColorAt(HRHSVColor *hsv, float x, float y, float saturationUpperLimit, float brightness) {
+void HSVColorAt(HRHSVColor *hsv, CGFloat x, CGFloat y, CGFloat saturationUpperLimit, CGFloat brightness) {
     hsv->h = x;
     hsv->s = 1.0f - (y * saturationUpperLimit);
     hsv->v = brightness;

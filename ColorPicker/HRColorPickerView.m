@@ -46,7 +46,7 @@ typedef struct timeval timeval;
     CGRect _brightnessPickerFrame;
     CGRect _brightnessPickerTouchFrame;
     CGRect _colorMapFrame;
-    float _tileSize;
+    CGFloat _tileSize;
 
     // フレームレート
     timeval _lastDrawTime;
@@ -64,11 +64,16 @@ typedef struct timeval timeval;
     HRColorPickerStyle style;
     style.width = 320.0f;
     style.headerHeight = 106.0f;
-    style.colorMapTileSize = 15.0f;
+    style.colorMapTileSize = 15;
     style.colorMapSizeWidth = 20;
     style.colorMapSizeHeight = 20;
     style.brightnessLowerLimit = 0.4f;
     style.saturationUpperLimit = 0.95f;
+
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+        style.colorMapTileSize = 16;
+    }
+
     return style;
 }
 
@@ -79,7 +84,7 @@ typedef struct timeval timeval;
     HRColorPickerStyle style = [HRColorPickerView defaultStyle];
     style.colorMapSizeHeight = (int) ((defaultSize.height - style.headerHeight) / style.colorMapTileSize);
 
-    float colorMapMargin = (style.width - (style.colorMapSizeWidth * style.colorMapTileSize)) / 2.f;
+    CGFloat colorMapMargin = (style.width - (style.colorMapSizeWidth * style.colorMapTileSize)) / 2.f;
     style.headerHeight = defaultSize.height - (style.colorMapSizeHeight * style.colorMapTileSize) - colorMapMargin;
 
     return style;
@@ -101,7 +106,7 @@ typedef struct timeval timeval;
 
 + (CGSize)sizeWithStyle:(HRColorPickerStyle)style {
     CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
-    float colorMapMargin = (style.width - colorMapSize.width) / 2.0f;
+    CGFloat colorMapMargin = (style.width - colorMapSize.width) / 2.0f;
     return CGSizeMake(style.width, style.headerHeight + colorMapSize.height + colorMapMargin);
 }
 
@@ -116,8 +121,8 @@ typedef struct timeval timeval;
 
         // UIの配置
         CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
-        float colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
-        float headerPartsOriginY = (style.headerHeight - 40.0f) / 2.0f;
+        CGFloat colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
+        CGFloat headerPartsOriginY = (style.headerHeight - 40.0f) / 2.0f;
         _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
 
         self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, headerPartsOriginY - 5, 100, 60)];
@@ -138,15 +143,21 @@ typedef struct timeval timeval;
 
         [self addSubview:self.brightnessSlider];
 
-        _colorMapFrame = CGRectMake(colorMapSpace + 1.0f, style.headerHeight, colorMapSize.width, colorMapSize.height);
+        _colorMapFrame = CGRectMake(colorMapSpace, style.headerHeight, colorMapSize.width, colorMapSize.height);
 
-        self.colorMapView = [HRColorMapView colorMapWithFrame:_colorMapFrame
-                                         saturationUpperLimit:style.saturationUpperLimit];
-        self.colorMapView.brightness = _currentHsvColor.v;
-        self.colorMapView.color = defaultUIColor;
-        [self.colorMapView addTarget:self
-                              action:@selector(colorMapColorChanged:)
-                    forControlEvents:UIControlEventEditingChanged];
+        HRColorMapView *colorMapView;
+        colorMapView = [HRColorMapView colorMapWithFrame:_colorMapFrame
+                                    saturationUpperLimit:style.saturationUpperLimit];
+
+        colorMapView.brightness = _currentHsvColor.v;
+        colorMapView.tileSize = style.colorMapTileSize;
+
+        colorMapView.color = defaultUIColor;
+        [colorMapView addTarget:self
+                         action:@selector(colorMapColorChanged:)
+               forControlEvents:UIControlEventEditingChanged];
+
+        self.colorMapView = colorMapView;
 
         [self addSubview:self.colorMapView];
         _tileSize = style.colorMapTileSize;
@@ -207,7 +218,7 @@ typedef struct timeval timeval;
 
 #pragma - deprecated
 
-@implementation HRColorPickerView(Deprecated)
+@implementation HRColorPickerView (Deprecated)
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -239,27 +250,27 @@ typedef struct timeval timeval;
     NSAssert(NO, @"Deprecated");
 }
 
-- (float)BrightnessLowerLimit {
+- (CGFloat)BrightnessLowerLimit {
     if ([self.brightnessSlider respondsToSelector:@selector(brightnessLowerLimit)]) {
         return [self.brightnessSlider brightnessLowerLimit];
     }
     return 0.0;
 }
 
-- (void)setBrightnessLowerLimit:(float)brightnessUnderLimit {
+- (void)setBrightnessLowerLimit:(CGFloat)brightnessUnderLimit {
     if ([self.brightnessSlider respondsToSelector:@selector(setBrightnessLowerLimit:)]) {
         [self.brightnessSlider setBrightnessLowerLimit:brightnessUnderLimit];
     }
 }
 
-- (float)SaturationUpperLimit {
+- (CGFloat)SaturationUpperLimit {
     if ([self.colorMapView respondsToSelector:@selector(saturationUpperLimit)]) {
         return self.colorMapView.saturationUpperLimit;
     }
     return 1.0;
 }
 
-- (void)setSaturationUpperLimit:(float)saturationUpperLimit {
+- (void)setSaturationUpperLimit:(CGFloat)saturationUpperLimit {
     if ([self.colorMapView respondsToSelector:@selector(setSaturationUpperLimit:)]) {
         [self.colorMapView setSaturationUpperLimit:saturationUpperLimit];
     }

@@ -57,9 +57,9 @@
     HRSetRoundedRectanglePath(context, CGRectMake(2.0f, 13.0f, 14.0f, 14.0f), 2.0f);
     CGContextClip(context);
 
-    float top_color = 0.9f;
-    float bottom_color = 0.98f;
-    float alpha = 1.0f;
+    CGFloat top_color = 0.9f;
+    CGFloat bottom_color = 0.98f;
+    CGFloat alpha = 1.0f;
     CGFloat gradient_color[] = {
             top_color, top_color, top_color, alpha,
             bottom_color, bottom_color, bottom_color, alpha
@@ -93,8 +93,6 @@
     CGContextDrawPath(context, kCGPathStroke);
 
     CGContextRestoreGState(context);
-
 }
-
 
 @end

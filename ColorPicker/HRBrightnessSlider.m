@@ -113,8 +113,6 @@
     return self;
 }
 
-
-
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGRect frame = self.sliderFrame;
@@ -126,8 +124,8 @@
 - (void)setColor:(UIColor *)color {
     _color = color;
 
-    float brightness;
-    [self.color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
+    CGFloat brightness;
+    [_color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
     _brightness = brightness;
 
     [CATransaction begin];
@@ -135,12 +133,11 @@
                      forKey:kCATransactionDisableActions];
 
     HRHSVColor hsvColor;
-    HSVColorFromUIColor(self.color, &hsvColor);
+    HSVColorFromUIColor(_color, &hsvColor);
     UIColor *darkColorFromHsv = [UIColor colorWithHue:hsvColor.h saturation:hsvColor.s brightness:self.brightnessLowerLimit alpha:1.0f];
     UIColor *lightColorFromHsv = [UIColor colorWithHue:hsvColor.h saturation:hsvColor.s brightness:1.0f alpha:1.0f];
 
     _sliderLayer.colors = @[(id) lightColorFromHsv.CGColor, (id) darkColorFromHsv.CGColor];
-    _sliderLayer.backgroundColor = self.color.CGColor;
 
     [CATransaction commit];
 }
@@ -187,7 +184,7 @@
 }
 
 - (void)updateCursor {
-    float brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
+    CGFloat brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
     _brightnessCursor.center = CGPointMake(brightnessCursorX * self.sliderFrame.size.width + self.sliderFrame.origin.x, _brightnessCursor.center.y);
 }
 
@@ -236,7 +233,7 @@
 
 - (void)setColor:(UIColor *)color {
     _color = color;
-    float brightness;
+    CGFloat brightness;
     [_color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
     _brightness = brightness;
     [self updateCursor];
@@ -310,7 +307,7 @@
 }
 
 - (void)updateCursor {
-    float brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
+    CGFloat brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
     _brightnessCursor.center = CGPointMake(brightnessCursorX * self.sliderFrame.size.width + self.sliderFrame.origin.x, _brightnessCursor.center.y);
 }
 

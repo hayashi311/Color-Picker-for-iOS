@@ -86,7 +86,7 @@
 */
 
 - (UIButton *)createButtonWithTitle:(NSString *)title index:(int)index {
-    float offsetY = index * 60;
+    CGFloat offsetY = index * 60;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.tag = index;
     [button setFrame:CGRectMake(10.0f, 30.0f + offsetY, 300.0f, 50.0f)];

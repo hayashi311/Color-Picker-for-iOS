@@ -32,9 +32,9 @@
 /////////////////////////////////////////////////////////////////////////////
 
 typedef struct {
-    float r;
-    float g;
-    float b;
+    CGFloat r;
+    CGFloat g;
+    CGFloat b;
 } HRRGBColor __attribute__((deprecated));
 
 /////////////////////////////////////////////////////////////////////////////
@@ -44,9 +44,9 @@ typedef struct {
 /////////////////////////////////////////////////////////////////////////////
 
 typedef struct {
-    float h;
-    float s;
-    float v;
+    CGFloat h;
+    CGFloat s;
+    CGFloat v;
 } HRHSVColor;
 
 // 値のチェックしてません。数値として入れさせるなら自前でチェックして下さい。
@@ -73,5 +73,5 @@ bool HRHSVColorEqualToColor(const HRHSVColor *, const HRHSVColor *) __attribute_
 
 
 // 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
-void HSVColorAt(HRHSVColor *hsv, float x, float y, float saturationLowerLimit, float brightness) __attribute__((deprecated));
+void HSVColorAt(HRHSVColor *hsv, CGFloat x, CGFloat y, CGFloat saturationLowerLimit, CGFloat brightness) __attribute__((deprecated));
 

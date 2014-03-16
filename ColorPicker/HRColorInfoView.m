@@ -65,13 +65,13 @@
     //
     /////////////////////////////////////////////////////////////////////////////
 
-    float red, green, blue, alpha;
+    CGFloat red, green, blue, alpha;
     [self.color getRed:&red green:&green blue:&blue alpha:&alpha];
 
     [[UIColor darkGrayColor] set];
 
-    float textHeight = 20.0f;
-    float textCenter = CGRectGetMidY(colorFrame) - 5.0f;
+    CGFloat textHeight = 20.0f;
+    CGFloat textCenter = CGRectGetMidY(colorFrame) - 5.0f;
     [[NSString stringWithFormat:@"R:%3d%%", (int) (red * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter - textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
     [[NSString stringWithFormat:@"G:%3d%%", (int) (green * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter) withFont:[UIFont boldSystemFontOfSize:12.0f]];
     [[NSString stringWithFormat:@"B:%3d%%", (int) (blue * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter + textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];

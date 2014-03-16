@@ -44,13 +44,13 @@ void HRSetRoundedRectanglePath(CGContextRef context, const CGRect rect, CGFloat 
 }
 
 __attribute__((overloadable))
-void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, UIColor *color, float size) {
-    float cx = position.x;
-    float cy = position.y;
+void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, UIColor *color, CGFloat size) {
+    CGFloat cx = position.x;
+    CGFloat cy = position.y;
 
-    float rSize = size;
-    float backRSize = rSize + 3.0f;
-    float shadowRSize = backRSize + 3.0f;
+    CGFloat rSize = size;
+    CGFloat backRSize = rSize + 3.0f;
+    CGFloat shadowRSize = backRSize + 3.0f;
 
     CGRect rectEllipse = CGRectMake(cx - rSize, cy - rSize, rSize * 2, rSize * 2);
     CGRect rectBackEllipse = CGRectMake(cx - backRSize, cy - backRSize, backRSize * 2, backRSize * 2);
@@ -75,6 +75,6 @@ void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, UIColor *col
 }
 
 __attribute__((deprecated, overloadable))
-void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, HRRGBColor *color, float size) {
+void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, HRRGBColor *color, CGFloat size) {
     UIColor *uiColor = [UIColor colorWithRed:color->r green:color->g blue:color->b alpha:1];
 }

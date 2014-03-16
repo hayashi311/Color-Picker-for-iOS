@@ -27,19 +27,29 @@
 
 #import "HRColorCursor.h"
 #import "HRCgUtil.h"
+#import "HRColorUtil.h"
 
 @implementation HRColorCursor
 
 + (CGSize)cursorSize {
-    return CGSizeMake(30.0, 30.0f);
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return CGSizeMake(30.0, 30.0f);
+    }
+    return CGSizeMake(22.0, 22.0f);
 }
 
-+ (float)outlineSize {
-    return 4.0f;
++ (CGFloat)outlineSize {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return 4.0f;
+    }
+    return 3.0f;
 }
 
-+ (float)shadowSize {
-    return 2.0f;
++ (CGFloat)shadowSize {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return 2.0f;
+    }
+    return 0.0f;
 }
 
 
@@ -63,14 +73,25 @@
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    float outlineSize = [HRColorCursor outlineSize];
+    CGFloat outlineSize = [HRColorCursor outlineSize];
     CGSize cursorSize = [HRColorCursor cursorSize];
-    float shadowSize = [HRColorCursor shadowSize];
+    CGFloat shadowSize = [HRColorCursor shadowSize];
 
     CGContextSaveGState(context);
     HRSetRoundedRectanglePath(context, CGRectMake(shadowSize, shadowSize, cursorSize.width - shadowSize * 2.0f, cursorSize.height - shadowSize * 2.0f), 2.0f);
-    [[UIColor whiteColor] set];
-    CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), shadowSize);
+
+    HRHSVColor hsvColor;
+    HSVColorFromUIColor(self.cursorColor, &hsvColor);
+
+    if (hsvColor.v > 0.7 && hsvColor.s < 0.4) {
+        [[UIColor colorWithWhite:0.6 alpha:1] set];
+    } else {
+        [[UIColor whiteColor] set];
+    }
+
+    if (shadowSize) {
+        CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), shadowSize);
+    }
     CGContextDrawPath(context, kCGPathFill);
     CGContextRestoreGState(context);
 
