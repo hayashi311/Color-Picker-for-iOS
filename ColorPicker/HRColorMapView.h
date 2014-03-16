@@ -15,7 +15,7 @@
 @property (nonatomic) CGFloat brightness;
 
 @optional
-@property (nonatomic) float saturationUpperLimit;
+@property (nonatomic) CGFloat saturationUpperLimit;
 
 @end
 
@@ -23,8 +23,8 @@
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
 
-+ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(float)saturationUpperLimit;
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit;
 
-@property (nonatomic) NSInteger tileSize;
+@property (nonatomic) CGFloat tileSize;
 
 @end

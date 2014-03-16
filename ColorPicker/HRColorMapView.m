@@ -7,7 +7,6 @@
 
 
 #import "HRColorMapView.h"
-#import <QuartzCore/QuartzCore.h>
 #import "HRColorUtil.h"
 #import "UIImage+CoreGraphics.h"
 #import "HRColorCursor.h"
@@ -29,13 +28,15 @@
 @synthesize saturationUpperLimit = _saturationUpperLimit;
 
 + (UIImage *)colorMapImageWithSize:(CGSize)size
-                          tileSize:(float)tileSize
-              saturationUpperLimit:(float)saturationUpperLimit {
+                          tileSize:(CGFloat)tileSize
+              saturationUpperLimit:(CGFloat)saturationUpperLimit {
 
     CGSize colorMapSize = size;
     void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
+//        CGFloat margin = 1.f / [[UIScreen mainScreen] scale];
+        CGFloat margin = 0;
 
-        float height;
+        CGFloat height;
         int pixelCountX = (int) (rect.size.width / tileSize);
         int pixelCountY = (int) (rect.size.height / tileSize);
 
@@ -43,9 +44,9 @@
         HRRGBColor pixelRgb;
         for (int j = 0; j < pixelCountY; ++j) {
             height = tileSize * j + rect.origin.y;
-            float pixelY = (float) j / (pixelCountY - 1); // Y(彩度)は0.0f~1.0f
+            CGFloat pixelY = (CGFloat) j / (pixelCountY - 1); // Y(彩度)は0.0f~1.0f
             for (int i = 0; i < pixelCountX; ++i) {
-                float pixelX = (float) i / pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+                CGFloat pixelX = (CGFloat) i / pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
 
                 pixelHsv.h = pixelX;
                 pixelHsv.s = 1.0f - (pixelY * saturationUpperLimit);
@@ -54,7 +55,7 @@
                 RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
                 CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
 
-                CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, height, tileSize - 2.0f, tileSize - 2.0f));
+                CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, height, tileSize - margin, tileSize - margin));
             }
         }
     };
@@ -62,12 +63,17 @@
 }
 
 + (UIImage *)backgroundImageWithSize:(CGSize)size
-                            tileSize:(float)tileSize {
+                            tileSize:(CGFloat)tileSize {
 
     CGSize colorMapSize = size;
     void(^renderBackgroundToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
+//        CGFloat margin = 1.f / [[UIScreen mainScreen] scale];
+        CGFloat margin = 0;
 
-        float height;
+        CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
+        CGContextFillRect(context, rect);
+
+        CGFloat height;
         int pixelCountX = (int) (rect.size.width / tileSize);
         int pixelCountY = (int) (rect.size.height / tileSize);
 
@@ -75,7 +81,7 @@
         for (int j = 0; j < pixelCountY; ++j) {
             height = tileSize * j + rect.origin.y;
             for (int i = 0; i < pixelCountX; ++i) {
-                CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, height, tileSize - 2.0f, tileSize - 2.0f));
+                CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, height, tileSize - margin, tileSize - margin));
             }
         }
     };
@@ -88,30 +94,22 @@
     return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:0.95];
 }
 
-+ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(float)saturationUpperLimit{
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit{
     return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:saturationUpperLimit];
 }
 
-- (id)initWithFrame:(CGRect)frame saturationUpperLimit:(float)saturationUpperLimit{
+- (id)initWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit{
     self = [super initWithFrame:frame];
     if (self) {
         self.tileSize = 15;
         self.saturationUpperLimit = saturationUpperLimit;
         self.brightness = 0.5;
+        self.backgroundColor = [UIColor whiteColor];
 
         // タイルの中心にくるようにずらす
         _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(-([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
                 -([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0)];
         [self addSubview:_colorCursor];
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [self createColorMapLayer];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
-                self.colorMapLayer.opacity = self.brightness;
-                [self.layer insertSublayer:self.colorMapLayer atIndex:1];
-            });
-        });
 
         UITapGestureRecognizer *tapGestureRecognizer;
         tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -124,8 +122,24 @@
     return self;
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    [super willMoveToSuperview:newSuperview];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self createColorMapLayer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
+            self.colorMapLayer.opacity = self.brightness;
+            [self.layer insertSublayer:self.colorMapLayer atIndex:1];
+        });
+    });
+}
+
 
 - (void)createColorMapLayer {
+    if (self.colorMapLayer){
+        return;
+    }
 
     UIImage *colorMapImage;
     colorMapImage = [HRColorMapView colorMapImageWithSize:self.frame.size
@@ -196,8 +210,8 @@
     int pixelCountX = (int) (self.frame.size.width / _tileSize);
     int pixelCountY = (int) (self.frame.size.height / _tileSize);
 
-    float pixelX = (int) ((tapPoint.x) / _tileSize) / (float) pixelCountX; // X(色相)
-    float pixelY = (int) ((tapPoint.y) / _tileSize) / (float) (pixelCountY - 1); // Y(彩度)
+    CGFloat pixelX = (int) ((tapPoint.x) / _tileSize) / (CGFloat) pixelCountX; // X(色相)
+    CGFloat pixelY = (int) ((tapPoint.y) / _tileSize) / (CGFloat) (pixelCountY - 1); // Y(彩度)
 
     HRHSVColor selectedHSVColor;
     HSVColorAt(&selectedHSVColor, pixelX, pixelY, self.saturationUpperLimit, self.brightness);
@@ -221,13 +235,13 @@
     int pixelCountX = (int) (self.frame.size.width / _tileSize);
     int pixelCountY = (int) (self.frame.size.height / _tileSize);
     CGPoint newPosition;
-    float hue = hsvColor.h;
+    CGFloat hue = hsvColor.h;
     if (hue == 1) {
         hue = 0;
     }
 
-    newPosition.x = hue * (float) pixelCountX * _tileSize + _tileSize / 2.0f;
-    newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (float) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
+    newPosition.x = hue * (CGFloat) pixelCountX * _tileSize + _tileSize / 2.0f;
+    newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (CGFloat) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
     colorCursorPosition.x = (int) (newPosition.x / _tileSize) * _tileSize;
     colorCursorPosition.y = (int) (newPosition.y / _tileSize) * _tileSize;
     _colorCursor.cursorColor = self.color;
