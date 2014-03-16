@@ -89,13 +89,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         _sliderLayer = [[CAGradientLayer alloc] initWithLayer:self.layer];
-        _sliderLayer.frame = (CGRect) {.origin = CGPointZero, .size = frame.size};
         _sliderLayer.startPoint = CGPointMake(0, .5);
         _sliderLayer.endPoint = CGPointMake(1, .5);
+        _sliderLayer.cornerRadius = 3;
+        _sliderLayer.borderColor = [[UIColor lightGrayColor] CGColor];
+        _sliderLayer.borderWidth = 1.f / [[UIScreen mainScreen] scale];
 
-        //_sliderLayer.locations = @[@0.f, @1.f];
-
-//        _sliderLayer.backgroundColor = [UIColor greenColor].CGColor;
         [self.layer addSublayer:_sliderLayer];
 
         self.backgroundColor = [UIColor clearColor];
@@ -118,7 +117,10 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _sliderLayer.frame = self.sliderFrame;
+    CGRect frame = self.sliderFrame;
+    frame.size.height = 6;
+    frame.origin.y = (CGRectGetHeight(self.frame) - CGRectGetHeight(frame))/2;
+    _sliderLayer.frame = frame;
 }
 
 - (void)setColor:(UIColor *)color {
