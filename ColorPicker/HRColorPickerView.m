@@ -122,15 +122,21 @@ typedef struct timeval timeval;
         // UIの配置
         CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
         CGFloat colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
-        CGFloat headerPartsOriginY = (style.headerHeight - 40.0f) / 2.0f;
-        _brightnessPickerFrame = CGRectMake(120.0f, headerPartsOriginY, style.width - 120.0f - 10.0f, 40.0f);
 
-        self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, headerPartsOriginY - 5, 100, 60)];
+
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+            self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, (style.headerHeight - 60.0f) / 2.0f - 5.f, 100, 60)];
+        }else{
+            self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, (style.headerHeight - 100.0f) / 2.0f, 80, 100)];
+        }
+
         self.colorInfoView.color = defaultUIColor;
         [self addSubview:self.colorInfoView];
 
+        CGFloat brightnessPickerTop = (style.headerHeight - 40.0f) / 2.0f;
+        _brightnessPickerFrame = CGRectMake(104.0f, brightnessPickerTop, style.width - 110.0f - 12.0f, 40.0f);
         _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
-                headerPartsOriginY,
+                brightnessPickerTop,
                 _brightnessPickerFrame.size.width + 40.0f,
                 _brightnessPickerFrame.size.height);
 
