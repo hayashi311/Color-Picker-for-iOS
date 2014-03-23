@@ -92,7 +92,6 @@
         _sliderLayer = [[CAGradientLayer alloc] initWithLayer:self.layer];
         _sliderLayer.startPoint = CGPointMake(0, .5);
         _sliderLayer.endPoint = CGPointMake(1, .5);
-        _sliderLayer.cornerRadius = 3;
         _sliderLayer.borderColor = [[UIColor lightGrayColor] CGColor];
         _sliderLayer.borderWidth = 1.f / [[UIScreen mainScreen] scale];
 
@@ -122,7 +121,8 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGRect frame = self.sliderFrame;
-    frame.size.height = 6;
+    frame.size.height = 8;
+    _sliderLayer.cornerRadius = frame.size.height / 2;
     frame.origin.y = (CGRectGetHeight(self.frame) - CGRectGetHeight(frame)) / 2;
     _sliderLayer.frame = frame;
 }

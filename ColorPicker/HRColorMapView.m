@@ -23,7 +23,9 @@
 
 @end
 
-@implementation HRColorMapView
+@implementation HRColorMapView {
+    CALayer *_lineLayer;
+}
 @synthesize color = _color;
 @synthesize saturationUpperLimit = _saturationUpperLimit;
 
@@ -105,6 +107,12 @@
         self.saturationUpperLimit = saturationUpperLimit;
         self.brightness = 0.5;
         self.backgroundColor = [UIColor whiteColor];
+
+        CGFloat lineHeight = 1.f/[[UIScreen mainScreen] scale];
+        _lineLayer = [[CALayer alloc] init];
+        _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
+        _lineLayer.frame = CGRectMake(0, -lineHeight, CGRectGetWidth(frame), lineHeight);
+        [self.layer addSublayer:_lineLayer];
 
         // タイルの中心にくるようにずらす
         CGPoint cursorOrigin = CGPointMake(
