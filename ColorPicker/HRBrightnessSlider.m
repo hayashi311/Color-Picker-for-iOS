@@ -78,10 +78,11 @@
     CGFloat _brightness;
     UIColor *_color;
     CGFloat _brightnessLowerLimit;
+
+    BOOL _needsToUpdateColor;
 }
 
 @synthesize brightness = _brightness;
-@synthesize color = _color;
 @synthesize brightnessLowerLimit = _brightnessLowerLimit;
 
 
@@ -112,6 +113,8 @@
                 CGRectGetMinX(self.sliderFrame),
                 CGRectGetMidY(self.sliderFrame));
         [self addSubview:_brightnessCursor];
+
+        _needsToUpdateColor = NO;
     }
     return self;
 }
@@ -124,12 +127,28 @@
     _sliderLayer.frame = frame;
 }
 
+- (UIColor *)color {
+    if (_needsToUpdateColor) {
+        HRHSVColor hsvColor;
+        HSVColorFromUIColor(_color, &hsvColor);
+        hsvColor.v = _brightness;
+        _color = [[UIColor alloc] initWithHue:hsvColor.h
+                                   saturation:hsvColor.s
+                                   brightness:hsvColor.v
+                                        alpha:1];
+    }
+    return _color;
+}
+
 - (void)setColor:(UIColor *)color {
     _color = color;
 
     CGFloat brightness;
     [_color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
     _brightness = brightness;
+    _needsToUpdateColor = YES;
+
+    [self updateCursor];
 
     [CATransaction begin];
     [CATransaction setValue:(id) kCFBooleanTrue
@@ -189,6 +208,7 @@
 - (void)updateCursor {
     CGFloat brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
     _brightnessCursor.center = CGPointMake(brightnessCursorX * self.sliderFrame.size.width + self.sliderFrame.origin.x, _brightnessCursor.center.y);
+    _brightnessCursor.color = self.color;
 }
 
 

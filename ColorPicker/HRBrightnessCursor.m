@@ -29,8 +29,6 @@
 #import "HRCgUtil.h"
 
 
-
-
 @implementation HRBrightnessCursor
 
 + (HRBrightnessCursor *)brightnessCursor {
@@ -53,42 +51,45 @@
 
 @end
 
-@implementation HRFlatStyleBrightnessCursor
+@implementation HRFlatStyleBrightnessCursor {
+    CALayer *colorLayer;
+}
 
 - (id)init {
-    self = [super initWithFrame:CGRectMake(0, 0, 30, 30)];
+    self = [super initWithFrame:CGRectMake(0, 0, 28, 28)];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.userInteractionEnabled = NO;
-//        self.layer.backgroundColor = [[UIColor whiteColor] CGColor];
-//        self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-//        self.layer.borderWidth = .5;
-//        self.layer.shadowColor = [[UIColor colorWithWhite:0.0f alpha:0.3f] CGColor];
-//        self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-//        self.layer.shadowRadius = 2.;
-//        self.layer.cornerRadius = CGRectGetHeight(self.frame) / 2;
+        colorLayer = [[CALayer alloc] init];
+        colorLayer.frame = CGRectInset(self.frame, 6, 6);
+        colorLayer.cornerRadius = CGRectGetHeight(colorLayer.frame) / 2;
+        [self.layer addSublayer:colorLayer];
     }
     return self;
 }
 
+- (void)setColor:(UIColor *)color {
+    _color = color;
+    [CATransaction begin];
+    [CATransaction setValue:(id) kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+    colorLayer.backgroundColor = [color CGColor];
+    [CATransaction commit];
+}
+
+
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    CGFloat lineWidth = 3;
+    CGFloat lineWidth = 0.5;
     CGRect ellipseRect = CGRectInset(rect, lineWidth, lineWidth);
 
     CGContextSaveGState(context);
-    CGContextAddEllipseInRect(context, CGRectInset(ellipseRect, lineWidth/2, lineWidth/2));
-    [[UIColor colorWithWhite:1 alpha:0.5] setFill];
-    CGContextDrawPath(context, kCGPathFill);
-    CGContextRestoreGState(context);
-
-
-    CGContextSaveGState(context);
     CGContextAddEllipseInRect(context, ellipseRect);
-    [[UIColor colorWithWhite:0 alpha:0.2] setStroke];
+    [[UIColor colorWithWhite:1 alpha:0.7] setFill];
+    [[UIColor colorWithWhite:0.75 alpha:1] setStroke];
     CGContextSetLineWidth(context, lineWidth);
-    CGContextDrawPath(context, kCGPathStroke);
+    CGContextDrawPath(context, kCGPathFillStroke);
     CGContextRestoreGState(context);
 }
 
