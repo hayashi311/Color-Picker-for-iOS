@@ -31,13 +31,6 @@
 
 @implementation HRBrightnessCursor
 
-+ (HRBrightnessCursor *)brightnessCursor {
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return [[HROldStyleBrightnessCursor alloc] init];
-    }
-    return [[HRFlatStyleBrightnessCursor alloc] init];
-}
-
 - (void)setOrigin:(CGPoint)origin {
     _origin = origin;
     CGRect frame = self.frame;

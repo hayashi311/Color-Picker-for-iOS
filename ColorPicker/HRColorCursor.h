@@ -36,6 +36,6 @@
 + (CGFloat)outlineSize;
 + (CGFloat)shadowSize;
 
-- (id)initWithPoint:(CGPoint)point;
++ (HRColorCursor *)colorCursorWithPoint:(CGPoint)point;
 
 @end

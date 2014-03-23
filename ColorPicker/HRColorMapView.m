@@ -94,11 +94,11 @@
     return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:0.95];
 }
 
-+ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit{
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit {
     return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:saturationUpperLimit];
 }
 
-- (id)initWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit{
+- (id)initWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit {
     self = [super initWithFrame:frame];
     if (self) {
         self.tileSize = 15;
@@ -107,8 +107,10 @@
         self.backgroundColor = [UIColor whiteColor];
 
         // タイルの中心にくるようにずらす
-        _colorCursor = [[HRColorCursor alloc] initWithPoint:CGPointMake(-([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
-                -([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0)];
+        CGPoint cursorCenter = CGPointMake(
+                -([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
+                -([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0);
+        _colorCursor = [HRColorCursor colorCursorWithPoint:cursorCenter];
         [self addSubview:_colorCursor];
 
         UITapGestureRecognizer *tapGestureRecognizer;
@@ -137,7 +139,7 @@
 
 
 - (void)createColorMapLayer {
-    if (self.colorMapLayer){
+    if (self.colorMapLayer) {
         return;
     }
 

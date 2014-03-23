@@ -29,6 +29,18 @@
 #import "HRCgUtil.h"
 #import "HRColorUtil.h"
 
+@interface HRColorCursor()
+- (id)initWithPoint:(CGPoint)point;
+@end
+
+@interface HRFlatStyleColorCursor : HRColorCursor
+
+@end
+
+@interface HROldStyleColorCursor : HRColorCursor
+
+@end
+
 @implementation HRColorCursor
 
 + (CGSize)cursorSize {
@@ -52,6 +64,12 @@
     return 0.0f;
 }
 
++ (HRColorCursor*)colorCursorWithPoint:(CGPoint)point {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return [[HROldStyleColorCursor alloc] initWithPoint:point];
+    }
+    return [[HRFlatStyleColorCursor alloc] initWithPoint:point];
+}
 
 - (id)initWithPoint:(CGPoint)point {
     CGSize size = [HRColorCursor cursorSize];
@@ -99,5 +117,10 @@
     CGContextFillRect(context, CGRectMake(outlineSize + shadowSize, outlineSize + shadowSize, cursorSize.width - (outlineSize + shadowSize) * 2.0f, cursorSize.height - (outlineSize + shadowSize) * 2.0f));
 }
 
+@end
 
+@implementation HRFlatStyleColorCursor
+@end
+
+@implementation HROldStyleColorCursor
 @end
