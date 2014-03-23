@@ -47,14 +47,14 @@
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
         return CGSizeMake(30.0, 30.0f);
     }
-    return CGSizeMake(22.0, 22.0f);
+    return CGSizeMake(28.0, 28.0f);
 }
 
 + (CGFloat)outlineSize {
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
         return 4.0f;
     }
-    return 3.0f;
+    return 0.0f;
 }
 
 + (CGFloat)shadowSize {
@@ -83,11 +83,72 @@
     return self;
 }
 
+@end
+
+@implementation HRFlatStyleColorCursor{
+    CALayer *_colorLayer;
+    UIColor *_cursorColor;
+}
+@synthesize cursorColor = _cursorColor;
+
+- (id)initWithPoint:(CGPoint)point {
+    self = [super initWithPoint:point];
+    if (self) {
+        _colorLayer = [[CALayer alloc] init];
+        CGRect colorLayerFrame = (CGRect){.origin = CGPointZero, .size = self.frame.size};
+        _colorLayer.frame = CGRectInset(colorLayerFrame, 5.5, 5.5);
+        _colorLayer.cornerRadius = CGRectGetHeight(_colorLayer.frame) / 2;
+        [self.layer addSublayer:_colorLayer];
+    }
+    return self;
+}
+
+
+- (void)setCursorColor:(UIColor *)cursorColor {
+    _cursorColor = cursorColor;
+    [CATransaction begin];
+    [CATransaction setValue:(id) kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+    _colorLayer.backgroundColor = [_cursorColor CGColor];
+    [CATransaction commit];
+    [self setNeedsDisplay];
+}
+
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGFloat lineWidth = 0.5;
+    CGRect ellipseRect = CGRectInset(rect, lineWidth, lineWidth);
+
+    HRHSVColor hsvColor;
+    HSVColorFromUIColor(self.cursorColor, &hsvColor);
+
+
+    CGContextSaveGState(context);
+    CGContextAddEllipseInRect(context, ellipseRect);
+    if (hsvColor.v > 0.7 && hsvColor.s < 0.4) {
+        [[UIColor colorWithWhite:0 alpha:0.3] setStroke];
+        [[UIColor colorWithWhite:0 alpha:0.2] setFill];
+    } else {
+        [[UIColor colorWithWhite:1 alpha:0.7] setFill];
+        [[UIColor colorWithWhite:0.75 alpha:1] setStroke];
+    }
+    CGContextSetLineWidth(context, lineWidth);
+    CGContextDrawPath(context, kCGPathFillStroke);
+    CGContextRestoreGState(context);
+}
+
+@end
+
+@implementation HROldStyleColorCursor {
+    UIColor *_cursorColor;
+}
+@synthesize cursorColor = _cursorColor;
+
 - (void)setCursorColor:(UIColor *)cursorColor {
     _cursorColor = cursorColor;
     [self setNeedsDisplay];
 }
-
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -117,10 +178,5 @@
     CGContextFillRect(context, CGRectMake(outlineSize + shadowSize, outlineSize + shadowSize, cursorSize.width - (outlineSize + shadowSize) * 2.0f, cursorSize.height - (outlineSize + shadowSize) * 2.0f));
 }
 
-@end
 
-@implementation HRFlatStyleColorCursor
-@end
-
-@implementation HROldStyleColorCursor
 @end

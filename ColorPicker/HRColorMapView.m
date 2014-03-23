@@ -107,10 +107,10 @@
         self.backgroundColor = [UIColor whiteColor];
 
         // タイルの中心にくるようにずらす
-        CGPoint cursorCenter = CGPointMake(
+        CGPoint cursorOrigin = CGPointMake(
                 -([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
                 -([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0);
-        _colorCursor = [HRColorCursor colorCursorWithPoint:cursorCenter];
+        _colorCursor = [HRColorCursor colorCursorWithPoint:cursorOrigin];
         [self addSubview:_colorCursor];
 
         UITapGestureRecognizer *tapGestureRecognizer;

@@ -55,7 +55,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.userInteractionEnabled = NO;
         _colorLayer = [[CALayer alloc] init];
-        _colorLayer.frame = CGRectInset(self.frame, 6, 6);
+        _colorLayer.frame = CGRectInset(self.frame, 5.5, 5.5);
         _colorLayer.cornerRadius = CGRectGetHeight(_colorLayer.frame) / 2;
         [self.layer addSublayer:_colorLayer];
 
