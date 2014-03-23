@@ -52,7 +52,8 @@
 @end
 
 @implementation HRFlatStyleBrightnessCursor {
-    CALayer *colorLayer;
+    CALayer *_colorLayer;
+    UILabel *_brightnessLabel;
 }
 
 - (id)init {
@@ -60,10 +61,18 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.userInteractionEnabled = NO;
-        colorLayer = [[CALayer alloc] init];
-        colorLayer.frame = CGRectInset(self.frame, 6, 6);
-        colorLayer.cornerRadius = CGRectGetHeight(colorLayer.frame) / 2;
-        [self.layer addSublayer:colorLayer];
+        _colorLayer = [[CALayer alloc] init];
+        _colorLayer.frame = CGRectInset(self.frame, 6, 6);
+        _colorLayer.cornerRadius = CGRectGetHeight(_colorLayer.frame) / 2;
+        [self.layer addSublayer:_colorLayer];
+
+        _brightnessLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 16)];
+        _brightnessLabel.center = CGPointMake(CGRectGetWidth(self.frame) / 2, -10);
+        _brightnessLabel.backgroundColor = [UIColor clearColor];
+        _brightnessLabel.textAlignment = NSTextAlignmentCenter;
+        _brightnessLabel.font = [UIFont systemFontOfSize:12];
+        _brightnessLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
+        [self addSubview:_brightnessLabel];
     }
     return self;
 }
@@ -73,10 +82,33 @@
     [CATransaction begin];
     [CATransaction setValue:(id) kCFBooleanTrue
                      forKey:kCATransactionDisableActions];
-    colorLayer.backgroundColor = [color CGColor];
+    _colorLayer.backgroundColor = [color CGColor];
     [CATransaction commit];
-}
 
+    HRHSVColor hsvColor;
+    HSVColorFromUIColor(_color, &hsvColor);
+
+    NSMutableAttributedString *status;
+    NSString *percent = [NSString stringWithFormat:@"%d", (int) (hsvColor.v * 100)];
+    NSDictionary *attributes = @{
+            NSFontAttributeName : [UIFont systemFontOfSize:12],
+            NSForegroundColorAttributeName : [UIColor colorWithWhite:0.5 alpha:1]};
+
+    status = [[NSMutableAttributedString alloc] initWithString:percent
+                                                    attributes:attributes];
+
+    NSDictionary *signAttributes = @{
+            NSFontAttributeName : [UIFont systemFontOfSize:10],
+            NSForegroundColorAttributeName : [UIColor colorWithWhite:0.5 alpha:1]};
+
+    NSAttributedString *percentSign;
+    percentSign = [[NSAttributedString alloc] initWithString:@"%"
+                                                  attributes:signAttributes];
+
+    [status appendAttributedString:percentSign];
+
+    _brightnessLabel.attributedText = status;
+}
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -92,7 +124,6 @@
     CGContextDrawPath(context, kCGPathFillStroke);
     CGContextRestoreGState(context);
 }
-
 
 @end
 
