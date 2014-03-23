@@ -28,13 +28,7 @@
 #import "HRBrightnessCursor.h"
 #import "HRCgUtil.h"
 
-@interface HRFlatStyleBrightnessCursor : HRBrightnessCursor
 
-@end
-
-@interface HROldStyleBrightnessCursor : HRBrightnessCursor
-
-@end
 
 
 @implementation HRBrightnessCursor
@@ -62,20 +56,42 @@
 @implementation HRFlatStyleBrightnessCursor
 
 - (id)init {
-    self = [super initWithFrame:CGRectMake(0, 0, 20, 20)];
+    self = [super initWithFrame:CGRectMake(0, 0, 30, 30)];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.userInteractionEnabled = NO;
-        self.layer.backgroundColor = [[UIColor whiteColor] CGColor];
-        self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        self.layer.borderWidth = .5;
-        self.layer.shadowColor = [[UIColor colorWithWhite:0.0f alpha:0.3f] CGColor];
-        self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-        self.layer.shadowRadius = 2.;
-        self.layer.cornerRadius = CGRectGetHeight(self.frame) / 2;
+//        self.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+//        self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//        self.layer.borderWidth = .5;
+//        self.layer.shadowColor = [[UIColor colorWithWhite:0.0f alpha:0.3f] CGColor];
+//        self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+//        self.layer.shadowRadius = 2.;
+//        self.layer.cornerRadius = CGRectGetHeight(self.frame) / 2;
     }
     return self;
 }
+
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGFloat lineWidth = 3;
+    CGRect ellipseRect = CGRectInset(rect, lineWidth, lineWidth);
+
+    CGContextSaveGState(context);
+    CGContextAddEllipseInRect(context, CGRectInset(ellipseRect, lineWidth/2, lineWidth/2));
+    [[UIColor colorWithWhite:1 alpha:0.5] setFill];
+    CGContextDrawPath(context, kCGPathFill);
+    CGContextRestoreGState(context);
+
+
+    CGContextSaveGState(context);
+    CGContextAddEllipseInRect(context, ellipseRect);
+    [[UIColor colorWithWhite:0 alpha:0.2] setStroke];
+    CGContextSetLineWidth(context, lineWidth);
+    CGContextDrawPath(context, kCGPathStroke);
+    CGContextRestoreGState(context);
+}
+
 
 @end
 

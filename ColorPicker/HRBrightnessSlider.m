@@ -72,7 +72,7 @@
 @end
 
 @implementation HRFlatStyleBrightnessSlider {
-    HRBrightnessCursor *_brightnessCursor;
+    HRFlatStyleBrightnessCursor *_brightnessCursor;
 
     CAGradientLayer *_sliderLayer;
     CGFloat _brightness;
@@ -107,7 +107,7 @@
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self addGestureRecognizer:panGestureRecognizer];
 
-        _brightnessCursor = [HRBrightnessCursor brightnessCursor];
+        _brightnessCursor = [[HRFlatStyleBrightnessCursor alloc] init];
         _brightnessCursor.origin = CGPointMake(
                 CGRectGetMinX(self.sliderFrame),
                 CGRectGetMidY(self.sliderFrame));
@@ -227,7 +227,7 @@
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self addGestureRecognizer:panGestureRecognizer];
 
-        _brightnessCursor = [HRBrightnessCursor brightnessCursor];
+        _brightnessCursor = [[HROldStyleBrightnessCursor alloc] init];
         _brightnessCursor.origin = CGPointMake(
                 CGRectGetMinY(self.sliderFrame),
                 CGRectGetMidY(self.sliderFrame));

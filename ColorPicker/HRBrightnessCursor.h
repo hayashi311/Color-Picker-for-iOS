@@ -28,9 +28,14 @@
 #import <UIKit/UIKit.h>
 
 @interface HRBrightnessCursor : UIView
-
-+ (HRBrightnessCursor *)brightnessCursor;
-
 @property (nonatomic) CGPoint origin;
+@end
+
+
+@interface HRFlatStyleBrightnessCursor : HRBrightnessCursor
+
+@end
+
+@interface HROldStyleBrightnessCursor : HRBrightnessCursor
 
 @end
