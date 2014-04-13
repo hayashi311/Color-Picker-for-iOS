@@ -31,7 +31,6 @@
 @class HRColorPickerView;
 
 
-
 struct HRColorPickerStyle {
     CGFloat width; // viewの横幅。デフォルトは320.0f;
     CGFloat headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
@@ -65,9 +64,9 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 - (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
 
 @property (nonatomic, readonly) UIColor *color;
-@property (nonatomic, strong) UIView<HRColorInfoView> *colorInfoView;
-@property (nonatomic, strong) UIControl<HRColorMapView> *colorMapView;
-@property (nonatomic, strong) UIControl<HRBrightnessSlider> *brightnessSlider;
+@property (nonatomic, strong) UIView <HRColorInfoView> *colorInfoView;
+@property (nonatomic, strong) UIControl <HRColorMapView> *colorMapView;
+@property (nonatomic, strong) UIControl <HRBrightnessSlider> *brightnessSlider;
 
 
 @end
@@ -81,7 +80,7 @@ __attribute__((deprecated))
 @end
 
 
-@interface HRColorPickerView(Deprecated)
+@interface HRColorPickerView (Deprecated)
 
 - (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
 

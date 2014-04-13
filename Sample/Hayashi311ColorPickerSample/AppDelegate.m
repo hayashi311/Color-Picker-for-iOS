@@ -38,7 +38,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     // テンプレートからの変更点↓
-    SampleTopViewController* sampleTopViewController = [[SampleTopViewController alloc] init];
+    SampleTopViewController *sampleTopViewController = [[SampleTopViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
 
     navigationController.navigationBar.translucent = NO;

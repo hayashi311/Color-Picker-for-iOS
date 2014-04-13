@@ -73,6 +73,7 @@
 
 const CGFloat kHRFlatStyleBrightnessSliderHeight = 11.;
 const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
+
 @implementation HRFlatStyleBrightnessSlider {
     HRFlatStyleBrightnessCursor *_brightnessCursor;
 
@@ -114,7 +115,7 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
 
         CGRect sliderFrame = CGRectMake(0, 0, frame.size.width, kHRFlatStyleBrightnessSliderHeight);
         sliderFrame = CGRectInset(sliderFrame, 20, 0);
-        sliderFrame.origin.y = CGRectGetHeight(frame) - kHRFlatStyleBrightnessSliderHeight / 2- kHRFlatStyleBrightnessSliderMarginBottom;
+        sliderFrame.origin.y = CGRectGetHeight(frame) - kHRFlatStyleBrightnessSliderHeight / 2 - kHRFlatStyleBrightnessSliderMarginBottom;
         self.sliderFrame = sliderFrame;
 
         _brightnessCursor = [[HRFlatStyleBrightnessCursor alloc] init];

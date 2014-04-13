@@ -108,7 +108,7 @@
         self.brightness = 0.5;
         self.backgroundColor = [UIColor whiteColor];
 
-        CGFloat lineHeight = 1.f/[[UIScreen mainScreen] scale];
+        CGFloat lineHeight = 1.f / [[UIScreen mainScreen] scale];
         _lineLayer = [[CALayer alloc] init];
         _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
         _lineLayer.frame = CGRectMake(0, -lineHeight, CGRectGetWidth(frame), lineHeight);

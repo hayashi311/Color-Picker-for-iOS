@@ -14,6 +14,6 @@
 
 @interface HRColorInfoView : UIView <HRColorInfoView>
 
-+ (HRColorInfoView*)colorInfoViewWithFrame:(CGRect)frame;
++ (HRColorInfoView *)colorInfoViewWithFrame:(CGRect)frame;
 
 @end

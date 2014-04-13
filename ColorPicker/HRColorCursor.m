@@ -27,9 +27,8 @@
 
 #import "HRColorCursor.h"
 #import "HRCgUtil.h"
-#import "HRColorUtil.h"
 
-@interface HRColorCursor()
+@interface HRColorCursor ()
 - (id)initWithPoint:(CGPoint)point;
 @end
 
@@ -64,7 +63,7 @@
     return 0.0f;
 }
 
-+ (HRColorCursor*)colorCursorWithPoint:(CGPoint)point {
++ (HRColorCursor *)colorCursorWithPoint:(CGPoint)point {
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
         return [[HROldStyleColorCursor alloc] initWithPoint:point];
     }
@@ -85,7 +84,7 @@
 
 @end
 
-@implementation HRFlatStyleColorCursor{
+@implementation HRFlatStyleColorCursor {
     CALayer *_colorLayer;
     UIColor *_cursorColor;
 }
@@ -95,7 +94,7 @@
     self = [super initWithPoint:point];
     if (self) {
         _colorLayer = [[CALayer alloc] init];
-        CGRect colorLayerFrame = (CGRect){.origin = CGPointZero, .size = self.frame.size};
+        CGRect colorLayerFrame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
         _colorLayer.frame = CGRectInset(colorLayerFrame, 5.5, 5.5);
         _colorLayer.cornerRadius = CGRectGetHeight(_colorLayer.frame) / 2;
         [self.layer addSublayer:_colorLayer];
