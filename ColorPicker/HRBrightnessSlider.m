@@ -71,6 +71,8 @@
 
 @end
 
+const CGFloat kHRFlatStyleBrightnessSliderHeight = 11.;
+const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
 @implementation HRFlatStyleBrightnessSlider {
     HRFlatStyleBrightnessCursor *_brightnessCursor;
 
@@ -110,6 +112,11 @@
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self addGestureRecognizer:panGestureRecognizer];
 
+        CGRect sliderFrame = CGRectMake(0, 0, frame.size.width, kHRFlatStyleBrightnessSliderHeight);
+        sliderFrame = CGRectInset(sliderFrame, 20, 0);
+        sliderFrame.origin.y = CGRectGetHeight(frame) - kHRFlatStyleBrightnessSliderHeight / 2- kHRFlatStyleBrightnessSliderMarginBottom;
+        self.sliderFrame = sliderFrame;
+
         _brightnessCursor = [[HRFlatStyleBrightnessCursor alloc] init];
         _brightnessCursor.origin = CGPointMake(
                 CGRectGetMinX(_controlFrame),
@@ -117,6 +124,7 @@
         [self addSubview:_brightnessCursor];
 
         _needsToUpdateColor = NO;
+
     }
     return self;
 }
@@ -124,9 +132,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGRect frame = _renderingFrame;
-    frame.size.height = 11;
     _sliderLayer.cornerRadius = frame.size.height / 2;
-    frame.origin.y = (CGRectGetHeight(self.frame) - CGRectGetHeight(frame)) / 2;
     _sliderLayer.frame = frame;
 }
 

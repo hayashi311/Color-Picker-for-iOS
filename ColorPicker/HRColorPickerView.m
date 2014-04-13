@@ -141,8 +141,12 @@ typedef struct timeval timeval;
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
             _brightnessPickerFrame = CGRectMake(104.0f, brightnessPickerTop, style.width - 110.0f - 12.0f, 40.0f);
         }else{
+            brightnessPickerTop = (style.headerHeight - 84.0f) / 2.0f;
             _brightnessPickerFrame = CGRectMake(
-                    CGRectGetMaxX(self.colorInfoView.frame) + CGRectGetMinX(self.colorInfoView.frame), brightnessPickerTop, style.width - CGRectGetMaxX(self.colorInfoView.frame) - CGRectGetMinX(self.colorInfoView.frame) * 2, 40.0f);
+                    CGRectGetMaxX(self.colorInfoView.frame) + CGRectGetMinX(self.colorInfoView.frame),
+                    brightnessPickerTop,
+                    style.width - CGRectGetMaxX(self.colorInfoView.frame) - CGRectGetMinX(self.colorInfoView.frame) * 2,
+                    84.0f);
         }
 
         _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,

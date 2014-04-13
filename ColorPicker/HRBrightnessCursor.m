@@ -66,7 +66,6 @@
         _brightnessLabel.font = [UIFont systemFontOfSize:12];
         _brightnessLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
         [self addSubview:_brightnessLabel];
-        _brightnessLabel.alpha = 0;
     }
     return self;
 }

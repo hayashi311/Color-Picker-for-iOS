@@ -131,7 +131,7 @@
         [[UIColor colorWithWhite:0 alpha:0.2] setFill];
     } else {
         [[UIColor colorWithWhite:1 alpha:0.7] setFill];
-        [[UIColor colorWithWhite:0.75 alpha:1] setStroke];
+        [[UIColor colorWithWhite:0.65 alpha:1] setStroke];
     }
     CGContextSetLineWidth(context, lineWidth);
     CGContextDrawPath(context, kCGPathFillStroke);
