@@ -66,6 +66,7 @@
         _brightnessLabel.font = [UIFont systemFontOfSize:12];
         _brightnessLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
         [self addSubview:_brightnessLabel];
+        _brightnessLabel.alpha = 0;
     }
     return self;
 }
@@ -112,7 +113,7 @@
     CGContextSaveGState(context);
     CGContextAddEllipseInRect(context, ellipseRect);
     [[UIColor colorWithWhite:1 alpha:0.7] setFill];
-    [[UIColor colorWithWhite:0.75 alpha:1] setStroke];
+    [[UIColor colorWithWhite:0.65 alpha:1] setStroke];
     CGContextSetLineWidth(context, lineWidth);
     CGContextDrawPath(context, kCGPathFillStroke);
     CGContextRestoreGState(context);

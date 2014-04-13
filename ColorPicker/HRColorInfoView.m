@@ -80,7 +80,7 @@
 @end
 
 
-const CGFloat kHRFlatStyleColorInfoViewLabelHeight = 20.;
+const CGFloat kHRFlatStyleColorInfoViewLabelHeight = 18.;
 const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 
 @implementation HRFlatStyleColorInfoView {

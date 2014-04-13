@@ -63,7 +63,11 @@ typedef struct timeval timeval;
 + (HRColorPickerStyle)defaultStyle {
     HRColorPickerStyle style;
     style.width = 320.0f;
-    style.headerHeight = 106.0f;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        style.headerHeight = 106.0f;
+    }else{
+        style.headerHeight = 198 - 44 - 61;
+    }
     style.colorMapTileSize = 15;
     style.colorMapSizeWidth = 20;
     style.colorMapSizeHeight = 20;
@@ -127,14 +131,20 @@ typedef struct timeval timeval;
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
             self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, (style.headerHeight - 60.0f) / 2.0f - 5.f, 100, 60)];
         }else{
-            self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, (style.headerHeight - 100.0f) / 2.0f, 80, 100)];
+            self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(8, (style.headerHeight - 84) / 2.0f, 66, 84)];
         }
 
         self.colorInfoView.color = defaultUIColor;
         [self addSubview:self.colorInfoView];
 
         CGFloat brightnessPickerTop = (style.headerHeight - 40.0f) / 2.0f;
-        _brightnessPickerFrame = CGRectMake(104.0f, brightnessPickerTop, style.width - 110.0f - 12.0f, 40.0f);
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+            _brightnessPickerFrame = CGRectMake(104.0f, brightnessPickerTop, style.width - 110.0f - 12.0f, 40.0f);
+        }else{
+            _brightnessPickerFrame = CGRectMake(
+                    CGRectGetMaxX(self.colorInfoView.frame) + CGRectGetMinX(self.colorInfoView.frame), brightnessPickerTop, style.width - CGRectGetMaxX(self.colorInfoView.frame) - CGRectGetMinX(self.colorInfoView.frame) * 2, 40.0f);
+        }
+
         _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
                 brightnessPickerTop,
                 _brightnessPickerFrame.size.width + 40.0f,

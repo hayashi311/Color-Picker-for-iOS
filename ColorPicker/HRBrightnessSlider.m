@@ -80,6 +80,9 @@
     CGFloat _brightnessLowerLimit;
 
     BOOL _needsToUpdateColor;
+
+    CGRect _controlFrame;
+    CGRect _renderingFrame;
 }
 
 @synthesize brightness = _brightness;
@@ -109,8 +112,8 @@
 
         _brightnessCursor = [[HRFlatStyleBrightnessCursor alloc] init];
         _brightnessCursor.origin = CGPointMake(
-                CGRectGetMinX(self.sliderFrame),
-                CGRectGetMidY(self.sliderFrame));
+                CGRectGetMinX(_controlFrame),
+                CGRectGetMidY(_controlFrame));
         [self addSubview:_brightnessCursor];
 
         _needsToUpdateColor = NO;
@@ -120,8 +123,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    CGRect frame = self.sliderFrame;
-    frame.size.height = 8;
+    CGRect frame = _renderingFrame;
+    frame.size.height = 11;
     _sliderLayer.cornerRadius = frame.size.height / 2;
     frame.origin.y = (CGRectGetHeight(self.frame) - CGRectGetHeight(frame)) / 2;
     _sliderLayer.frame = frame;
@@ -194,11 +197,11 @@
 
 - (void)update:(CGPoint)tapPoint {
     CGFloat selectedBrightness = 0;
-    CGPoint tapPointInSlider = CGPointMake(tapPoint.x - self.sliderFrame.origin.x, tapPoint.y);
-    tapPointInSlider.x = MIN(tapPointInSlider.x, self.sliderFrame.size.width);
+    CGPoint tapPointInSlider = CGPointMake(tapPoint.x - _controlFrame.origin.x, tapPoint.y);
+    tapPointInSlider.x = MIN(tapPointInSlider.x, _controlFrame.size.width);
     tapPointInSlider.x = MAX(tapPointInSlider.x, 0);
 
-    selectedBrightness = 1.0 - tapPointInSlider.x / self.sliderFrame.size.width;
+    selectedBrightness = 1.0 - tapPointInSlider.x / _controlFrame.size.width;
     selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit) + self.brightnessLowerLimit;
     _brightness = selectedBrightness;
 
@@ -207,8 +210,14 @@
 
 - (void)updateCursor {
     CGFloat brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
-    _brightnessCursor.center = CGPointMake(brightnessCursorX * self.sliderFrame.size.width + self.sliderFrame.origin.x, _brightnessCursor.center.y);
+    _brightnessCursor.center = CGPointMake(brightnessCursorX * _controlFrame.size.width + _controlFrame.origin.x, _brightnessCursor.center.y);
     _brightnessCursor.color = self.color;
+}
+
+- (void)setSliderFrame:(CGRect)sliderFrame {
+    [super setSliderFrame:sliderFrame];
+    _renderingFrame = sliderFrame;
+    _controlFrame = CGRectInset(_renderingFrame, 8, 0);
 }
 
 
