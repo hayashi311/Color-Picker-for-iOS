@@ -23,6 +23,7 @@
 @property (nonatomic) UIColor *color;
 @property (nonatomic) CGFloat brightnessLowerLimit;
 
+@property (nonatomic, strong) NSDate *lastUpdate;
 @end
 
 @interface HROldStyleBrightnessSlider : HRBrightnessSlider
@@ -194,11 +195,14 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
 - (void)handlePan:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
         if (sender.numberOfTouches <= 0) {
+
+            _brightnessCursor.editing = NO;
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
         [self update:tapPoint];
         [self updateCursor];
+        _brightnessCursor.editing = YES;
     }
 }
 

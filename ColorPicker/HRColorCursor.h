@@ -28,9 +28,14 @@
 #import <UIKit/UIKit.h>
 #import "HRColorUtil.h"
 
-@interface HRColorCursor : UIView
+@protocol HRColorCursor
+@optional
+- (void)setEditing:(BOOL)editing;
+@end
 
-@property (nonatomic, strong) UIColor *cursorColor;
+@interface HRColorCursor : UIView<HRColorCursor>
+
+@property (nonatomic, strong) UIColor *color;
 
 + (CGSize)cursorSize;
 + (CGFloat)outlineSize;

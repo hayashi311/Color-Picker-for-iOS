@@ -108,11 +108,13 @@
         self.brightness = 0.5;
         self.backgroundColor = [UIColor whiteColor];
 
-        CGFloat lineHeight = 1.f / [[UIScreen mainScreen] scale];
-        _lineLayer = [[CALayer alloc] init];
-        _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
-        _lineLayer.frame = CGRectMake(0, -lineHeight, CGRectGetWidth(frame), lineHeight);
-        [self.layer addSublayer:_lineLayer];
+        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+            CGFloat lineHeight = 1.f / [[UIScreen mainScreen] scale];
+            _lineLayer = [[CALayer alloc] init];
+            _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
+            _lineLayer.frame = CGRectMake(0, -lineHeight, CGRectGetWidth(frame), lineHeight);
+            [self.layer addSublayer:_lineLayer];
+        }
 
         // タイルの中心にくるようにずらす
         CGPoint cursorOrigin = CGPointMake(
@@ -205,10 +207,16 @@
 - (void)handlePan:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
         if (sender.numberOfTouches <= 0) {
+            if ([_colorCursor respondsToSelector:@selector(setEditing:)]) {
+                [_colorCursor setEditing:NO];
+            }
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
         [self update:tapPoint];
+        if ([_colorCursor respondsToSelector:@selector(setEditing:)]) {
+            [_colorCursor setEditing:YES];
+        }
     }
 }
 
@@ -254,7 +262,7 @@
     newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (CGFloat) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
     colorCursorPosition.x = (int) (newPosition.x / _tileSize) * _tileSize;
     colorCursorPosition.y = (int) (newPosition.y / _tileSize) * _tileSize;
-    _colorCursor.cursorColor = self.color;
+    _colorCursor.color = self.color;
     _colorCursor.transform = CGAffineTransformMakeTranslation(colorCursorPosition.x, colorCursorPosition.y);
 }
 

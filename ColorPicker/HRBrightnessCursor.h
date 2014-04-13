@@ -35,7 +35,7 @@
 @interface HRFlatStyleBrightnessCursor : HRBrightnessCursor
 
 @property (nonatomic, strong) UIColor *color;
-
+@property (nonatomic) BOOL editing;
 @end
 
 @interface HROldStyleBrightnessCursor : HRBrightnessCursor
