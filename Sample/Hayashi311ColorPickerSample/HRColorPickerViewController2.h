@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2012 Ryota Hayashi
+ * Copyright (c) 2011 Ryota Hayashi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,38 @@
  * $FreeBSD$
  */
 
-#ifndef HRColorPickerMacros_h
-#define HRColorPickerMacros_h
+#import <UIKit/UIKit.h>
+#import "HRColorPickerViewController.h"
 
-#if !__has_feature(objc_arc_weak)
-#define weak    unsafe_unretained
-#undef __weak
-#define __weak  __unsafe_unretained
-#endif
+@class HRColorPickerView;
 
-#endif
+@interface HRColorPickerViewController2 : UIViewController {
+    id <HRColorPickerViewControllerDelegate> __weak delegate;
+    HRColorPickerView *colorPickerView;
+
+    UIColor *_color;
+    BOOL _fullColor;
+    HCPCSaveStyle _saveStyle;
+}
+
++ (HRColorPickerViewController2 *)colorPickerViewControllerWithColor:(UIColor *)color;
+
+/** Initialize controller with selected color. 
+ * @param defaultColor selected color
+ * @param fullColor If YES, browseable full color. If NO color was limited.
+ * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
+ */
+- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
+
+/** @deprecated use -save: instead of this . */
+- (void)saveColor:(id)sender;
+
+- (void)save;
+- (void)save:(id)sender;
+- (void)cancel:(id)sender;
+
+
+@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
+
+
+@end

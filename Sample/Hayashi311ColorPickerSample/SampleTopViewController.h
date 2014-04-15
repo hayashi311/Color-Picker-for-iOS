@@ -26,10 +26,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "HRColorPickerViewController.h"
 
-@interface SampleTopViewController : UIViewController<HRColorPickerViewControllerDelegate>{
-    UILabel* hexColorLabel;
+@interface SampleTopViewController : UIViewController {
+    UILabel *hexColorLabel;
 }
 
 - (void)openColorPicker:(id)sender;

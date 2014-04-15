@@ -10,7 +10,12 @@
 		46E87BFE146F46C600BC1608 /* HRCgUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BF9146F46C600BC1608 /* HRCgUtil.m */; };
 		46E87BFF146F46C600BC1608 /* HRColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFB146F46C600BC1608 /* HRColorPickerView.m */; };
 		46E87C00146F46C600BC1608 /* HRColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87BFD146F46C600BC1608 /* HRColorUtil.m */; };
-		46E87C03146F519F00BC1608 /* HRColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */; };
+		5A960054696F86CC6BACBEE0 /* HRColorPickerViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9609895A2D64809BCB4C38 /* HRColorPickerViewController2.m */; };
+		5A96038FAFBF33414CA3FF88 /* HRBrightnessSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9606B41F0C30F27038D44F /* HRBrightnessSlider.m */; };
+		5A9609AF01047237D853AA4A /* HRColorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A96068A373E534008D7C3CD /* HRColorInfoView.m */; };
+		5A9609ED49BDBF8BED624F64 /* HRColorMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A960E1844766B749480FD79 /* HRColorMapView.m */; };
+		5A960A49BABFEF92F0906C08 /* UIImage+CoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9601E646B60A41D7B272B6 /* UIImage+CoreGraphics.m */; };
+		5A960E4C18B27F97510AF01D /* HRColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9605347C99063D65D09707 /* HRColorPickerViewController.m */; };
 		DA0203EA160F20840030C93D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA0203E9160F20830030C93D /* Default-568h@2x.png */; };
 		DA3CD22E148205F700492DF7 /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */; };
 		DA3CD2321482068B00492DF7 /* HRColorCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD2311482068B00492DF7 /* HRColorCursor.m */; };
@@ -25,17 +30,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		469979ED16129765002DBB63 /* HRColorPickerMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HRColorPickerMacros.h; sourceTree = "<group>"; };
 		46E87BF8146F46C600BC1608 /* HRCgUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRCgUtil.h; path = ../ColorPicker/HRCgUtil.h; sourceTree = "<group>"; };
 		46E87BF9146F46C600BC1608 /* HRCgUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRCgUtil.m; path = ../ColorPicker/HRCgUtil.m; sourceTree = "<group>"; };
 		46E87BFA146F46C600BC1608 /* HRColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerView.h; sourceTree = "<group>"; };
 		46E87BFB146F46C600BC1608 /* HRColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerView.m; sourceTree = "<group>"; };
 		46E87BFC146F46C600BC1608 /* HRColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRColorUtil.h; path = ../ColorPicker/HRColorUtil.h; sourceTree = "<group>"; };
 		46E87BFD146F46C600BC1608 /* HRColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRColorUtil.m; path = ../ColorPicker/HRColorUtil.m; sourceTree = "<group>"; };
-		46E87C01146F519F00BC1608 /* HRColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerViewController.h; sourceTree = "<group>"; };
-		46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerViewController.m; sourceTree = "<group>"; };
 		46FD94B21475604400384FD7 /* Hayashi311ColorPickerSample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hayashi311ColorPickerSample-Info.plist"; sourceTree = "<group>"; };
 		46FD94B31475604400384FD7 /* Hayashi311ColorPickerSample-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Hayashi311ColorPickerSample-Prefix.pch"; sourceTree = "<group>"; };
+		5A96000BB289E1B816E7711D /* HRBrightnessSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessSlider.h; sourceTree = "<group>"; };
+		5A9601E646B60A41D7B272B6 /* UIImage+CoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CoreGraphics.m"; sourceTree = "<group>"; };
+		5A9601F3CFD926E9ED1171C9 /* HRColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerViewController.h; sourceTree = "<group>"; };
+		5A9604DB1AB8CC3C8E7C866C /* HRColorPickerViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerViewController2.h; sourceTree = "<group>"; };
+		5A9605347C99063D65D09707 /* HRColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerViewController.m; sourceTree = "<group>"; };
+		5A96068A373E534008D7C3CD /* HRColorInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorInfoView.m; sourceTree = "<group>"; };
+		5A9606B41F0C30F27038D44F /* HRBrightnessSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessSlider.m; sourceTree = "<group>"; };
+		5A9607E144B89628A7AD769B /* UIImage+CoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CoreGraphics.h"; sourceTree = "<group>"; };
+		5A9609895A2D64809BCB4C38 /* HRColorPickerViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerViewController2.m; sourceTree = "<group>"; };
+		5A960B38CC298F0104212AD6 /* HRColorInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorInfoView.h; sourceTree = "<group>"; };
+		5A960E1844766B749480FD79 /* HRColorMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorMapView.m; sourceTree = "<group>"; };
+		5A960F2A9C9BAA292C0D92E5 /* HRColorMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorMapView.h; sourceTree = "<group>"; };
 		DA0203E9160F20830030C93D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		DA3CD22C148205F700492DF7 /* HRBrightnessCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessCursor.h; sourceTree = "<group>"; };
 		DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessCursor.m; sourceTree = "<group>"; };
@@ -72,8 +86,6 @@
 		46E87BF7146F46C600BC1608 /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
-				46E87C01146F519F00BC1608 /* HRColorPickerViewController.h */,
-				46E87C02146F519F00BC1608 /* HRColorPickerViewController.m */,
 				46E87BF8146F46C600BC1608 /* HRCgUtil.h */,
 				46E87BF9146F46C600BC1608 /* HRCgUtil.m */,
 				46E87BFA146F46C600BC1608 /* HRColorPickerView.h */,
@@ -84,7 +96,14 @@
 				DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */,
 				DA3CD2301482068B00492DF7 /* HRColorCursor.h */,
 				DA3CD2311482068B00492DF7 /* HRColorCursor.m */,
-				469979ED16129765002DBB63 /* HRColorPickerMacros.h */,
+				5A960E1844766B749480FD79 /* HRColorMapView.m */,
+				5A960F2A9C9BAA292C0D92E5 /* HRColorMapView.h */,
+				5A9601E646B60A41D7B272B6 /* UIImage+CoreGraphics.m */,
+				5A9607E144B89628A7AD769B /* UIImage+CoreGraphics.h */,
+				5A9606B41F0C30F27038D44F /* HRBrightnessSlider.m */,
+				5A96000BB289E1B816E7711D /* HRBrightnessSlider.h */,
+				5A96068A373E534008D7C3CD /* HRColorInfoView.m */,
+				5A960B38CC298F0104212AD6 /* HRColorInfoView.h */,
 			);
 			name = ColorPicker;
 			path = ../../ColorPicker;
@@ -148,6 +167,10 @@
 			children = (
 				DA877C4D14527E2300A0754C /* SampleTopViewController.h */,
 				DA877C4E14527E2300A0754C /* SampleTopViewController.m */,
+				5A9605347C99063D65D09707 /* HRColorPickerViewController.m */,
+				5A9601F3CFD926E9ED1171C9 /* HRColorPickerViewController.h */,
+				5A9609895A2D64809BCB4C38 /* HRColorPickerViewController2.m */,
+				5A9604DB1AB8CC3C8E7C866C /* HRColorPickerViewController2.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -221,9 +244,14 @@
 				46E87BFE146F46C600BC1608 /* HRCgUtil.m in Sources */,
 				46E87BFF146F46C600BC1608 /* HRColorPickerView.m in Sources */,
 				46E87C00146F46C600BC1608 /* HRColorUtil.m in Sources */,
-				46E87C03146F519F00BC1608 /* HRColorPickerViewController.m in Sources */,
 				DA3CD22E148205F700492DF7 /* HRBrightnessCursor.m in Sources */,
 				DA3CD2321482068B00492DF7 /* HRColorCursor.m in Sources */,
+				5A960E4C18B27F97510AF01D /* HRColorPickerViewController.m in Sources */,
+				5A960054696F86CC6BACBEE0 /* HRColorPickerViewController2.m in Sources */,
+				5A9609ED49BDBF8BED624F64 /* HRColorMapView.m in Sources */,
+				5A960A49BABFEF92F0906C08 /* UIImage+CoreGraphics.m in Sources */,
+				5A96038FAFBF33414CA3FF88 /* HRBrightnessSlider.m in Sources */,
+				5A9609AF01047237D853AA4A /* HRColorInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +273,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -261,7 +289,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 			};
 			name = Debug;
 		};
@@ -269,7 +297,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -279,7 +307,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -287,12 +315,14 @@
 		DA877C4614527BD000A0754C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -300,12 +330,14 @@
 		DA877C4714527BD000A0754C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -27,11 +27,11 @@
 
 #import "HRColorUtil.h"
 
-void HSVColorFromRGBColor(const HRRGBColor* rgb,HRHSVColor* hsv){
-    HRRGBColor rgb255 = {rgb->r * 255.0f,rgb->g * 255.0f,rgb->b * 255.0f};
-    HRHSVColor hsv255 = {0.0f,0.0f,0.0f};
-    
-    float max = rgb255.r;
+void HSVColorFromRGBColor(const HRRGBColor *rgb, HRHSVColor *hsv) {
+    HRRGBColor rgb255 = {rgb->r * 255.0f, rgb->g * 255.0f, rgb->b * 255.0f};
+    HRHSVColor hsv255 = {0.0f, 0.0f, 0.0f};
+
+    CGFloat max = rgb255.r;
     if (max < rgb255.g) {
         max = rgb255.g;
     }
@@ -39,97 +39,101 @@ void HSVColorFromRGBColor(const HRRGBColor* rgb,HRHSVColor* hsv){
         max = rgb255.b;
     }
     hsv255.v = max;
-    
-    float min = rgb255.r;
+
+    CGFloat min = rgb255.r;
     if (min > rgb255.g) {
         min = rgb255.g;
     }
     if (min > rgb255.b) {
         min = rgb255.b;
     }
-    
+
     if (max == 0.0f) {
         hsv255.h = 0.0f;
         hsv255.s = 0.0f;
-    }else{
-        hsv255.s = 255*(max - min)/(double)max;
+    } else {
+        hsv255.s = 255 * (max - min) / (double) max;
         int h = 0.0f;
-        if(max == rgb255.r){
-            h = 60 * (rgb255.g - rgb255.b) / (double)(max - min);
-        }else if(max == rgb255.g){
-            h = 60 * (rgb255.b - rgb255.r) / (double)(max - min) + 120;
-        }else{
-            h = 60 * (rgb255.r - rgb255.g) / (double)(max - min) + 240;
+        if (max == rgb255.r) {
+            h = 60 * (rgb255.g - rgb255.b) / (double) (max - min);
+        } else if (max == rgb255.g) {
+            h = 60 * (rgb255.b - rgb255.r) / (double) (max - min) + 120;
+        } else {
+            h = 60 * (rgb255.r - rgb255.g) / (double) (max - min) + 240;
         }
-        if(h < 0) h += 360;
-        hsv255.h = (float)h;
+        if (h < 0) h += 360;
+        hsv255.h = (CGFloat) h;
     }
     hsv->h = hsv255.h / 360.0f;
     hsv->s = hsv255.s / 255.0f;
     hsv->v = hsv255.v / 255.0f;
 }
 
+void HSVColorFromUIColor(UIColor *uiColor, HRHSVColor *hsv) {
+    CGFloat alpha;
+    [uiColor getHue:&hsv->h saturation:&hsv->s brightness:&hsv->v alpha:&alpha];
+}
 
-void RGBColorFromHSVColor(const HRHSVColor* hsv,HRRGBColor* rgb){
-   /*
-    UIColorには
-    [UIColor colorWithHue:<#(CGFloat)#> saturation:<#(CGFloat)#> brightness:<#(CGFloat)#> alpha:<#(CGFloat)#>]
-    もあります
-    */
-    if(hsv->s == 0.0f)
-    {
+
+void RGBColorFromHSVColor(const HRHSVColor *hsv, HRRGBColor *rgb) {
+    /*
+     UIColorには
+     [UIColor colorWithHue:<#(CGFloat)#> saturation:<#(CGFloat)#> brightness:<#(CGFloat)#> alpha:<#(CGFloat)#>]
+     もあります
+     */
+    if (hsv->s == 0.0f) {
         rgb->r = rgb->g = rgb->b = hsv->v;
         return;
     }
-    
-    float h360 = hsv->h * 360.0f;
-    int		i;
-    float	f;
-    float	m;
-    float	n;
-    float	k;
-    
-    i = floor(h360 /60);
-    if(i < 0){
+
+    CGFloat h360 = hsv->h * 360.0f;
+    int i;
+    CGFloat f;
+    CGFloat m;
+    CGFloat n;
+    CGFloat k;
+
+    i = (int) floor(h360 / 60);
+    if (i < 0) {
         i *= -1;
     }
     f = h360 / 60.0f - i;
     m = hsv->v * (1 - hsv->s);
     n = hsv->v * (1 - f * hsv->s);
     k = hsv->v * (1 - (1 - f) * hsv->s);
-    
+
     switch (i) {
-        case 0:{
+        case 0: {
             rgb->r = hsv->v;
             rgb->g = k;
             rgb->b = m;
             break;
         }
-        case 1:{
+        case 1: {
             rgb->r = n;
             rgb->g = hsv->v;
             rgb->b = m;
             break;
         }
-        case 2:{
+        case 2: {
             rgb->r = m;
             rgb->g = hsv->v;
             rgb->b = k;
             break;
         }
-        case 3:{
+        case 3: {
             rgb->r = m;
             rgb->g = n;
             rgb->b = hsv->v;
             break;
         }
-        case 4:{
+        case 4: {
             rgb->r = k;
             rgb->g = m;
             rgb->b = hsv->v;
             break;
         }
-        case 5:{
+        case 5: {
             rgb->r = hsv->v;
             rgb->g = m;
             rgb->b = n;
@@ -140,34 +144,34 @@ void RGBColorFromHSVColor(const HRHSVColor* hsv,HRRGBColor* rgb){
     }
 }
 
-void RGBColorFromUIColor(const UIColor* uiColor,HRRGBColor* rgb){
-    const CGFloat* components = CGColorGetComponents(uiColor.CGColor);
-    if(CGColorGetNumberOfComponents(uiColor.CGColor) == 2){
+void RGBColorFromUIColor(const UIColor *uiColor, HRRGBColor *rgb) {
+    const CGFloat *components = CGColorGetComponents(uiColor.CGColor);
+    if (CGColorGetNumberOfComponents(uiColor.CGColor) == 2) {
         rgb->r = components[0];
         rgb->g = components[0];
         rgb->b = components[0];
-    }else{
+    } else {
         rgb->r = components[0];
         rgb->g = components[1];
         rgb->b = components[2];
     }
 }
 
-int HexColorFromRGBColor(const HRRGBColor* rgb){
-    return (int)(rgb->r*255.0f) << 16 | (int)(rgb->g*255.0f) << 8 | (int)(rgb->b*255.0f) << 0;
+int HexColorFromRGBColor(const HRRGBColor *rgb) {
+    return (int) (rgb->r * 255.0f)<<16 | (int) (rgb->g * 255.0f)<<8 | (int) (rgb->b * 255.0f)<<0;
 }
 
-int HexColorFromUIColor(const UIColor* color){
+int HexColorFromUIColor(const UIColor *color) {
     HRRGBColor rgb_color;
     RGBColorFromUIColor(color, &rgb_color);
     return HexColorFromRGBColor(&rgb_color);
 }
 
-bool HRHSVColorEqualToColor(const HRHSVColor* hsv1,const HRHSVColor* hsv2){
+bool HRHSVColorEqualToColor(const HRHSVColor *hsv1, const HRHSVColor *hsv2) {
     return (hsv1->h == hsv2->h) && (hsv1->s == hsv2->s) && (hsv1->v == hsv2->v);
 }
 
-void HSVColorAt(HRHSVColor* hsv,float x,float y,float saturationUpperLimit,float brightness){
+void HSVColorAt(HRHSVColor *hsv, CGFloat x, CGFloat y, CGFloat saturationUpperLimit, CGFloat brightness) {
     hsv->h = x;
     hsv->s = 1.0f - (y * saturationUpperLimit);
     hsv->v = brightness;

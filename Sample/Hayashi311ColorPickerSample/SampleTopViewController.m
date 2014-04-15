@@ -28,44 +28,51 @@
 
 #import "SampleTopViewController.h"
 #import "HRColorUtil.h"
+#import "HRColorPickerViewController.h"
+#import "HRColorPickerViewController2.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 60000
 #define NSTextAlignmentCenter    UITextAlignmentCenter
 #endif
 
+@interface SampleTopViewController () <HRColorPickerViewControllerDelegate>
+@end
 
 @implementation SampleTopViewController
 
-
-- (void)openColorPicker:(id)sender{
-    HRColorPickerViewController* controller;
+- (void)openColorPicker:(id)sender {
+    UIViewController *controller;
     switch ([sender tag]) {
-    case 0:
-        controller = [HRColorPickerViewController colorPickerViewControllerWithColor:[self.view backgroundColor]];
-        break;
-    case 1:
-        controller = [HRColorPickerViewController cancelableColorPickerViewControllerWithColor:[self.view backgroundColor]];
-        break;
-    case 2:
-        controller = [HRColorPickerViewController fullColorPickerViewControllerWithColor:[self.view backgroundColor]];
-        break;
-    case 3:
-        controller = [HRColorPickerViewController cancelableFullColorPickerViewControllerWithColor:[self.view backgroundColor]];
-        break;
-
-    default:
-        return;
-        break;
+        case 0:
+            controller = [HRColorPickerViewController colorPickerViewControllerWithColor:[self.view backgroundColor]];
+            ((HRColorPickerViewController *) controller).delegate = self;
+            break;
+        case 1:
+            controller = [HRColorPickerViewController cancelableColorPickerViewControllerWithColor:[self.view backgroundColor]];
+            ((HRColorPickerViewController *) controller).delegate = self;
+            break;
+        case 2:
+            controller = [HRColorPickerViewController fullColorPickerViewControllerWithColor:[self.view backgroundColor]];
+            ((HRColorPickerViewController *) controller).delegate = self;
+            break;
+        case 3:
+            controller = [HRColorPickerViewController cancelableFullColorPickerViewControllerWithColor:[self.view backgroundColor]];
+            ((HRColorPickerViewController *) controller).delegate = self;
+            break;
+        case 4:
+            controller = [HRColorPickerViewController2 colorPickerViewControllerWithColor:[self.view backgroundColor]];
+            ((HRColorPickerViewController *) controller).delegate = self;
+            break;
+        default:
+            return;
     }
-    controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
@@ -78,10 +85,9 @@
 }
 */
 
-- (UIButton *)createButtonWithTitle:(NSString *)title index:(int)index
-{
-    float offsetY = index * 60;
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+- (UIButton *)createButtonWithTitle:(NSString *)title index:(int)index {
+    CGFloat offsetY = index * 60;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.tag = index;
     [button setFrame:CGRectMake(10.0f, 30.0f + offsetY, 300.0f, 50.0f)];
     [button setTitle:title forState:UIControlStateNormal];
@@ -90,56 +96,57 @@
     return button;
 }
 
-- (void)loadView
-{
-    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-    
+- (void)loadView {
+    self.view = [[UIView alloc] init];
+
     self.title = @"Color Picker by Hayashi311";
-    
-    NSString *titles[] = { @"Limited color ->", @"Limited color with Save button ->", @"Full color ->", @"Full color with Save button ->" };
-    
-    int i;
-    for (i = 0; i < sizeof(titles) / sizeof(titles[0]); i++) {
+
+    NSArray *titles = @[
+            @"Limited color ->",
+            @"Limited color with Save button ->",
+            @"Full color ->",
+            @"Full color with Save button ->",
+            @"New API ->"];
+
+    NSUInteger i;
+    for (i = 0; i < titles.count; i++) {
         [self createButtonWithTitle:titles[i] index:i];
     }
-    
+
     hexColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f,
-                                                              self.view.frame.size.height-46.f,
-                                                              320.f,
-                                                              46.f)];
+            self.view.frame.size.height - 46.f,
+            320.f,
+            46.f)];
     hexColorLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [hexColorLabel setTextAlignment:NSTextAlignmentCenter];
     [hexColorLabel setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.4f]];
     [self.view addSubview:hexColorLabel];
-    
+
     [self setSelectedColor:[UIColor cyanColor]];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
+
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Hayashi311ColorPickerDelegate
 
-- (void)setSelectedColor:(UIColor*)color{
+- (void)setSelectedColor:(UIColor *)color {
     [self.view setBackgroundColor:color];
-    [hexColorLabel setText:[NSString stringWithFormat:@"#%06x",HexColorFromUIColor(color)]];
+    [hexColorLabel setText:[NSString stringWithFormat:@"#%06x", HexColorFromUIColor(color)]];
 }
 
 

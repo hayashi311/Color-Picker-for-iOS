@@ -26,12 +26,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "HRColorPickerMacros.h"
 
 @class HRColorPickerView;
 
 @protocol HRColorPickerViewControllerDelegate
-- (void)setSelectedColor:(UIColor*)color;
+- (void)setSelectedColor:(UIColor *)color;
 @end
 
 #define HRColorPickerDelegate HRColorPickerViewControllerDelegate
@@ -43,9 +42,9 @@ typedef enum {
 } HCPCSaveStyle;
 
 @interface HRColorPickerViewController : UIViewController {
-    id<HRColorPickerViewControllerDelegate> __weak delegate;
-    HRColorPickerView* colorPickerView;
-    
+    id <HRColorPickerViewControllerDelegate> __weak delegate;
+    HRColorPickerView *colorPickerView;
+
     UIColor *_color;
     BOOL _fullColor;
     HCPCSaveStyle _saveStyle;
@@ -61,7 +60,7 @@ typedef enum {
  * @param fullColor If YES, browseable full color. If NO color was limited.
  * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
  */
-- (id)initWithColor:(UIColor*)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
+- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
 
 /** @deprecated use -save: instead of this . */
 - (void)saveColor:(id)sender;
@@ -71,7 +70,7 @@ typedef enum {
 - (void)cancel:(id)sender;
 
 
-@property (weak) id<HRColorPickerViewControllerDelegate> delegate;
+@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
 
 
 @end

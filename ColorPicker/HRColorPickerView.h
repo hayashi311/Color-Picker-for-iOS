@@ -26,80 +26,30 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
-#import <sys/time.h>
 #import "HRColorUtil.h"
-#import "HRColorPickerMacros.h"
 
 @class HRColorPickerView;
 
-@protocol HRColorPickerViewDelegate
-- (void)colorWasChanged:(HRColorPickerView*)color_picker_view;
-@end
 
-typedef struct timeval timeval;
-
-struct HRColorPickerStyle{
-    float width; // viewの横幅。デフォルトは320.0f;
-    float headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
-    float colorMapTileSize; // カラーマップの中のタイルのサイズ。デフォルトは15.0f;
+struct HRColorPickerStyle {
+    CGFloat width; // viewの横幅。デフォルトは320.0f;
+    CGFloat headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
+    CGFloat colorMapTileSize; // カラーマップの中のタイルのサイズ。デフォルトは15.0f;
     int colorMapSizeWidth; // カラーマップの中にいくつのタイルが並ぶか (not view.width)。デフォルトは20;
     int colorMapSizeHeight; // 同じく縦にいくつ並ぶか。デフォルトは20;
-    float brightnessLowerLimit; // 明度の下限
-    float saturationUpperLimit; // 彩度の上限
+    CGFloat brightnessLowerLimit; // 明度の下限
+    CGFloat saturationUpperLimit; // 彩度の上限
 };
 
 typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 @class HRBrightnessCursor;
 @class HRColorCursor;
+@protocol HRColorMapView;
+@protocol HRBrightnessSlider;
+@protocol HRColorInfoView;
 
-@interface HRColorPickerView : UIControl{
-    NSObject<HRColorPickerViewDelegate>* __weak delegate;
- @private
-    bool _animating;
-    
-    // 入力関係
-    bool _isTapStart;
-    bool _isTapped;
-	bool _wasDragStart;
-    bool _isDragStart;
-	bool _isDragging;
-	bool _isDragEnd;
-    
-	CGPoint _activeTouchPosition;
-	CGPoint _touchStartPosition;
-    
-    // 色情報
-    HRRGBColor _defaultRgbColor;
-    HRHSVColor _currentHsvColor;
-    
-    // カラーマップ上のカーソルの位置
-    CGPoint _colorCursorPosition;
-    
-    // パーツの配置
-    CGRect _currentColorFrame;
-    CGRect _brightnessPickerFrame;
-    CGRect _brightnessPickerTouchFrame;
-    CGRect _brightnessPickerShadowFrame;
-    CGRect _colorMapFrame;
-    CGRect _colorMapSideFrame;
-    float _tileSize;
-    float _brightnessLowerLimit;
-    float _saturationUpperLimit;
-    
-    HRBrightnessCursor* _brightnessCursor;
-    HRColorCursor* _colorCursor;
-    
-    // キャッシュ
-    CGImageRef _brightnessPickerShadowImage;
-    
-    // フレームレート
-    timeval _lastDrawTime;
-    timeval _timeInterval15fps;
-    
-    bool _delegateHasSELColorWasChanged;
-}
+@interface HRColorPickerView : UIControl
 
 // スタイルを取得
 + (HRColorPickerStyle)defaultStyle;
@@ -111,20 +61,38 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 // スタイルからviewのサイズを取得
 + (CGSize)sizeWithStyle:(HRColorPickerStyle)style;
 
+- (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
+
+@property (nonatomic, readonly) UIColor *color;
+@property (nonatomic, strong) UIView <HRColorInfoView> *colorInfoView;
+@property (nonatomic, strong) UIControl <HRColorMapView> *colorMapView;
+@property (nonatomic, strong) UIControl <HRBrightnessSlider> *brightnessSlider;
+
+
+@end
+
+
+#pragma - Deprecated
+
+__attribute__((deprecated))
+@protocol HRColorPickerViewDelegate
+- (void)colorWasChanged:(HRColorPickerView *)color_picker_view;
+@end
+
+
+@interface HRColorPickerView (Deprecated)
+
+- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
+
 // スタイルを指定してデフォルトカラーで初期化
-- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor;
+- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated));
 
-// デフォルトカラーで初期化 (互換性のために残していますが、frameが反映されません)
-- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor;
+- (HRRGBColor)RGBColor __attribute__((deprecated)); // colorを使ってください
 
-// 現在選択している色をRGBで返す
-- (HRRGBColor)RGBColor;
+- (void)BeforeDealloc __attribute__((deprecated)); // 呼び出す必要はありません。
 
-// 後方互換性のため。呼び出す必要はありません。
-- (void)BeforeDealloc; 
-
-@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) float BrightnessLowerLimit;
-@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) float SaturationUpperLimit;
-@property (nonatomic, weak) NSObject<HRColorPickerViewDelegate>* delegate;
+@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) CGFloat BrightnessLowerLimit __attribute__((deprecated));
+@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) CGFloat SaturationUpperLimit __attribute__((deprecated));
+@property (nonatomic, weak) NSObject <HRColorPickerViewDelegate> *delegate __attribute__((deprecated));
 
 @end

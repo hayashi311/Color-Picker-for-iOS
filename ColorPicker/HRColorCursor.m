@@ -28,61 +28,179 @@
 #import "HRColorCursor.h"
 #import "HRCgUtil.h"
 
+@interface HRColorCursor ()
+- (id)initWithPoint:(CGPoint)point;
+@end
+
+@interface HRFlatStyleColorCursor : HRColorCursor
+
+@property (nonatomic) BOOL editing;
+@property (nonatomic, getter=isGrayCursor) BOOL grayCursor;
+@end
+
+@interface HROldStyleColorCursor : HRColorCursor
+
+@end
+
 @implementation HRColorCursor
 
-+ (CGSize) cursorSize 
-{
-    return CGSizeMake(30.0, 30.0f);
++ (CGSize)cursorSize {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return CGSizeMake(30.0, 30.0f);
+    }
+    return CGSizeMake(28.0, 28.0f);
 }
 
-+ (float) outlineSize
-{
-    return 4.0f;
++ (CGFloat)outlineSize {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return 4.0f;
+    }
+    return 0.0f;
 }
 
-+ (float) shadowSize
-{
-    return 2.0f;
++ (CGFloat)shadowSize {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return 2.0f;
+    }
+    return 0.0f;
 }
 
++ (HRColorCursor *)colorCursorWithPoint:(CGPoint)point {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return [[HROldStyleColorCursor alloc] initWithPoint:point];
+    }
+    return [[HRFlatStyleColorCursor alloc] initWithPoint:point];
+}
 
-- (id)initWithPoint:(CGPoint)point
-{
+- (id)initWithPoint:(CGPoint)point {
     CGSize size = [HRColorCursor cursorSize];
     CGRect frame = CGRectMake(point.x, point.y, size.width, size.height);
     self = [super initWithFrame:frame];
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self setUserInteractionEnabled:FALSE];
-        _currentColor.r = _currentColor.g = _currentColor.b = 1.0f;
+        self.color = [UIColor whiteColor];
     }
     return self;
 }
 
-- (void)setColorRed:(float)red andGreen:(float)green andBlue:(float)blue{
-    _currentColor.r = red;
-    _currentColor.g = green;
-    _currentColor.b = blue;
+@end
+
+@implementation HRFlatStyleColorCursor {
+    CALayer *_backLayer;
+    CALayer *_colorLayer;
+    UIColor *_color;
+    BOOL _editing;
+}
+@synthesize color = _color;
+
+- (id)initWithPoint:(CGPoint)point {
+    self = [super initWithPoint:point];
+    if (self) {
+        CGRect backFrame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
+        _backLayer = [[CALayer alloc] init];
+        _backLayer.frame = backFrame;
+        _backLayer.cornerRadius = CGRectGetHeight(self.frame) / 2;
+        _backLayer.borderColor = [[UIColor colorWithWhite:0.65 alpha:1.] CGColor];
+        _backLayer.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
+        _backLayer.backgroundColor = [[UIColor colorWithWhite:1. alpha:.7] CGColor];
+        [self.layer addSublayer:_backLayer];
+
+        _colorLayer = [[CALayer alloc] init];
+        _colorLayer.frame = CGRectInset(backFrame, 5.5, 5.5);
+        _colorLayer.cornerRadius = CGRectGetHeight(_colorLayer.frame) / 2;
+        [self.layer addSublayer:_colorLayer];
+    }
+    return self;
+}
+
+
+- (void)setColor:(UIColor *)color {
+    _color = color;
+    HRHSVColor hsvColor;
+    HSVColorFromUIColor(_color, &hsvColor);
+    BOOL shouldBeGrayCursor = hsvColor.v > 0.7 && hsvColor.s < 0.4;
+
+
+    [CATransaction begin];
+    [CATransaction setValue:(id) kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+    _colorLayer.backgroundColor = [_color CGColor];
+    if (self.isGrayCursor != shouldBeGrayCursor) {
+        if (shouldBeGrayCursor) {
+            _backLayer.borderColor = [[UIColor colorWithWhite:0 alpha:0.3] CGColor];
+            _backLayer.backgroundColor = [[UIColor colorWithWhite:0. alpha:0.2] CGColor];
+        } else {
+            _backLayer.borderColor = [[UIColor colorWithWhite:0.65 alpha:1] CGColor];
+            _backLayer.backgroundColor = [[UIColor colorWithWhite:1. alpha:0.7] CGColor];
+        }
+        self.grayCursor = shouldBeGrayCursor;
+    }
+
+    [CATransaction commit];
     [self setNeedsDisplay];
 }
 
-- (void)drawRect:(CGRect)rect
-{
+- (void)setEditing:(BOOL)editing {
+    if (editing == _editing) {
+        return;
+    }
+    _editing = editing;
+    void (^showState)() = ^{
+        _backLayer.transform = CATransform3DMakeScale(1.6, 1.6, 1.0);
+        _colorLayer.transform = CATransform3DMakeScale(1.4, 1.4, 1.0);
+    };
+    void (^hiddenState)() = ^{
+        _backLayer.transform = CATransform3DIdentity;
+        _colorLayer.transform = CATransform3DIdentity;
+    };
+    if (_editing) {
+        hiddenState();
+    } else {
+        showState();
+    }
+    [UIView animateWithDuration:0.1
+                     animations:_editing ? showState : hiddenState];
+}
+
+@end
+
+@implementation HROldStyleColorCursor {
+    UIColor *_cursorColor;
+}
+@synthesize color = _cursorColor;
+
+- (void)setColor:(UIColor *)color {
+    _cursorColor = color;
+    [self setNeedsDisplay];
+}
+
+- (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    float outlineSize = [HRColorCursor outlineSize];
+    CGFloat outlineSize = [HRColorCursor outlineSize];
     CGSize cursorSize = [HRColorCursor cursorSize];
-    float shadowSize = [HRColorCursor shadowSize];
-    
+    CGFloat shadowSize = [HRColorCursor shadowSize];
+
     CGContextSaveGState(context);
-    HRSetRoundedRectanglePath(context, CGRectMake(shadowSize, shadowSize, cursorSize.width - shadowSize*2.0f, cursorSize.height - shadowSize*2.0f), 2.0f);
-    [[UIColor whiteColor] set];
-    CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), shadowSize);
+    HRSetRoundedRectanglePath(context, CGRectMake(shadowSize, shadowSize, cursorSize.width - shadowSize * 2.0f, cursorSize.height - shadowSize * 2.0f), 2.0f);
+
+    HRHSVColor hsvColor;
+    HSVColorFromUIColor(self.color, &hsvColor);
+
+    if (hsvColor.v > 0.7 && hsvColor.s < 0.4) {
+        [[UIColor colorWithWhite:0.6 alpha:1] set];
+    } else {
+        [[UIColor whiteColor] set];
+    }
+
+    if (shadowSize) {
+        CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), shadowSize);
+    }
     CGContextDrawPath(context, kCGPathFill);
     CGContextRestoreGState(context);
-    
-    
-    [[UIColor colorWithRed:_currentColor.r green:_currentColor.g blue:_currentColor.b alpha:1.0f] set];
-    CGContextFillRect(context, CGRectMake(outlineSize + shadowSize, outlineSize + shadowSize, cursorSize.width - (outlineSize + shadowSize)*2.0f, cursorSize.height - (outlineSize + shadowSize)*2.0f));
+
+    [self.color set];
+    CGContextFillRect(context, CGRectMake(outlineSize + shadowSize, outlineSize + shadowSize, cursorSize.width - (outlineSize + shadowSize) * 2.0f, cursorSize.height - (outlineSize + shadowSize) * 2.0f));
 }
 
 
