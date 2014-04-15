@@ -129,7 +129,7 @@ typedef struct timeval timeval;
 
 
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-            self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, (style.headerHeight - 60.0f) / 2.0f - 5.f, 100, 60)];
+            self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(10, (style.headerHeight - 60.0f) / 2.0f, 100, 60)];
         } else {
             self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(8, (style.headerHeight - 84) / 2.0f, 66, 84)];
         }
@@ -137,9 +137,9 @@ typedef struct timeval timeval;
         self.colorInfoView.color = defaultUIColor;
         [self addSubview:self.colorInfoView];
 
-        CGFloat brightnessPickerTop = (style.headerHeight - 40.0f) / 2.0f;
+        CGFloat brightnessPickerTop = CGRectGetMinY(self.colorInfoView.frame) + 6;
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-            _brightnessPickerFrame = CGRectMake(104.0f, brightnessPickerTop, style.width - 110.0f - 12.0f, 40.0f);
+            _brightnessPickerFrame = CGRectMake(120.0f, brightnessPickerTop, style.width - 120.0f - 12.0f, 40.0f);
         } else {
             brightnessPickerTop = (style.headerHeight - 84.0f) / 2.0f;
             _brightnessPickerFrame = CGRectMake(

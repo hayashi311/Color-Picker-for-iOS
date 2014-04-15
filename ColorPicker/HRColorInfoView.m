@@ -47,7 +47,7 @@
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    CGRect colorFrame = CGRectMake(1, 5, 40.0f, 40.0f);
+    CGRect colorFrame = CGRectMake(3, 5, 40.0f, 40.0f);
 
     /////////////////////////////////////////////////////////////////////////////
     //
