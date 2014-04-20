@@ -66,6 +66,7 @@ const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 - (void)setColor:(UIColor *)color {
     _color = color;
     _hexColorLabel.text = [NSString stringWithFormat:@"#%06x", HexColorFromUIColor(color)];
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect {
