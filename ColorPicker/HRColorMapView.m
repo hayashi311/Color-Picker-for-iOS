@@ -36,10 +36,6 @@
     CGSize colorMapSize = size;
     void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
         CGFloat margin = 0;
-        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-            margin = 2;
-        }
-
         CGFloat height;
         int pixelCountX = (int) (rect.size.width / tileSize);
         int pixelCountY = (int) (rect.size.height / tileSize);
@@ -72,9 +68,6 @@
     CGSize colorMapSize = size;
     void(^renderBackgroundToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
         CGFloat margin = 0;
-        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-            margin = 2;
-        }
 
         CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
         CGContextFillRect(context, rect);
@@ -114,16 +107,8 @@
 
         CGFloat lineWidth = 1.f / [[UIScreen mainScreen] scale];
         _lineLayer = [[CALayer alloc] init];
-        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-            // 囲むライン
-            _lineLayer.borderColor = [[UIColor colorWithWhite:0.9f alpha:1.0f] CGColor];
-            _lineLayer.borderWidth = lineWidth;
-            _lineLayer.frame = CGRectMake(-1, -1, frame.size.width, frame.size.height);
-        } else {
-            // フラットデザイン用のラインはトップのみ
-            _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
-            _lineLayer.frame = CGRectMake(0, -lineWidth, CGRectGetWidth(frame), lineWidth);
-        }
+        _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
+        _lineLayer.frame = CGRectMake(0, -lineWidth, CGRectGetWidth(frame), lineWidth);
         [self.layer addSublayer:_lineLayer];
 
         // タイルの中心にくるようにずらす

@@ -9,88 +9,30 @@
 #import "HRColorInfoView.h"
 #import "HRCgUtil.h"
 
+const CGFloat kHRFlatStyleColorInfoViewLabelHeight = 18.;
+const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 
 @interface HRColorInfoView () {
     UIColor *_color;
 }
 @end
 
-@interface HRFlatStyleColorInfoView : HRColorInfoView
-
-@end
-
-@implementation HRColorInfoView
-@synthesize color = _color;
-
-
-+ (HRColorInfoView *)colorInfoViewWithFrame:(CGRect)frame {
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return [[HRColorInfoView alloc] initWithFrame:frame];
-    }
-    return [[HRFlatStyleColorInfoView alloc] initWithFrame:frame];
-}
-
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.color = [UIColor whiteColor];
-        self.backgroundColor = [UIColor clearColor];
-    }
-    return self;
-}
-
-- (void)setColor:(UIColor *)color {
-    _color = color;
-    [self setNeedsDisplay];
-}
-
-- (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-
-    CGRect colorFrame = CGRectMake(3, 5, 40.0f, 40.0f);
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // カラー
-    //
-    /////////////////////////////////////////////////////////////////////////////
-
-    CGContextSaveGState(context);
-    HRDrawSquareColorBatch(context, CGPointMake(CGRectGetMidX(colorFrame), CGRectGetMidY(colorFrame)), self.color, colorFrame.size.width / 2.0f);
-    CGContextRestoreGState(context);
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // RGBのパーセント表示
-    //
-    /////////////////////////////////////////////////////////////////////////////
-
-    CGFloat red, green, blue, alpha;
-    [self.color getRed:&red green:&green blue:&blue alpha:&alpha];
-
-    [[UIColor darkGrayColor] set];
-
-    CGFloat textHeight = 20.0f;
-    CGFloat textCenter = CGRectGetMidY(colorFrame) - 5.0f;
-    [[NSString stringWithFormat:@"R:%3d%%", (int) (red * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter - textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
-    [[NSString stringWithFormat:@"G:%3d%%", (int) (green * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter) withFont:[UIFont boldSystemFontOfSize:12.0f]];
-    [[NSString stringWithFormat:@"B:%3d%%", (int) (blue * 100)] drawAtPoint:CGPointMake(colorFrame.origin.x + colorFrame.size.width + 10.0f, textCenter + textHeight) withFont:[UIFont boldSystemFontOfSize:12.0f]];
-}
-
-@end
-
-
-const CGFloat kHRFlatStyleColorInfoViewLabelHeight = 18.;
-const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
-
-@implementation HRFlatStyleColorInfoView {
+@implementation HRColorInfoView {
     UILabel *_hexColorLabel;
     CALayer *_borderLayer;
 }
 
+@synthesize color = _color;
+
+
++ (HRColorInfoView *)colorInfoViewWithFrame:(CGRect)frame {
+    return [[HRColorInfoView alloc] initWithFrame:frame];
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         _hexColorLabel = [[UILabel alloc] init];
         _hexColorLabel.backgroundColor = [UIColor clearColor];
         _hexColorLabel.font = [UIFont systemFontOfSize:12];
@@ -122,7 +64,7 @@ const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 }
 
 - (void)setColor:(UIColor *)color {
-    [super setColor:color];
+    _color = color;
     _hexColorLabel.text = [NSString stringWithFormat:@"#%06x", HexColorFromUIColor(color)];
 }
 
@@ -135,5 +77,5 @@ const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
     [rectanglePath fill];
 }
 
-
 @end
+
