@@ -14,8 +14,9 @@
 @interface HRColorMapView () {
     UIColor *_color;
     CGFloat _brightness;
-    CGFloat _saturationUpperLimit;
+    NSNumber *_saturationUpperLimit;
     HRColorCursor *_colorCursor;
+    NSOperationQueue *_createColorMapQueue;
 }
 
 @property (atomic, strong) CALayer *colorMapLayer; // brightness 1.0
@@ -100,48 +101,90 @@
 - (id)initWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit {
     self = [super initWithFrame:frame];
     if (self) {
-        self.tileSize = 15;
-        self.saturationUpperLimit = saturationUpperLimit;
-        self.brightness = 0.5;
-        self.backgroundColor = [UIColor whiteColor];
-
-        CGFloat lineWidth = 1.f / [[UIScreen mainScreen] scale];
-        _lineLayer = [[CALayer alloc] init];
-        _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
-        _lineLayer.frame = CGRectMake(0, -lineWidth, CGRectGetWidth(frame), lineWidth);
-        [self.layer addSublayer:_lineLayer];
-
-        // タイルの中心にくるようにずらす
-        CGPoint cursorOrigin = CGPointMake(
-                -([HRColorCursor cursorSize].width - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0,
-                -([HRColorCursor cursorSize].height - _tileSize) / 2.0f - [HRColorCursor shadowSize] / 2.0);
-        _colorCursor = [HRColorCursor colorCursorWithPoint:cursorOrigin];
-        [self addSubview:_colorCursor];
-
-        UITapGestureRecognizer *tapGestureRecognizer;
-        tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self addGestureRecognizer:tapGestureRecognizer];
-
-        UIPanGestureRecognizer *panGestureRecognizer;
-        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        [self addGestureRecognizer:panGestureRecognizer];
+        self.saturationUpperLimit = @(saturationUpperLimit);
+        [self _init];
     }
     return self;
 }
 
-- (void)willMoveToSuperview:(UIView *)newSuperview {
-    [super willMoveToSuperview:newSuperview];
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self _init];
+    }
+    return self;
+}
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+- (void)_init {
+    self.brightness = 0.5;
+    self.backgroundColor = [UIColor whiteColor];
+
+    CGFloat lineWidth = 1.f / [[UIScreen mainScreen] scale];
+    _lineLayer = [[CALayer alloc] init];
+    _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
+    _lineLayer.frame = CGRectMake(0, -lineWidth, CGRectGetWidth(self.frame), lineWidth);
+    [self.layer addSublayer:_lineLayer];
+
+    // タイルの中心にくるようにずらす
+    CGPoint cursorOrigin = CGPointMake(
+            -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
+            -([HRColorCursor cursorSize].height - _tileSize.floatValue) / 2.0f);
+    _colorCursor = [HRColorCursor colorCursorWithPoint:cursorOrigin];
+    [self addSubview:_colorCursor];
+
+    UITapGestureRecognizer *tapGestureRecognizer;
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self addGestureRecognizer:tapGestureRecognizer];
+
+    UIPanGestureRecognizer *panGestureRecognizer;
+    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [self addGestureRecognizer:panGestureRecognizer];
+
+    _createColorMapQueue = [[NSOperationQueue alloc] init];
+    [_createColorMapQueue setSuspended:YES];
+    [_createColorMapQueue addOperationWithBlock:^{
         [self createColorMapLayer];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
             self.colorMapLayer.opacity = self.brightness;
             [self.layer insertSublayer:self.colorMapLayer atIndex:1];
         });
-    });
+    }];
 }
 
+- (void)setSaturationUpperLimit:(NSNumber *)saturationUpperLimit {
+    _saturationUpperLimit = saturationUpperLimit;
+    [_createColorMapQueue setSuspended:!self.isAbleToCreateColorMap];
+}
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [_createColorMapQueue setSuspended:!self.isAbleToCreateColorMap];
+}
+
+- (void)setTileSize:(NSNumber *)tileSize {
+    _tileSize = tileSize;
+    [_createColorMapQueue setSuspended:!self.isAbleToCreateColorMap];
+    CGRect cursorFrame = _colorCursor.frame;
+
+    cursorFrame.origin = CGPointMake(
+            -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
+            -([HRColorCursor cursorSize].height - _tileSize.floatValue) / 2.0f);
+    _colorCursor.frame = cursorFrame;
+}
+
+- (BOOL)isAbleToCreateColorMap {
+    if (CGRectIsNull(self.frame)) {
+        return NO;
+    }
+    if (!self.saturationUpperLimit) {
+        return NO;
+    }
+    if (!self.tileSize) {
+        return NO;
+    }
+    return YES;
+}
 
 - (void)createColorMapLayer {
     if (self.colorMapLayer) {
@@ -150,12 +193,12 @@
 
     UIImage *colorMapImage;
     colorMapImage = [HRColorMapView colorMapImageWithSize:self.frame.size
-                                                 tileSize:self.tileSize
-                                     saturationUpperLimit:self.saturationUpperLimit];
+                                                 tileSize:self.tileSize.floatValue
+                                     saturationUpperLimit:self.saturationUpperLimit.floatValue];
 
     UIImage *backgroundImage;
     backgroundImage = [HRColorMapView backgroundImageWithSize:self.frame.size
-                                                     tileSize:self.tileSize];
+                                                     tileSize:self.tileSize.floatValue];
 
     [CATransaction begin];
     [CATransaction setValue:(id) kCFBooleanTrue
@@ -220,14 +263,14 @@
     if (!CGRectContainsPoint((CGRect) {.origin = CGPointZero, .size = self.frame.size}, tapPoint)) {
         return;
     }
-    int pixelCountX = (int) (self.frame.size.width / _tileSize);
-    int pixelCountY = (int) (self.frame.size.height / _tileSize);
+    int pixelCountX = (int) (self.frame.size.width / _tileSize.floatValue);
+    int pixelCountY = (int) (self.frame.size.height / _tileSize.floatValue);
 
-    CGFloat pixelX = (int) ((tapPoint.x) / _tileSize) / (CGFloat) pixelCountX; // X(色相)
-    CGFloat pixelY = (int) ((tapPoint.y) / _tileSize) / (CGFloat) (pixelCountY - 1); // Y(彩度)
+    CGFloat pixelX = (int) ((tapPoint.x) / _tileSize.floatValue) / (CGFloat) pixelCountX; // X(色相)
+    CGFloat pixelY = (int) ((tapPoint.y) / _tileSize.floatValue) / (CGFloat) (pixelCountY - 1); // Y(彩度)
 
     HRHSVColor selectedHSVColor;
-    HSVColorAt(&selectedHSVColor, pixelX, pixelY, self.saturationUpperLimit, self.brightness);
+    HSVColorAt(&selectedHSVColor, pixelX, pixelY, self.saturationUpperLimit.floatValue, self.brightness);
 
     UIColor *selectedColor;
     selectedColor = [UIColor colorWithHue:selectedHSVColor.h
@@ -245,18 +288,18 @@
     HRHSVColor hsvColor;
     HSVColorFromUIColor(self.color, &hsvColor);
 
-    int pixelCountX = (int) (self.frame.size.width / _tileSize);
-    int pixelCountY = (int) (self.frame.size.height / _tileSize);
+    int pixelCountX = (int) (self.frame.size.width / _tileSize.floatValue);
+    int pixelCountY = (int) (self.frame.size.height / _tileSize.floatValue);
     CGPoint newPosition;
     CGFloat hue = hsvColor.h;
     if (hue == 1) {
         hue = 0;
     }
 
-    newPosition.x = hue * (CGFloat) pixelCountX * _tileSize + _tileSize / 2.0f;
-    newPosition.y = (1.0f - hsvColor.s) * (1.0f / _saturationUpperLimit) * (CGFloat) (pixelCountY - 1) * _tileSize + _tileSize / 2.0f;
-    colorCursorPosition.x = (int) (newPosition.x / _tileSize) * _tileSize;
-    colorCursorPosition.y = (int) (newPosition.y / _tileSize) * _tileSize;
+    newPosition.x = hue * (CGFloat) pixelCountX * _tileSize.floatValue + _tileSize.floatValue / 2.0f;
+    newPosition.y = (1.0f - hsvColor.s) * (1.0f / self.saturationUpperLimit.floatValue) * (CGFloat) (pixelCountY - 1) * _tileSize.floatValue + _tileSize.floatValue / 2.0f;
+    colorCursorPosition.x = (int) (newPosition.x / _tileSize.floatValue) * _tileSize.floatValue;
+    colorCursorPosition.y = (int) (newPosition.y / _tileSize.floatValue) * _tileSize.floatValue;
     _colorCursor.color = self.color;
     _colorCursor.transform = CGAffineTransformMakeTranslation(colorCursorPosition.x, colorCursorPosition.y);
 }

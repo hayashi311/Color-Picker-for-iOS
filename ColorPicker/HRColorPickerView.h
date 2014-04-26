@@ -63,10 +63,10 @@ typedef struct HRColorPickerStyle HRColorPickerStyle;
 
 - (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
 
-@property (nonatomic, readonly) UIColor *color;
-@property (nonatomic, strong) UIView <HRColorInfoView> *colorInfoView;
-@property (nonatomic, strong) UIControl <HRColorMapView> *colorMapView;
-@property (nonatomic, strong) UIControl <HRBrightnessSlider> *brightnessSlider;
+@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) IBOutlet UIView <HRColorInfoView> *colorInfoView;
+@property (nonatomic, strong) IBOutlet UIControl <HRColorMapView> *colorMapView;
+@property (nonatomic, strong) IBOutlet UIControl <HRBrightnessSlider> *brightnessSlider;
 
 
 @end

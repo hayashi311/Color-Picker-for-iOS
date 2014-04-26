@@ -16,65 +16,16 @@
 
 @end
 
+const CGFloat kHRBrightnessSliderHeight = 11.;
+const CGFloat kHRBrightnessSliderMarginBottom = 18.;
 
-@interface HRFlatStyleBrightnessSlider : HRBrightnessSlider
-
-@property (nonatomic, readonly) CGFloat brightness;
-@property (nonatomic) UIColor *color;
-@property (nonatomic) CGFloat brightnessLowerLimit;
-
-@property (nonatomic, strong) NSDate *lastUpdate;
-@end
-
-
-@implementation HRBrightnessSlider
-
-+ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame {
-    return [[HRFlatStyleBrightnessSlider alloc] initWithFrame:frame];
-}
-
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        CGRect frameInView = (CGRect) {.origin = CGPointZero, .size = frame.size};
-        self.sliderFrame = UIEdgeInsetsInsetRect(frameInView, UIEdgeInsetsMake(0, 20, 0, 20));
-    }
-    return self;
-}
-
-
-- (CGFloat)brightness {
-    return 0;
-}
-
-- (UIColor *)color {
-    return nil;
-}
-
-- (void)setColor:(UIColor *)color {
-    // Do noting
-}
-
-- (CGFloat)brightnessLowerLimit {
-    return 0;
-}
-
-- (void)setBrightnessLowerLimit:(CGFloat)brightnessLowerLimit {
-    // Do noting
-}
-
-@end
-
-const CGFloat kHRFlatStyleBrightnessSliderHeight = 11.;
-const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
-
-@implementation HRFlatStyleBrightnessSlider {
-    HRFlatStyleBrightnessCursor *_brightnessCursor;
+@implementation HRBrightnessSlider{
+    HRBrightnessCursor *_brightnessCursor;
 
     CAGradientLayer *_sliderLayer;
-    CGFloat _brightness;
+    NSNumber * _brightness;
     UIColor *_color;
-    CGFloat _brightnessLowerLimit;
+    NSNumber *_brightnessLowerLimit;
 
     BOOL _needsToUpdateColor;
 
@@ -85,43 +36,57 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
 @synthesize brightness = _brightness;
 @synthesize brightnessLowerLimit = _brightnessLowerLimit;
 
++ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame {
+    return [[HRBrightnessSlider alloc] initWithFrame:frame];
+}
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _sliderLayer = [[CAGradientLayer alloc] initWithLayer:self.layer];
-        _sliderLayer.startPoint = CGPointMake(0, .5);
-        _sliderLayer.endPoint = CGPointMake(1, .5);
-        _sliderLayer.borderColor = [[UIColor lightGrayColor] CGColor];
-        _sliderLayer.borderWidth = 1.f / [[UIScreen mainScreen] scale];
-
-        [self.layer addSublayer:_sliderLayer];
-
-        self.backgroundColor = [UIColor clearColor];
-
-        UITapGestureRecognizer *tapGestureRecognizer;
-        tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        [self addGestureRecognizer:tapGestureRecognizer];
-
-        UIPanGestureRecognizer *panGestureRecognizer;
-        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        [self addGestureRecognizer:panGestureRecognizer];
-
-        CGRect sliderFrame = CGRectMake(0, 0, frame.size.width, kHRFlatStyleBrightnessSliderHeight);
-        sliderFrame = CGRectInset(sliderFrame, 20, 0);
-        sliderFrame.origin.y = CGRectGetHeight(frame) - kHRFlatStyleBrightnessSliderHeight / 2 - kHRFlatStyleBrightnessSliderMarginBottom;
-        self.sliderFrame = sliderFrame;
-
-        _brightnessCursor = [[HRFlatStyleBrightnessCursor alloc] init];
-        _brightnessCursor.origin = CGPointMake(
-                CGRectGetMinX(_controlFrame),
-                CGRectGetMidY(_controlFrame));
-        [self addSubview:_brightnessCursor];
-
-        _needsToUpdateColor = NO;
-
+        [self _init];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self _init];
+    }
+    return self;
+}
+
+- (void)_init {
+    _sliderLayer = [[CAGradientLayer alloc] initWithLayer:self.layer];
+    _sliderLayer.startPoint = CGPointMake(0, .5);
+    _sliderLayer.endPoint = CGPointMake(1, .5);
+    _sliderLayer.borderColor = [[UIColor lightGrayColor] CGColor];
+    _sliderLayer.borderWidth = 1.f / [[UIScreen mainScreen] scale];
+
+    [self.layer addSublayer:_sliderLayer];
+
+    self.backgroundColor = [UIColor clearColor];
+
+    UITapGestureRecognizer *tapGestureRecognizer;
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self addGestureRecognizer:tapGestureRecognizer];
+
+    UIPanGestureRecognizer *panGestureRecognizer;
+    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [self addGestureRecognizer:panGestureRecognizer];
+
+    CGRect sliderFrame = CGRectMake(0, 0, self.frame.size.width, kHRBrightnessSliderHeight);
+    sliderFrame = CGRectInset(sliderFrame, 20, 0);
+    sliderFrame.origin.y = CGRectGetHeight(self.frame) - kHRBrightnessSliderHeight / 2 - kHRBrightnessSliderMarginBottom;
+    self.sliderFrame = sliderFrame;
+
+    _brightnessCursor = [[HRBrightnessCursor alloc] init];
+    _brightnessCursor.center = CGPointMake(
+            CGRectGetMinX(_controlFrame),
+            CGRectGetMidY(_controlFrame));
+    [self addSubview:_brightnessCursor];
+
+    _needsToUpdateColor = NO;
 }
 
 - (void)layoutSubviews {
@@ -135,7 +100,7 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
     if (_needsToUpdateColor) {
         HRHSVColor hsvColor;
         HSVColorFromUIColor(_color, &hsvColor);
-        hsvColor.v = _brightness;
+        hsvColor.v = _brightness.floatValue;
         _color = [[UIColor alloc] initWithHue:hsvColor.h
                                    saturation:hsvColor.s
                                    brightness:hsvColor.v
@@ -149,7 +114,7 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
 
     CGFloat brightness;
     [_color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
-    _brightness = brightness;
+    _brightness = @(brightness);
     _needsToUpdateColor = YES;
 
     [self updateCursor];
@@ -160,7 +125,7 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
 
     HRHSVColor hsvColor;
     HSVColorFromUIColor(_color, &hsvColor);
-    UIColor *darkColorFromHsv = [UIColor colorWithHue:hsvColor.h saturation:hsvColor.s brightness:self.brightnessLowerLimit alpha:1.0f];
+    UIColor *darkColorFromHsv = [UIColor colorWithHue:hsvColor.h saturation:hsvColor.s brightness:self.brightnessLowerLimit.floatValue alpha:1.0f];
     UIColor *lightColorFromHsv = [UIColor colorWithHue:hsvColor.h saturation:hsvColor.s brightness:1.0f alpha:1.0f];
 
     _sliderLayer.colors = @[(id) lightColorFromHsv.CGColor, (id) darkColorFromHsv.CGColor];
@@ -168,7 +133,7 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
     [CATransaction commit];
 }
 
-- (void)setBrightnessLowerLimit:(CGFloat)brightnessLowerLimit {
+- (void)setBrightnessLowerLimit:(NSNumber *)brightnessLowerLimit {
     _brightnessLowerLimit = brightnessLowerLimit;
     [self updateCursor];
     self.color = _color;
@@ -206,25 +171,22 @@ const CGFloat kHRFlatStyleBrightnessSliderMarginBottom = 18.;
     tapPointInSlider.x = MAX(tapPointInSlider.x, 0);
 
     selectedBrightness = 1.0 - tapPointInSlider.x / _controlFrame.size.width;
-    selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit) + self.brightnessLowerLimit;
-    _brightness = selectedBrightness;
+    selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit.floatValue) + self.brightnessLowerLimit.floatValue;
+    _brightness = @(selectedBrightness);
 
     [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)updateCursor {
-    CGFloat brightnessCursorX = (1.0f - (self.brightness - self.brightnessLowerLimit) / (1.0f - self.brightnessLowerLimit));
+    CGFloat brightnessCursorX = (1.0f - (self.brightness.floatValue - self.brightnessLowerLimit.floatValue) / (1.0f - self.brightnessLowerLimit.floatValue));
     _brightnessCursor.center = CGPointMake(brightnessCursorX * _controlFrame.size.width + _controlFrame.origin.x, _brightnessCursor.center.y);
     _brightnessCursor.color = self.color;
 }
 
 - (void)setSliderFrame:(CGRect)sliderFrame {
-    [super setSliderFrame:sliderFrame];
     _renderingFrame = sliderFrame;
     _controlFrame = CGRectInset(_renderingFrame, 8, 0);
 }
 
-
 @end
-
 

@@ -9,8 +9,8 @@
 #import "HRColorInfoView.h"
 #import "HRCgUtil.h"
 
-const CGFloat kHRFlatStyleColorInfoViewLabelHeight = 18.;
-const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
+const CGFloat kHRColorInfoViewLabelHeight = 18.;
+const CGFloat kHRColorInfoViewCornerRadius = 3.;
 
 @interface HRColorInfoView () {
     UIColor *_color;
@@ -24,7 +24,6 @@ const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 
 @synthesize color = _color;
 
-
 + (HRColorInfoView *)colorInfoViewWithFrame:(CGRect)frame {
     return [[HRColorInfoView alloc] initWithFrame:frame];
 }
@@ -32,22 +31,34 @@ const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
-        _hexColorLabel = [[UILabel alloc] init];
-        _hexColorLabel.backgroundColor = [UIColor clearColor];
-        _hexColorLabel.font = [UIFont systemFontOfSize:12];
-        _hexColorLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
-        _hexColorLabel.textAlignment = NSTextAlignmentCenter;
-
-        [self addSubview:_hexColorLabel];
-
-        _borderLayer = [[CALayer alloc] initWithLayer:self.layer];
-        _borderLayer.cornerRadius = kHRFlatStyleColorInfoViewCornerRadius;
-        _borderLayer.borderColor = [[UIColor lightGrayColor] CGColor];
-        _borderLayer.borderWidth = 1.f / [[UIScreen mainScreen] scale];
-        [self.layer addSublayer:_borderLayer];
+        [self _init];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self _init];
+    }
+    return self;
+}
+
+- (void)_init {
+    self.backgroundColor = [UIColor clearColor];
+    _hexColorLabel = [[UILabel alloc] init];
+    _hexColorLabel.backgroundColor = [UIColor clearColor];
+    _hexColorLabel.font = [UIFont systemFontOfSize:12];
+    _hexColorLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
+    _hexColorLabel.textAlignment = NSTextAlignmentCenter;
+
+    [self addSubview:_hexColorLabel];
+
+    _borderLayer = [[CALayer alloc] initWithLayer:self.layer];
+    _borderLayer.cornerRadius = kHRColorInfoViewCornerRadius;
+    _borderLayer.borderColor = [[UIColor lightGrayColor] CGColor];
+    _borderLayer.borderWidth = 1.f / [[UIScreen mainScreen] scale];
+    [self.layer addSublayer:_borderLayer];
 }
 
 - (void)layoutSubviews {
@@ -55,12 +66,11 @@ const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 
     _hexColorLabel.frame = CGRectMake(
             0,
-            CGRectGetHeight(self.frame) - kHRFlatStyleColorInfoViewLabelHeight,
+            CGRectGetHeight(self.frame) - kHRColorInfoViewLabelHeight,
             CGRectGetWidth(self.frame),
-            kHRFlatStyleColorInfoViewLabelHeight);
+            kHRColorInfoViewLabelHeight);
 
     _borderLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
-
 }
 
 - (void)setColor:(UIColor *)color {
@@ -70,7 +80,7 @@ const CGFloat kHRFlatStyleColorInfoViewCornerRadius = 3.;
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGRect colorRect = CGRectMake(0, 0, CGRectGetWidth(rect), CGRectGetHeight(rect) - kHRFlatStyleColorInfoViewLabelHeight);
+    CGRect colorRect = CGRectMake(0, 0, CGRectGetWidth(rect), CGRectGetHeight(rect) - kHRColorInfoViewLabelHeight);
 
     UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:colorRect byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(4, 4)];
     [rectanglePath closePath];

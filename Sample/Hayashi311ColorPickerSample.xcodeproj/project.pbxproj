@@ -27,6 +27,7 @@
 		DA877C4214527BD000A0754C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C4114527BD000A0754C /* AppDelegate.m */; };
 		DA877C4F14527E2300A0754C /* SampleTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA877C4E14527E2300A0754C /* SampleTopViewController.m */; };
 		DA877C731452A1C500A0754C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA877C721452A1C500A0754C /* QuartzCore.framework */; };
+		DAF8D17E19039B750034B586 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF8D17D19039B750034B586 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		DA877C4D14527E2300A0754C /* SampleTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTopViewController.h; sourceTree = "<group>"; };
 		DA877C4E14527E2300A0754C /* SampleTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTopViewController.m; sourceTree = "<group>"; };
 		DA877C721452A1C500A0754C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DAF8D17D19039B750034B586 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				DA877C4114527BD000A0754C /* AppDelegate.m */,
 				DA877C4914527C2500A0754C /* Classes */,
 				DA877C3814527BD000A0754C /* Supporting Files */,
+				DAF8D17D19039B750034B586 /* Main.storyboard */,
 			);
 			name = Sample;
 			path = Hayashi311ColorPickerSample;
@@ -226,6 +229,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF8D17E19039B750034B586 /* Main.storyboard in Resources */,
 				DA877C3C14527BD000A0754C /* InfoPlist.strings in Resources */,
 				DA0203EA160F20840030C93D /* Default-568h@2x.png in Resources */,
 			);
@@ -320,7 +324,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
@@ -335,7 +339,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
 				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Hayashi311ColorPickerSample;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;

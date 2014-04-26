@@ -15,7 +15,7 @@
 @property (nonatomic) CGFloat brightness;
 
 @optional
-@property (nonatomic) CGFloat saturationUpperLimit;
+@property (nonatomic) NSNumber *saturationUpperLimit;
 
 @end
 
@@ -25,6 +25,6 @@
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit;
 
-@property (nonatomic) CGFloat tileSize;
+@property (nonatomic) NSNumber *tileSize;
 
 @end

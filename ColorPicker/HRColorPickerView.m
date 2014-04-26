@@ -111,16 +111,14 @@ typedef struct timeval timeval;
 
     self = [super initWithFrame:frame];
     if (self) {
-        // RGBのデフォルトカラーをHSVに変換
-        HSVColorFromUIColor(defaultUIColor, &_currentHsvColor);
+
+        self.color = defaultUIColor;
 
         // UIの配置
         CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
         CGFloat colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
 
         self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(8, (style.headerHeight - 84) / 2.0f, 66, 84)];
-
-        self.colorInfoView.color = defaultUIColor;
         [self addSubview:self.colorInfoView];
 
         CGFloat brightnessPickerTop = (style.headerHeight - 84.0f) / 2.0f;
@@ -135,12 +133,7 @@ typedef struct timeval timeval;
                 _brightnessPickerFrame.size.height);
 
         self.brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:_brightnessPickerTouchFrame];
-        self.brightnessSlider.color = defaultUIColor;
-        self.brightnessSlider.brightnessLowerLimit = style.brightnessLowerLimit;
-        [self.brightnessSlider addTarget:self
-                                  action:@selector(brightnessChanged:)
-                        forControlEvents:UIControlEventEditingChanged];
-
+        self.brightnessSlider.brightnessLowerLimit = @(style.brightnessLowerLimit);
         [self addSubview:self.brightnessSlider];
 
         _colorMapFrame = CGRectMake(colorMapSpace, style.headerHeight, colorMapSize.width, colorMapSize.height);
@@ -148,15 +141,7 @@ typedef struct timeval timeval;
         HRColorMapView *colorMapView;
         colorMapView = [HRColorMapView colorMapWithFrame:_colorMapFrame
                                     saturationUpperLimit:style.saturationUpperLimit];
-
-        colorMapView.brightness = _currentHsvColor.v;
-        colorMapView.tileSize = style.colorMapTileSize;
-
-        colorMapView.color = defaultUIColor;
-        [colorMapView addTarget:self
-                         action:@selector(colorMapColorChanged:)
-               forControlEvents:UIControlEventEditingChanged];
-
+//        colorMapView.tileSize = style.colorMapTileSize;
         self.colorMapView = colorMapView;
 
         [self addSubview:self.colorMapView];
@@ -166,15 +151,27 @@ typedef struct timeval timeval;
         [self setBackgroundColor:[UIColor colorWithWhite:0.99f alpha:1.0f]];
         [self setMultipleTouchEnabled:FALSE];
 
-        // フレームレートの調整
-        gettimeofday(&_lastDrawTime, NULL);
-
-        _waitTimeDuration.tv_sec = (__darwin_time_t) 0.0;
-        _waitTimeDuration.tv_usec = (__darwin_suseconds_t) (1000000.0 / 15.0);
-
-        _delegateHasSELColorWasChanged = FALSE;
+        [self _init];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self _init];
+    }
+    return self;
+}
+
+- (void)_init {
+    // フレームレートの調整
+    gettimeofday(&_lastDrawTime, NULL);
+
+    _waitTimeDuration.tv_sec = (__darwin_time_t) 0.0;
+    _waitTimeDuration.tv_usec = (__darwin_suseconds_t) (1000000.0 / 15.0);
+
+    _delegateHasSELColorWasChanged = FALSE;
 }
 
 - (UIColor *)color {
@@ -184,8 +181,37 @@ typedef struct timeval timeval;
                            alpha:1];
 }
 
+- (void)setColor:(UIColor *)color {
+    // RGBのデフォルトカラーをHSVに変換
+    HSVColorFromUIColor(color, &_currentHsvColor);
+}
+
+
+- (void)setColorInfoView:(UIView <HRColorInfoView> *)colorInfoView {
+    _colorInfoView = colorInfoView;
+    _colorInfoView.color = self.color;
+}
+
+- (void)setBrightnessSlider:(UIControl <HRBrightnessSlider> *)brightnessSlider {
+    _brightnessSlider = brightnessSlider;
+    _brightnessSlider.color = self.color;
+    [_brightnessSlider addTarget:self
+                              action:@selector(brightnessChanged:)
+                    forControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)setColorMapView:(UIControl <HRColorMapView> *)colorMapView {
+    _colorMapView = colorMapView;
+    _colorMapView.brightness = _currentHsvColor.v;
+    _colorMapView.color = self.color;
+    [_colorMapView addTarget:self
+                     action:@selector(colorMapColorChanged:)
+           forControlEvents:UIControlEventEditingChanged];
+}
+
+
 - (void)brightnessChanged:(UIControl <HRBrightnessSlider> *)slider {
-    _currentHsvColor.v = slider.brightness;
+    _currentHsvColor.v = slider.brightness.floatValue;
     self.colorMapView.brightness = _currentHsvColor.v;
     self.colorMapView.color = self.color;
     self.colorInfoView.color = self.color;

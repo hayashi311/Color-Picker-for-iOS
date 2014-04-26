@@ -38,8 +38,6 @@
 @property (nonatomic, strong) UIColor *color;
 
 + (CGSize)cursorSize;
-+ (CGFloat)outlineSize;
-+ (CGFloat)shadowSize;
 
 + (HRColorCursor *)colorCursorWithPoint:(CGPoint)point;
 

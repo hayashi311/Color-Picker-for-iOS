@@ -28,10 +28,20 @@
 #import "HRColorPickerViewController.h"
 #import "HRColorPickerView.h"
 
+@interface HRColorPickerViewController(){
+    id <HRColorPickerViewControllerDelegate> __weak delegate;
+    UIColor *_color;
+    BOOL _fullColor;
+    HCPCSaveStyle _saveStyle;
+}
+
+@property (nonatomic, retain) IBOutlet HRColorPickerView *colorPickerView;
+
+@end
+
 @implementation HRColorPickerViewController
 
 @synthesize delegate;
-
 
 + (HRColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color {
     return [[HRColorPickerViewController alloc] initWithColor:color fullColor:NO saveStyle:HCPCSaveStyleSaveAlways];
@@ -49,11 +59,6 @@
     return [[HRColorPickerViewController alloc] initWithColor:color fullColor:YES saveStyle:HCPCSaveStyleSaveAndCancel];
 }
 
-
-- (id)initWithDefaultColor:(UIColor *)defaultColor {
-    return [self initWithColor:defaultColor fullColor:NO saveStyle:HCPCSaveStyleSaveAlways];
-}
-
 - (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -64,36 +69,49 @@
     return self;
 }
 
-- (void)loadView {
-    CGRect frame = [[UIScreen mainScreen] applicationFrame];
-    frame.size.height -= 44.f;
-
-    self.view = [[UIView alloc] initWithFrame:frame];
-
-    HRRGBColor rgbColor;
-    RGBColorFromUIColor(_color, &rgbColor);
-
-    HRColorPickerStyle style;
-    if (_fullColor) {
-        style = [HRColorPickerView fitScreenFullColorStyle];
-    } else {
-        style = [HRColorPickerView fitScreenStyle];
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        _color = [UIColor blueColor];
+        _fullColor = NO;
+        _saveStyle = HCPCSaveStyleSaveAlways;
     }
-
-    colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
-
-    [self.view addSubview:colorPickerView];
-
-    if (_saveStyle == HCPCSaveStyleSaveAndCancel) {
-        UIBarButtonItem *buttonItem;
-
-        buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-        self.navigationItem.leftBarButtonItem = buttonItem;
-
-        buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
-        self.navigationItem.rightBarButtonItem = buttonItem;
-    }
+    return self;
 }
+
+
+
+//- (void)loadView {
+//    [super loadView];
+//    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+//    frame.size.height -= 44.f;
+//
+//    self.view = [[UIView alloc] initWithFrame:frame];
+//
+//    HRRGBColor rgbColor;
+//    RGBColorFromUIColor(_color, &rgbColor);
+//
+//    HRColorPickerStyle style;
+//    if (_fullColor) {
+//        style = [HRColorPickerView fitScreenFullColorStyle];
+//    } else {
+//        style = [HRColorPickerView fitScreenStyle];
+//    }
+//
+//    self.colorPickerView = [[HRColorPickerView alloc] initWithStyle:style defaultColor:rgbColor];
+//
+//    [self.view addSubview:self.colorPickerView];
+//
+//    if (_saveStyle == HCPCSaveStyleSaveAndCancel) {
+//        UIBarButtonItem *buttonItem;
+//
+//        buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+//        self.navigationItem.leftBarButtonItem = buttonItem;
+//
+//        buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
+//        self.navigationItem.rightBarButtonItem = buttonItem;
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -113,7 +131,7 @@
 
 - (void)save {
     if (self.delegate) {
-        HRRGBColor rgbColor = [colorPickerView RGBColor];
+        HRRGBColor rgbColor = [self.colorPickerView RGBColor];
         [self.delegate setSelectedColor:[UIColor colorWithRed:rgbColor.r green:rgbColor.g blue:rgbColor.b alpha:1.0f]];
     }
     [self.navigationController popViewControllerAnimated:YES];

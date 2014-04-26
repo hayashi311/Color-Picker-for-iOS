@@ -11,11 +11,11 @@
 @protocol HRBrightnessSlider
 
 @required
-@property (nonatomic, readonly) CGFloat brightness;
+@property (nonatomic, readonly) NSNumber * brightness;
 @property (nonatomic) UIColor *color;
 
 @optional
-@property (nonatomic) CGFloat brightnessLowerLimit;
+@property (nonatomic) NSNumber * brightnessLowerLimit;
 
 @end
 

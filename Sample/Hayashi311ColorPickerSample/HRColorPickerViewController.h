@@ -33,21 +33,12 @@
 - (void)setSelectedColor:(UIColor *)color;
 @end
 
-#define HRColorPickerDelegate HRColorPickerViewControllerDelegate
-// Delegateの名前変えました。すみません。
-
 typedef enum {
     HCPCSaveStyleSaveAlways,
     HCPCSaveStyleSaveAndCancel
 } HCPCSaveStyle;
 
 @interface HRColorPickerViewController : UIViewController {
-    id <HRColorPickerViewControllerDelegate> __weak delegate;
-    HRColorPickerView *colorPickerView;
-
-    UIColor *_color;
-    BOOL _fullColor;
-    HCPCSaveStyle _saveStyle;
 }
 
 + (HRColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color;
@@ -62,9 +53,6 @@ typedef enum {
  */
 - (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
 
-/** @deprecated use -save: instead of this . */
-- (void)saveColor:(id)sender;
-
 - (void)save;
 - (void)save:(id)sender;
 - (void)cancel:(id)sender;
@@ -74,3 +62,4 @@ typedef enum {
 
 
 @end
+

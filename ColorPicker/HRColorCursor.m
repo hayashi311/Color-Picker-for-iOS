@@ -26,34 +26,30 @@
  */
 
 #import "HRColorCursor.h"
-#import "HRCgUtil.h"
 
 @interface HRColorCursor ()
 - (id)initWithPoint:(CGPoint)point;
-@end
-
-@interface HRFlatStyleColorCursor : HRColorCursor
 
 @property (nonatomic) BOOL editing;
 @property (nonatomic, getter=isGrayCursor) BOOL grayCursor;
+
 @end
 
-@implementation HRColorCursor
+@implementation HRColorCursor{
+    CALayer *_backLayer;
+    CALayer *_colorLayer;
+    UIColor *_color;
+    BOOL _editing;
+}
+
+@synthesize color = _color;
 
 + (CGSize)cursorSize {
     return CGSizeMake(28.0, 28.0f);
 }
 
-+ (CGFloat)outlineSize {
-    return 0.0f;
-}
-
-+ (CGFloat)shadowSize {
-    return 0.0f;
-}
-
 + (HRColorCursor *)colorCursorWithPoint:(CGPoint)point {
-    return [[HRFlatStyleColorCursor alloc] initWithPoint:point];
+    return [[HRColorCursor alloc] initWithPoint:point];
 }
 
 - (id)initWithPoint:(CGPoint)point {
@@ -64,23 +60,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
         [self setUserInteractionEnabled:FALSE];
         self.color = [UIColor whiteColor];
-    }
-    return self;
-}
 
-@end
-
-@implementation HRFlatStyleColorCursor {
-    CALayer *_backLayer;
-    CALayer *_colorLayer;
-    UIColor *_color;
-    BOOL _editing;
-}
-@synthesize color = _color;
-
-- (id)initWithPoint:(CGPoint)point {
-    self = [super initWithPoint:point];
-    if (self) {
         CGRect backFrame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
         _backLayer = [[CALayer alloc] init];
         _backLayer.frame = backFrame;
@@ -97,7 +77,6 @@
     }
     return self;
 }
-
 
 - (void)setColor:(UIColor *)color {
     _color = color;
