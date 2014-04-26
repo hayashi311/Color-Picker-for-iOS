@@ -36,17 +36,6 @@
     BOOL _editing;
 }
 
-//- (void)setOrigin:(CGPoint)origin {
-//    _origin = origin;
-//    CGRect frame = self.frame;
-//    frame = CGRectMake(
-//            origin.x - frame.size.width / 2.0f,
-//            origin.y - frame.size.height / 2.0f,
-//            frame.size.width,
-//            frame.size.height);
-//    self.frame = frame;
-//}
-
 - (id)init {
     self = [super initWithFrame:CGRectMake(0, 0, 28, 28)];
     if (self) {
