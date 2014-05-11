@@ -26,73 +26,18 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "HRColorUtil.h"
-
-@class HRColorPickerView;
-
-
-struct HRColorPickerStyle {
-    CGFloat width; // viewの横幅。デフォルトは320.0f;
-    CGFloat headerHeight; // 明度スライダーを含むヘッダ部分の高さ(デフォルトは106.0f。70.0fくらいが下限になると思います)
-    CGFloat colorMapTileSize; // カラーマップの中のタイルのサイズ。デフォルトは15.0f;
-    int colorMapSizeWidth; // カラーマップの中にいくつのタイルが並ぶか (not view.width)。デフォルトは20;
-    int colorMapSizeHeight; // 同じく縦にいくつ並ぶか。デフォルトは20;
-    CGFloat brightnessLowerLimit; // 明度の下限
-    CGFloat saturationUpperLimit; // 彩度の上限
-};
 
 typedef struct HRColorPickerStyle HRColorPickerStyle;
 
-@class HRBrightnessCursor;
-@class HRColorCursor;
 @protocol HRColorMapView;
 @protocol HRBrightnessSlider;
 @protocol HRColorInfoView;
 
 @interface HRColorPickerView : UIControl
 
-// スタイルを取得
-+ (HRColorPickerStyle)defaultStyle;
-+ (HRColorPickerStyle)fullColorStyle;
-
-+ (HRColorPickerStyle)fitScreenStyle; // iPhone5以降の縦長スクリーンに対応しています。
-+ (HRColorPickerStyle)fitScreenFullColorStyle;
-
-// スタイルからviewのサイズを取得
-+ (CGSize)sizeWithStyle:(HRColorPickerStyle)style;
-
-- (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor;
-
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, strong) IBOutlet UIView <HRColorInfoView> *colorInfoView;
 @property (nonatomic, strong) IBOutlet UIControl <HRColorMapView> *colorMapView;
 @property (nonatomic, strong) IBOutlet UIControl <HRBrightnessSlider> *brightnessSlider;
-
-
-@end
-
-
-#pragma - Deprecated
-
-__attribute__((deprecated))
-@protocol HRColorPickerViewDelegate
-- (void)colorWasChanged:(HRColorPickerView *)color_picker_view;
-@end
-
-
-@interface HRColorPickerView (Deprecated)
-
-- (id)initWithFrame:(CGRect)frame defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated)); // frameが反映されません
-
-// スタイルを指定してデフォルトカラーで初期化
-- (id)initWithStyle:(HRColorPickerStyle)style defaultColor:(const HRRGBColor)defaultColor __attribute__((deprecated));
-
-- (HRRGBColor)RGBColor __attribute__((deprecated)); // colorを使ってください
-
-- (void)BeforeDealloc __attribute__((deprecated)); // 呼び出す必要はありません。
-
-@property (getter = BrightnessLowerLimit, setter = setBrightnessLowerLimit:) CGFloat BrightnessLowerLimit __attribute__((deprecated));
-@property (getter = SaturationUpperLimit, setter = setSaturationUpperLimit:) CGFloat SaturationUpperLimit __attribute__((deprecated));
-@property (nonatomic, weak) NSObject <HRColorPickerViewDelegate> *delegate __attribute__((deprecated));
 
 @end

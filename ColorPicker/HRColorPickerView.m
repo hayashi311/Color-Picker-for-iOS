@@ -30,127 +30,36 @@
 #import "HRColorMapView.h"
 #import "HRBrightnessSlider.h"
 #import "HRColorInfoView.h"
+#import "HRColorUtil.h"
 
 typedef struct timeval timeval;
 
 @interface HRColorPickerView () {
-    NSObject <HRColorPickerViewDelegate> *__weak delegate;
-
-    // 色情報
-    HRHSVColor _currentHsvColor;
-
-    // カラーマップ上のカーソルの位置
-    CGPoint _colorCursorPosition;
-
-    // パーツの配置
-    CGRect _brightnessPickerFrame;
-    CGRect _brightnessPickerTouchFrame;
-    CGRect _colorMapFrame;
-    CGFloat _tileSize;
-
-    // フレームレート
-    timeval _lastDrawTime;
-    timeval _waitTimeDuration;
-
-    bool _delegateHasSELColorWasChanged;
 }
 
 @end
 
-@implementation HRColorPickerView
+@implementation HRColorPickerView {
+    UIView <HRColorInfoView> *_colorInfoView;
+    UIControl <HRColorMapView> *_colorMapView;
+    UIControl <HRBrightnessSlider> *_brightnessSlider;
 
+    // 色情報
+    HRHSVColor _currentHsvColor;
 
-+ (HRColorPickerStyle)defaultStyle {
-    HRColorPickerStyle style;
-    style.width = 320.0f;
-    style.headerHeight = 198 - 44 - 61;
-    style.colorMapTileSize = 16;
-    style.colorMapSizeWidth = 20;
-    style.colorMapSizeHeight = 20;
-    style.brightnessLowerLimit = 0.4f;
-    style.saturationUpperLimit = 0.95f;
-    return style;
+    // フレームレート
+    timeval _lastDrawTime;
+    timeval _waitTimeDuration;
 }
 
-+ (HRColorPickerStyle)fitScreenStyle {
-    CGSize defaultSize = [[UIScreen mainScreen] applicationFrame].size;
-    defaultSize.height -= 44.f;
-
-    HRColorPickerStyle style = [HRColorPickerView defaultStyle];
-    style.colorMapSizeHeight = (int) ((defaultSize.height - style.headerHeight) / style.colorMapTileSize);
-
-    CGFloat colorMapMargin = (style.width - (style.colorMapSizeWidth * style.colorMapTileSize)) / 2.f;
-    style.headerHeight = defaultSize.height - (style.colorMapSizeHeight * style.colorMapTileSize) - colorMapMargin;
-
-    return style;
+- (id)init {
+    return [self initWithFrame:CGRectZero];
 }
 
-+ (HRColorPickerStyle)fullColorStyle {
-    HRColorPickerStyle style = [HRColorPickerView defaultStyle];
-    style.brightnessLowerLimit = 0.0f;
-    style.saturationUpperLimit = 1.0f;
-    return style;
-}
-
-+ (HRColorPickerStyle)fitScreenFullColorStyle {
-    HRColorPickerStyle style = [HRColorPickerView fitScreenStyle];
-    style.brightnessLowerLimit = 0.0f;
-    style.saturationUpperLimit = 1.0f;
-    return style;
-}
-
-+ (CGSize)sizeWithStyle:(HRColorPickerStyle)style {
-    CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
-    CGFloat colorMapMargin = (style.width - colorMapSize.width) / 2.0f;
-    return CGSizeMake(style.width, style.headerHeight + colorMapSize.height + colorMapMargin);
-}
-
-- (id)initWithStyle:(HRColorPickerStyle)style defultUIColor:(UIColor *)defaultUIColor {
-    CGSize size = [HRColorPickerView sizeWithStyle:style];
-    CGRect frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
-
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-
-        self.color = defaultUIColor;
-
-        // UIの配置
-        CGSize colorMapSize = CGSizeMake(style.colorMapTileSize * style.colorMapSizeWidth, style.colorMapTileSize * style.colorMapSizeHeight);
-        CGFloat colorMapSpace = (style.width - colorMapSize.width) / 2.0f;
-
-        self.colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectMake(8, (style.headerHeight - 84) / 2.0f, 66, 84)];
-        [self addSubview:self.colorInfoView];
-
-        CGFloat brightnessPickerTop = (style.headerHeight - 84.0f) / 2.0f;
-        _brightnessPickerFrame = CGRectMake(
-                CGRectGetMaxX(self.colorInfoView.frame) + CGRectGetMinX(self.colorInfoView.frame),
-                brightnessPickerTop,
-                style.width - CGRectGetMaxX(self.colorInfoView.frame) - CGRectGetMinX(self.colorInfoView.frame) * 2,
-                84.0f);
-        _brightnessPickerTouchFrame = CGRectMake(_brightnessPickerFrame.origin.x - 20.0f,
-                brightnessPickerTop,
-                _brightnessPickerFrame.size.width + 40.0f,
-                _brightnessPickerFrame.size.height);
-
-        self.brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:_brightnessPickerTouchFrame];
-        self.brightnessSlider.brightnessLowerLimit = @(style.brightnessLowerLimit);
-        [self addSubview:self.brightnessSlider];
-
-        _colorMapFrame = CGRectMake(colorMapSpace, style.headerHeight, colorMapSize.width, colorMapSize.height);
-
-        HRColorMapView *colorMapView;
-        colorMapView = [HRColorMapView colorMapWithFrame:_colorMapFrame
-                                    saturationUpperLimit:style.saturationUpperLimit];
-//        colorMapView.tileSize = style.colorMapTileSize;
-        self.colorMapView = colorMapView;
-
-        [self addSubview:self.colorMapView];
-        _tileSize = style.colorMapTileSize;
-
-        // 諸々初期化
-        [self setBackgroundColor:[UIColor colorWithWhite:0.99f alpha:1.0f]];
-        [self setMultipleTouchEnabled:FALSE];
-
+        self.backgroundColor = [UIColor whiteColor];
         [self _init];
     }
     return self;
@@ -170,8 +79,10 @@ typedef struct timeval timeval;
 
     _waitTimeDuration.tv_sec = (__darwin_time_t) 0.0;
     _waitTimeDuration.tv_usec = (__darwin_suseconds_t) (1000000.0 / 15.0);
+}
 
-    _delegateHasSELColorWasChanged = FALSE;
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    [super willMoveToSuperview:newSuperview];
 }
 
 - (UIColor *)color {
@@ -186,18 +97,58 @@ typedef struct timeval timeval;
     HSVColorFromUIColor(color, &_currentHsvColor);
 }
 
+- (UIView <HRColorInfoView> *)colorInfoView {
+    if (!_colorInfoView) {
+        _colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectZero];
+        _colorInfoView.color = self.color;
+        [self addSubview:self.colorInfoView];
+    }
+    return _colorInfoView;
+}
 
 - (void)setColorInfoView:(UIView <HRColorInfoView> *)colorInfoView {
     _colorInfoView = colorInfoView;
     _colorInfoView.color = self.color;
 }
 
+- (UIControl <HRBrightnessSlider> *)brightnessSlider {
+    if (!_brightnessSlider) {
+        _brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:CGRectZero];
+        _brightnessSlider.brightnessLowerLimit = @0.4;
+        _brightnessSlider.color = self.color;
+        [_brightnessSlider addTarget:self
+                              action:@selector(brightnessChanged:)
+                    forControlEvents:UIControlEventEditingChanged];
+        [self addSubview:_brightnessSlider];
+    }
+    return _brightnessSlider;
+}
+
 - (void)setBrightnessSlider:(UIControl <HRBrightnessSlider> *)brightnessSlider {
     _brightnessSlider = brightnessSlider;
     _brightnessSlider.color = self.color;
     [_brightnessSlider addTarget:self
-                              action:@selector(brightnessChanged:)
-                    forControlEvents:UIControlEventEditingChanged];
+                          action:@selector(brightnessChanged:)
+                forControlEvents:UIControlEventEditingChanged];
+}
+
+- (UIControl <HRColorMapView> *)colorMapView {
+    if (!_colorMapView) {
+        HRColorMapView *colorMapView;
+        colorMapView = [HRColorMapView colorMapWithFrame:CGRectZero
+                                    saturationUpperLimit:0.9];
+        colorMapView.tileSize = @16;
+        _colorMapView = colorMapView;
+
+        _colorMapView.brightness = _currentHsvColor.v;
+        _colorMapView.color = self.color;
+        [_colorMapView addTarget:self
+                          action:@selector(colorMapColorChanged:)
+                forControlEvents:UIControlEventEditingChanged];
+        _colorMapView.backgroundColor = [UIColor redColor];
+        [self addSubview:_colorMapView];
+    }
+    return _colorMapView;
 }
 
 - (void)setColorMapView:(UIControl <HRColorMapView> *)colorMapView {
@@ -205,10 +156,9 @@ typedef struct timeval timeval;
     _colorMapView.brightness = _currentHsvColor.v;
     _colorMapView.color = self.color;
     [_colorMapView addTarget:self
-                     action:@selector(colorMapColorChanged:)
-           forControlEvents:UIControlEventEditingChanged];
+                      action:@selector(colorMapColorChanged:)
+            forControlEvents:UIControlEventEditingChanged];
 }
-
 
 - (void)brightnessChanged:(UIControl <HRBrightnessSlider> *)slider {
     _currentHsvColor.v = slider.brightness.floatValue;
@@ -231,11 +181,40 @@ typedef struct timeval timeval;
     timersub(&now, &_lastDrawTime, &diff);
     if (timercmp(&diff, &_waitTimeDuration, >)) {
         _lastDrawTime = now;
-        if (_delegateHasSELColorWasChanged) {
-            [delegate colorWasChanged:self];
-        }
         [self sendActionsForControlEvents:UIControlEventEditingChanged];
     }
 }
 
+- (BOOL)usingAutoLayout {
+    return self.constraints && self.constraints.count > 0;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    if (self.usingAutoLayout) {
+        return;
+    }
+
+    CGFloat headerHeight = 198 - 44 - 61;
+    self.colorInfoView.frame = CGRectMake(8, (headerHeight - 84) / 2.0f, 66, 84);
+
+    CGFloat brightnessPickerTop = (headerHeight - 84.0f) / 2.0f;
+
+    CGRect brightnessPickerFrame = CGRectMake(
+            CGRectGetMaxX(self.colorInfoView.frame) + CGRectGetMinX(self.colorInfoView.frame),
+            brightnessPickerTop,
+            CGRectGetWidth(self.frame) - CGRectGetMaxX(self.colorInfoView.frame) - CGRectGetMinX(self.colorInfoView.frame) * 2,
+            84.0f);
+
+    CGRect brightnessPickerTouchFrame = CGRectInset(brightnessPickerFrame, 20, 0);
+    self.brightnessSlider.frame = brightnessPickerTouchFrame;
+
+    self.colorMapView.frame = CGRectMake(
+            0, headerHeight,
+            CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight
+    );
+}
+
 @end
+

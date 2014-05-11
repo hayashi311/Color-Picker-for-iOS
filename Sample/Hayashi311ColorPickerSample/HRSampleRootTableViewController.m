@@ -25,38 +25,42 @@
  * $FreeBSD$
  */
 
-#import <UIKit/UIKit.h>
-#import "HRColorPickerViewController.h"
+#import "HRSampleRootTableViewController.h"
+#import "HRSampleColorPickerViewController2.h"
 
-@class HRColorPickerView;
+@interface HRSampleRootTableViewController ()
 
-@interface HRColorPickerViewController2 : UIViewController {
-    id <HRColorPickerViewControllerDelegate> __weak delegate;
-    HRColorPickerView *colorPickerView;
+@property IBOutlet UITableViewCell *codeCell;
 
-    UIColor *_color;
-    BOOL _fullColor;
-    HCPCSaveStyle _saveStyle;
+@end
+
+@implementation HRSampleRootTableViewController
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+
+    }
+    return self;
 }
 
-+ (HRColorPickerViewController2 *)colorPickerViewControllerWithColor:(UIColor *)color;
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
-/** Initialize controller with selected color. 
- * @param defaultColor selected color
- * @param fullColor If YES, browseable full color. If NO color was limited.
- * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
- */
-- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-/** @deprecated use -save: instead of this . */
-- (void)saveColor:(id)sender;
-
-- (void)save;
-- (void)save:(id)sender;
-- (void)cancel:(id)sender;
-
-
-@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
-
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (self.codeCell == cell){
+        HRSampleColorPickerViewController2 *controller;
+        controller = [[HRSampleColorPickerViewController2 alloc] initWithColor:[UIColor blueColor] fullColor:NO];
+        [self.navigationController pushViewController:controller
+                                             animated:YES];
+        return;
+    }
+}
 
 @end

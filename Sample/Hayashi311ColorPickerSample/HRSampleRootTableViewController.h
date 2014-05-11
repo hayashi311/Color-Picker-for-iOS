@@ -25,22 +25,8 @@
  * $FreeBSD$
  */
 
+#import <UIKit/UIKit.h>
 
-#import <Foundation/Foundation.h>
-
-@protocol HRBrightnessSlider
-
-@required
-@property (nonatomic, readonly) NSNumber * brightness;
-@property (nonatomic) UIColor *color;
-
-@optional
-@property (nonatomic) NSNumber * brightnessLowerLimit;
-
-@end
-
-@interface HRBrightnessSlider : UIControl <HRBrightnessSlider>
-
-+ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame;
+@interface HRSampleRootTableViewController : UITableViewController
 
 @end

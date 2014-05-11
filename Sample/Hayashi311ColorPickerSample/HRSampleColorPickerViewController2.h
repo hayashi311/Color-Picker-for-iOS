@@ -26,40 +26,26 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "HRSampleColorPickerViewController.h"
 
 @class HRColorPickerView;
 
-@protocol HRColorPickerViewControllerDelegate
-- (void)setSelectedColor:(UIColor *)color;
-@end
-
-typedef enum {
-    HCPCSaveStyleSaveAlways,
-    HCPCSaveStyleSaveAndCancel
-} HCPCSaveStyle;
-
-@interface HRColorPickerViewController : UIViewController {
+@interface HRSampleColorPickerViewController2 : UIViewController {
+    id <HRColorPickerViewControllerDelegate> __weak delegate;
+    HRColorPickerView *colorPickerView;
+    UIColor *_color;
+    BOOL _fullColor;
 }
 
-+ (HRColorPickerViewController *)colorPickerViewControllerWithColor:(UIColor *)color;
-+ (HRColorPickerViewController *)cancelableColorPickerViewControllerWithColor:(UIColor *)color;
-+ (HRColorPickerViewController *)fullColorPickerViewControllerWithColor:(UIColor *)color;
-+ (HRColorPickerViewController *)cancelableFullColorPickerViewControllerWithColor:(UIColor *)color;
-
-/** Initialize controller with selected color. 
+/** Initialize controller with selected color.
  * @param defaultColor selected color
  * @param fullColor If YES, browseable full color. If NO color was limited.
  * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
  */
-- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
-
-- (void)save;
-- (void)save:(id)sender;
-- (void)cancel:(id)sender;
 
 
 @property (weak) id <HRColorPickerViewControllerDelegate> delegate;
 
+- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor;
 
 @end
-

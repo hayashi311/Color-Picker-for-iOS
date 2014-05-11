@@ -71,7 +71,6 @@ int HexColorFromUIColor(const UIColor *) __attribute__((deprecated));
 // 同値チェック
 bool HRHSVColorEqualToColor(const HRHSVColor *, const HRHSVColor *) __attribute__((deprecated));
 
-
 // 0.0f~1.0fに納まるxとy、彩度の下限、輝度からHSVを求める
 void HSVColorAt(HRHSVColor *hsv, CGFloat x, CGFloat y, CGFloat saturationLowerLimit, CGFloat brightness) __attribute__((deprecated));
 

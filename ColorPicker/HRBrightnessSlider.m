@@ -1,20 +1,34 @@
-//
-// Created by hayashi311 on 2013/09/14.
-// Copyright (c) 2013 Hayashi Ryota. All rights reserved.
-//
-// To change the template use AppCode | Preferences | File Templates.
-//
+/*-
+ * Copyright (c) 2011 Ryota Hayashi
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR(S) ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR(S) BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * $FreeBSD$
+ */
 
 
 #import "HRBrightnessSlider.h"
 #import "HRCgUtil.h"
 #import "HRBrightnessCursor.h"
-
-@interface HRBrightnessSlider ()
-
-@property (nonatomic) CGRect sliderFrame;
-
-@end
 
 const CGFloat kHRBrightnessSliderHeight = 11.;
 const CGFloat kHRBrightnessSliderMarginBottom = 18.;
@@ -75,15 +89,8 @@ const CGFloat kHRBrightnessSliderMarginBottom = 18.;
     panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self addGestureRecognizer:panGestureRecognizer];
 
-    CGRect sliderFrame = CGRectMake(0, 0, self.frame.size.width, kHRBrightnessSliderHeight);
-    sliderFrame = CGRectInset(sliderFrame, 20, 0);
-    sliderFrame.origin.y = CGRectGetHeight(self.frame) - kHRBrightnessSliderHeight / 2 - kHRBrightnessSliderMarginBottom;
-    self.sliderFrame = sliderFrame;
 
     _brightnessCursor = [[HRBrightnessCursor alloc] init];
-    _brightnessCursor.center = CGPointMake(
-            CGRectGetMinX(_controlFrame),
-            CGRectGetMidY(_controlFrame));
     [self addSubview:_brightnessCursor];
 
     _needsToUpdateColor = NO;
@@ -153,7 +160,6 @@ const CGFloat kHRBrightnessSliderMarginBottom = 18.;
 - (void)handlePan:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateChanged || sender.state == UIGestureRecognizerStateEnded) {
         if (sender.numberOfTouches <= 0) {
-
             _brightnessCursor.editing = NO;
             return;
         }
@@ -183,10 +189,20 @@ const CGFloat kHRBrightnessSliderMarginBottom = 18.;
     _brightnessCursor.color = self.color;
 }
 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    CGRect sliderFrame = CGRectMake(0, 0, self.frame.size.width, kHRBrightnessSliderHeight);
+    sliderFrame = CGRectInset(sliderFrame, 20, 0);
+    sliderFrame.origin.y = CGRectGetHeight(self.frame) - kHRBrightnessSliderHeight / 2 - kHRBrightnessSliderMarginBottom;
+    self.sliderFrame = sliderFrame;
+}
+
 - (void)setSliderFrame:(CGRect)sliderFrame {
     _renderingFrame = sliderFrame;
     _controlFrame = CGRectInset(_renderingFrame, 8, 0);
+    _brightnessCursor.center = CGPointMake(
+            CGRectGetMinX(_controlFrame),
+            CGRectGetMidY(_controlFrame));
 }
 
 @end
-

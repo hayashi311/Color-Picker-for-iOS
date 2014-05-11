@@ -25,22 +25,16 @@
  * $FreeBSD$
  */
 
+#import <UIKit/UIKit.h>
 
-#import <Foundation/Foundation.h>
+@protocol HRColorPickerViewControllerDelegate
+- (void)setSelectedColor:(UIColor *)color;
+@end
 
-@protocol HRBrightnessSlider
+@interface HRSampleColorPickerViewController : UIViewController {
+}
 
-@required
-@property (nonatomic, readonly) NSNumber * brightness;
-@property (nonatomic) UIColor *color;
-
-@optional
-@property (nonatomic) NSNumber * brightnessLowerLimit;
+@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
 
 @end
 
-@interface HRBrightnessSlider : UIControl <HRBrightnessSlider>
-
-+ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame;
-
-@end

@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller - HRColorPicker by hayashi311-->
+        <!--Sample Root Table View Controller - HRColorPicker by hayashi311-->
         <scene sceneID="Kkp-Bx-O7S">
             <objects>
-                <tableViewController id="6GW-io-gwo" sceneMemberID="viewController">
+                <tableViewController id="6GW-io-gwo" customClass="HRSampleRootTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xvd-Kj-Dq4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,12 +36,21 @@
                                             <segue destination="jn2-5z-SyP" kind="push" id="cGi-yB-uCX"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6b8-k4-aWb">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="AGN-4O-tGX" style="IBUITableViewCellStyleDefault" id="6b8-k4-aWb">
                                         <rect key="frame" x="0.0" y="108" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6b8-k4-aWb" id="wWR-EH-2aE">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AGN-4O-tGX">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="shD-Kv-lGs">
@@ -61,15 +70,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="HRColorPicker by hayashi311" id="Crh-in-cc8"/>
+                    <connections>
+                        <outlet property="codeCell" destination="6b8-k4-aWb" id="uKY-jm-4V0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vzf-JC-nVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="103"/>
         </scene>
-        <!--Color Picker View Controller-->
+        <!--Sample Color Picker View Controller-->
         <scene sceneID="aai-bR-j9j">
             <objects>
-                <viewController id="jn2-5z-SyP" customClass="HRColorPickerViewController" sceneMemberID="viewController">
+                <viewController id="jn2-5z-SyP" customClass="HRSampleColorPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Yia-Px-m75"/>
                         <viewControllerLayoutGuide type="bottom" id="2wx-1L-wxn"/>

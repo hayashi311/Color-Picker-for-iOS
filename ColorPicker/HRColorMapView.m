@@ -1,9 +1,29 @@
-//
-// Created by hayashi311 on 2013/09/14.
-// Copyright (c) 2013 Hayashi Ryota. All rights reserved.
-//
-// To change the template use AppCode | Preferences | File Templates.
-//
+/*-
+ * Copyright (c) 2011 Ryota Hayashi
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR(S) ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR(S) BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * $FreeBSD$
+ */
 
 
 #import "HRColorMapView.h"
@@ -16,7 +36,7 @@
     CGFloat _brightness;
     NSNumber *_saturationUpperLimit;
     HRColorCursor *_colorCursor;
-    NSOperationQueue *_createColorMapQueue;
+    NSOperationQueue *_initializeQueue;
 }
 
 @property (atomic, strong) CALayer *colorMapLayer; // brightness 1.0
@@ -140,9 +160,9 @@
     panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self addGestureRecognizer:panGestureRecognizer];
 
-    _createColorMapQueue = [[NSOperationQueue alloc] init];
-    [_createColorMapQueue setSuspended:YES];
-    [_createColorMapQueue addOperationWithBlock:^{
+    _initializeQueue = [[NSOperationQueue alloc] init];
+    [_initializeQueue setSuspended:YES];
+    [_initializeQueue addOperationWithBlock:^{
         [self createColorMapLayer];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
@@ -152,19 +172,24 @@
     }];
 }
 
-- (void)setSaturationUpperLimit:(NSNumber *)saturationUpperLimit {
-    _saturationUpperLimit = saturationUpperLimit;
-    [_createColorMapQueue setSuspended:!self.isAbleToCreateColorMap];
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self updateColorCursor];
 }
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    [_createColorMapQueue setSuspended:!self.isAbleToCreateColorMap];
+    [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
+}
+
+- (void)setSaturationUpperLimit:(NSNumber *)saturationUpperLimit {
+    _saturationUpperLimit = saturationUpperLimit;
+    [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
 }
 
 - (void)setTileSize:(NSNumber *)tileSize {
     _tileSize = tileSize;
-    [_createColorMapQueue setSuspended:!self.isAbleToCreateColorMap];
+    [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
     CGRect cursorFrame = _colorCursor.frame;
 
     cursorFrame.origin = CGPointMake(
@@ -173,8 +198,9 @@
     _colorCursor.frame = cursorFrame;
 }
 
+
 - (BOOL)isAbleToCreateColorMap {
-    if (CGRectIsNull(self.frame)) {
+    if (CGRectIsNull(self.frame) || CGRectIsEmpty(self.frame)) {
         return NO;
     }
     if (!self.saturationUpperLimit) {
@@ -257,7 +283,6 @@
         }
     }
 }
-
 
 - (void)update:(CGPoint)tapPoint {
     if (!CGRectContainsPoint((CGRect) {.origin = CGPointZero, .size = self.frame.size}, tapPoint)) {

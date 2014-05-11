@@ -43,38 +43,3 @@ void HRSetRoundedRectanglePath(CGContextRef context, const CGRect rect, CGFloat 
     CGContextClosePath(context);
 }
 
-__attribute__((overloadable))
-void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, UIColor *color, CGFloat size) {
-    CGFloat cx = position.x;
-    CGFloat cy = position.y;
-
-    CGFloat rSize = size;
-    CGFloat backRSize = rSize + 3.0f;
-    CGFloat shadowRSize = backRSize + 3.0f;
-
-    CGRect rectEllipse = CGRectMake(cx - rSize, cy - rSize, rSize * 2, rSize * 2);
-    CGRect rectBackEllipse = CGRectMake(cx - backRSize, cy - backRSize, backRSize * 2, backRSize * 2);
-    CGRect rectShadowEllipse = CGRectMake(cx - shadowRSize, cy - shadowRSize, shadowRSize * 2, shadowRSize * 2);
-
-    CGContextSaveGState(context);
-    HRSetRoundedRectanglePath(context, rectBackEllipse, 8.0f);
-    CGContextClip(context);
-    HRSetRoundedRectanglePath(context, rectShadowEllipse, 8.0f);
-    CGContextSetLineWidth(context, 5.5f);
-    [[UIColor whiteColor] set];
-    CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 1.0f), 4.0f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
-    CGContextDrawPath(context, kCGPathStroke);
-    CGContextRestoreGState(context);
-
-    CGContextSaveGState(context);
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 0.5f), 0.5f, [UIColor colorWithWhite:0.0f alpha:0.2f].CGColor);
-    HRSetRoundedRectanglePath(context, rectEllipse, 5.0f);
-    CGContextDrawPath(context, kCGPathFill);
-    CGContextRestoreGState(context);
-}
-
-__attribute__((deprecated, overloadable))
-void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, HRRGBColor *color, CGFloat size) {
-    UIColor *uiColor = [UIColor colorWithRed:color->r green:color->g blue:color->b alpha:1];
-}
