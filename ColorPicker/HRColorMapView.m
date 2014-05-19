@@ -137,7 +137,7 @@
     self = [super initWithCoder:coder];
     if (self) {
         [self _init];
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -196,11 +196,9 @@
     [self updateColorCursor];
     _didLayoutSubview = YES;
     [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
-    NSLog(@"layoutSubviews %@ %@", NSStringFromCGRect(self.frame), NSStringFromCGSize(self.intrinsicContentSize));
 }
 
 - (CGSize)intrinsicContentSize {
-    NSLog(@"intrinsicContentSize");
     return self.colorMapLayer.frame.size;
 }
 
@@ -257,10 +255,10 @@
                      forKey:kCATransactionDisableActions];
 
     self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
+    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = colorMapImage.size};
     self.colorMapLayer.contents = (id) colorMapImage.CGImage;
     self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.layer.frame.size};
+    self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = backgroundImage.size};
     self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
 
     [CATransaction commit];
