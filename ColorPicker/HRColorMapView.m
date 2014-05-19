@@ -37,6 +37,7 @@
     NSNumber *_saturationUpperLimit;
     HRColorCursor *_colorCursor;
     NSOperationQueue *_initializeQueue;
+    BOOL _didLayoutSubview;
 }
 
 @property (atomic, strong) CALayer *colorMapLayer; // brightness 1.0
@@ -50,16 +51,19 @@
 @synthesize color = _color;
 @synthesize saturationUpperLimit = _saturationUpperLimit;
 
+#pragma mark - generate color map image
+
 + (UIImage *)colorMapImageWithSize:(CGSize)size
                           tileSize:(CGFloat)tileSize
               saturationUpperLimit:(CGFloat)saturationUpperLimit {
 
-    CGSize colorMapSize = size;
+    int pixelCountX = (int) (size.width / tileSize);
+    int pixelCountY = (int) (size.height / tileSize);
+    CGSize colorMapSize = CGSizeMake(pixelCountX * tileSize, pixelCountY * tileSize);
+
     void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
         CGFloat margin = 0;
         CGFloat height;
-        int pixelCountX = (int) (rect.size.width / tileSize);
-        int pixelCountY = (int) (rect.size.height / tileSize);
 
         HRHSVColor pixelHsv;
         HRRGBColor pixelRgb;
@@ -86,7 +90,9 @@
 + (UIImage *)backgroundImageWithSize:(CGSize)size
                             tileSize:(CGFloat)tileSize {
 
-    CGSize colorMapSize = size;
+    int pixelCountX = (int) (size.width / tileSize);
+    int pixelCountY = (int) (size.height / tileSize);
+    CGSize colorMapSize = CGSizeMake(pixelCountX * tileSize, pixelCountY * tileSize);
     void(^renderBackgroundToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
         CGFloat margin = 0;
 
@@ -94,8 +100,6 @@
         CGContextFillRect(context, rect);
 
         CGFloat height;
-        int pixelCountX = (int) (rect.size.width / tileSize);
-        int pixelCountY = (int) (rect.size.height / tileSize);
 
         CGContextSetGrayFillColor(context, 0, 1.0);
         for (int j = 0; j < pixelCountY; ++j) {
@@ -109,6 +113,8 @@
     return [UIImage hr_imageWithSize:colorMapSize
                             renderer:renderBackgroundToContext];
 }
+
+#pragma mark - init
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame {
     return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:0.95];
@@ -131,11 +137,21 @@
     self = [super initWithCoder:coder];
     if (self) {
         [self _init];
+        self.backgroundColor = [UIColor redColor];
+    }
+    return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self _init];
     }
     return self;
 }
 
 - (void)_init {
+    _didLayoutSubview = NO;
     self.brightness = 0.5;
     self.backgroundColor = [UIColor whiteColor];
 
@@ -168,18 +184,42 @@
             [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
             self.colorMapLayer.opacity = self.brightness;
             [self.layer insertSublayer:self.colorMapLayer atIndex:1];
+            [self invalidateIntrinsicContentSize];
         });
     }];
 }
 
+#pragma mark - layout
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self updateColorCursor];
+    _didLayoutSubview = YES;
+    [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
+    NSLog(@"layoutSubviews %@ %@", NSStringFromCGRect(self.frame), NSStringFromCGSize(self.intrinsicContentSize));
 }
 
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
+- (CGSize)intrinsicContentSize {
+    NSLog(@"intrinsicContentSize");
+    return self.colorMapLayer.frame.size;
+}
+
+#pragma mark color map
+
+- (BOOL)isAbleToCreateColorMap {
+    if (!_didLayoutSubview){
+        return NO;
+    }
+    if (CGRectIsNull(self.frame) || CGRectIsEmpty(self.frame) || CGRectEqualToRect(self.frame, CGRectZero)) {
+        return NO;
+    }
+    if (!self.saturationUpperLimit) {
+        return NO;
+    }
+    if (!self.tileSize) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)setSaturationUpperLimit:(NSNumber *)saturationUpperLimit {
@@ -196,20 +236,6 @@
             -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
             -([HRColorCursor cursorSize].height - _tileSize.floatValue) / 2.0f);
     _colorCursor.frame = cursorFrame;
-}
-
-
-- (BOOL)isAbleToCreateColorMap {
-    if (CGRectIsNull(self.frame) || CGRectIsEmpty(self.frame)) {
-        return NO;
-    }
-    if (!self.saturationUpperLimit) {
-        return NO;
-    }
-    if (!self.tileSize) {
-        return NO;
-    }
-    return YES;
 }
 
 - (void)createColorMapLayer {

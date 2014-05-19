@@ -42,7 +42,6 @@
 @interface HRColorMapView : UIControl <HRColorMapView>
 
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
-
 + (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit;
 
 @property (nonatomic) NSNumber *tileSize;

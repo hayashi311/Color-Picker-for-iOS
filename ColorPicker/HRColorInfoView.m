@@ -48,6 +48,14 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
     return [[HRColorInfoView alloc] initWithFrame:frame];
 }
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self _init];
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {

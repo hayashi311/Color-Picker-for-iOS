@@ -30,12 +30,7 @@
 
 @class HRColorPickerView;
 
-@interface HRSampleColorPickerViewController2 : UIViewController {
-    id <HRColorPickerViewControllerDelegate> __weak delegate;
-    HRColorPickerView *colorPickerView;
-    UIColor *_color;
-    BOOL _fullColor;
-}
+@interface HRSampleColorPickerViewController2 : UIViewController
 
 /** Initialize controller with selected color.
  * @param defaultColor selected color

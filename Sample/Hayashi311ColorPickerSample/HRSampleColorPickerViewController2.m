@@ -27,8 +27,14 @@
 
 #import "HRSampleColorPickerViewController2.h"
 #import "HRColorPickerView.h"
+#import "HRColorMapView.h"
 
-@implementation HRSampleColorPickerViewController2
+@implementation HRSampleColorPickerViewController2 {
+    id <HRColorPickerViewControllerDelegate> __weak delegate;
+    HRColorPickerView *colorPickerView;
+    UIColor *_color;
+    BOOL _fullColor;
+}
 
 @synthesize delegate;
 
@@ -48,6 +54,14 @@
     colorPickerView = [[HRColorPickerView alloc] init];
     colorPickerView.color = _color;
 
+    if (_fullColor){
+        HRColorMapView *colorMapView = [[HRColorMapView alloc] init];
+        colorMapView.saturationUpperLimit = @1;
+        colorMapView.tileSize = @16;
+        [colorPickerView addSubview:colorMapView];
+        colorPickerView.colorMapView = colorMapView;
+    }
+
 //    Please uncomment. If you want to catch the color change event.
 //    [colorPickerView addTarget:self
 //                        action:@selector(colorWasChanged:)
@@ -58,13 +72,19 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    colorPickerView.frame = (CGRect){.origin = CGPointZero, .size = self.view.frame.size};
+}
 
-    if ([self respondsToSelector:@selector(topLayoutGuide)]){
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    colorPickerView.frame = (CGRect) {.origin = CGPointZero, .size = self.view.frame.size};
+
+    if ([self respondsToSelector:@selector(topLayoutGuide)]) {
         CGRect frame = colorPickerView.frame;
         frame.origin.y = self.topLayoutGuide.length;
         colorPickerView.frame = frame;
     }
+    NSLog(@"self.view.frame %@", NSStringFromCGRect(self.view.frame));
+    NSLog(@"[UIScreen mainScreen].applicationFrame %@", NSStringFromCGRect([UIScreen mainScreen].applicationFrame));
 }
 
 

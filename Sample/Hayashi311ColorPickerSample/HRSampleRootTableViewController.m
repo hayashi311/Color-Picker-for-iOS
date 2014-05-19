@@ -31,6 +31,7 @@
 @interface HRSampleRootTableViewController ()
 
 @property IBOutlet UITableViewCell *codeCell;
+@property IBOutlet UITableViewCell *codeFullColorCell;
 
 @end
 
@@ -60,6 +61,13 @@
         [self.navigationController pushViewController:controller
                                              animated:YES];
         return;
+    } else if (self.codeFullColorCell == cell) {
+        HRSampleColorPickerViewController2 *controller;
+        controller = [[HRSampleColorPickerViewController2 alloc] initWithColor:[UIColor blueColor] fullColor:YES];
+        [self.navigationController pushViewController:controller
+                                             animated:YES];
+        return;
+
     }
 }
 

@@ -53,12 +53,21 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="shD-Kv-lGs">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="oDg-Ie-JPf" style="IBUITableViewCellStyleDefault" id="shD-Kv-lGs">
                                         <rect key="frame" x="0.0" y="152" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="shD-Kv-lGs" id="a0H-nh-5jd">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Code (FullColor)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oDg-Ie-JPf">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -72,6 +81,7 @@
                     <navigationItem key="navigationItem" title="HRColorPicker by hayashi311" id="Crh-in-cc8"/>
                     <connections>
                         <outlet property="codeCell" destination="6b8-k4-aWb" id="uKY-jm-4V0"/>
+                        <outlet property="codeFullColorCell" destination="shD-Kv-lGs" id="4Qs-pk-tp1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vzf-JC-nVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -94,15 +104,22 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xjh-OR-WLh" customClass="HRColorInfoView">
-                                        <rect key="frame" x="13" y="13" width="73" height="98"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xjh-OR-WLh" customClass="HRColorInfoView">
+                                        <rect key="frame" x="8" y="5" width="66" height="84"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="84" id="dBc-JS-2SR"/>
+                                            <constraint firstAttribute="width" constant="66" id="zlF-WP-7Oj"/>
+                                        </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sys-iB-e21" customClass="HRBrightnessSlider">
-                                        <rect key="frame" x="78" y="40" width="233" height="32"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sys-iB-e21" customClass="HRBrightnessSlider">
+                                        <rect key="frame" x="78" y="48" width="233" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.66666666666666663" green="0.61911003492255423" blue="0.62945342689079642" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="7el-yA-m3x"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="brightnessLowerLimit">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -110,7 +127,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lot-0L-K9C" customClass="HRColorMapView">
-                                        <rect key="frame" x="0.0" y="136" width="320" height="368"/>
+                                        <rect key="frame" x="0.0" y="93" width="320" height="411"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <userDefinedRuntimeAttributes>
@@ -122,13 +139,40 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-Ei-PQU">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="AXh-O4-Oq5"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3mt-dQ-rvI">
+                                        <rect key="frame" x="0.0" y="89" width="100" height="4"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="6hf-Fw-Igs"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="Lot-0L-K9C" firstAttribute="top" secondItem="3mt-dQ-rvI" secondAttribute="bottom" id="2Ah-Es-67u"/>
                                     <constraint firstItem="Lot-0L-K9C" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" id="35H-hW-cTC"/>
+                                    <constraint firstItem="Sys-iB-e21" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" constant="78" id="Bh1-H7-Cuv"/>
+                                    <constraint firstItem="hKb-Ei-PQU" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" id="F0c-zc-hYF"/>
+                                    <constraint firstAttribute="trailing" secondItem="Sys-iB-e21" secondAttribute="trailing" constant="9" id="HeL-Rj-CRU"/>
+                                    <constraint firstItem="hKb-Ei-PQU" firstAttribute="height" secondItem="3mt-dQ-rvI" secondAttribute="height" id="SRs-eR-evw"/>
                                     <constraint firstAttribute="bottom" secondItem="Lot-0L-K9C" secondAttribute="bottom" id="Ssk-fx-LsA"/>
-                                    <constraint firstItem="Lot-0L-K9C" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" constant="136" id="aQS-Hn-1d8"/>
+                                    <constraint firstItem="Sys-iB-e21" firstAttribute="top" secondItem="Xjh-OR-WLh" secondAttribute="bottom" constant="-41" id="XOB-0c-udh"/>
+                                    <constraint firstItem="3mt-dQ-rvI" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" id="ZUp-S2-O22"/>
+                                    <constraint firstItem="Lot-0L-K9C" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" priority="250" constant="93" id="aQS-Hn-1d8"/>
+                                    <constraint firstItem="hKb-Ei-PQU" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" id="ijq-d5-fxW"/>
+                                    <constraint firstItem="3mt-dQ-rvI" firstAttribute="top" secondItem="Xjh-OR-WLh" secondAttribute="bottom" id="jbS-iH-5fL"/>
+                                    <constraint firstItem="Xjh-OR-WLh" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" constant="8" id="rRE-7P-oIj"/>
                                     <constraint firstAttribute="trailing" secondItem="Lot-0L-K9C" secondAttribute="trailing" id="uxj-Nc-w3z"/>
+                                    <constraint firstItem="Xjh-OR-WLh" firstAttribute="top" secondItem="hKb-Ei-PQU" secondAttribute="bottom" id="wKq-LK-CAh"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="color">
