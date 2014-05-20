@@ -196,7 +196,7 @@ typedef struct timeval timeval;
         return;
     }
 
-    CGFloat headerHeight = 198 - 44 - 61;
+    CGFloat headerHeight = (20 + 44) * 1.625;
     self.colorInfoView.frame = CGRectMake(8, (headerHeight - 84) / 2.0f, 66, 84);
 
     CGFloat brightnessPickerTop = (headerHeight - 84.0f) / 2.0f;
