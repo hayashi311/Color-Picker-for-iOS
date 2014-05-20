@@ -197,6 +197,20 @@ typedef struct timeval timeval;
     }
 
     CGFloat headerHeight = (20 + 44) * 1.625;
+    self.colorMapView.frame = CGRectMake(
+            0, headerHeight,
+            CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight
+    );
+    NSLog(@"self.colorMapView.frame %@ %f %f", NSStringFromCGRect(self.colorMapView.frame), headerHeight, CGRectGetHeight(self.frame));
+    // use intrinsicContentSize for 3.5inch screen
+    CGRect colorMapFrame = (CGRect) {
+            .origin = CGPointZero,
+            .size = self.colorMapView.intrinsicContentSize
+    };
+    colorMapFrame.origin.y = CGRectGetHeight(self.frame) - CGRectGetHeight(colorMapFrame);
+    self.colorMapView.frame = colorMapFrame;
+    headerHeight = CGRectGetMinY(colorMapFrame);
+
     self.colorInfoView.frame = CGRectMake(8, (headerHeight - 84) / 2.0f, 66, 84);
 
     CGFloat brightnessPickerTop = (headerHeight - 84.0f) / 2.0f;
@@ -210,10 +224,7 @@ typedef struct timeval timeval;
     CGRect brightnessPickerTouchFrame = CGRectInset(brightnessPickerFrame, 20, 0);
     self.brightnessSlider.frame = brightnessPickerTouchFrame;
 
-    self.colorMapView.frame = CGRectMake(
-            0, headerHeight,
-            CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight
-    );
+
 }
 
 @end

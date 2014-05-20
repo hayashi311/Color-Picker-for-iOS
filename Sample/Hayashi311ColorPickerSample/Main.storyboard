@@ -113,8 +113,8 @@
                                             <constraint firstAttribute="width" constant="66" id="zlF-WP-7Oj"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sys-iB-e21" customClass="HRBrightnessSlider">
-                                        <rect key="frame" x="78" y="48" width="233" height="32"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sys-iB-e21" customClass="HRBrightnessSlider">
+                                        <rect key="frame" x="78" y="56" width="233" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.66666666666666663" green="0.61911003492255423" blue="0.62945342689079642" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -163,9 +163,9 @@
                                     <constraint firstItem="Sys-iB-e21" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" constant="78" id="Bh1-H7-Cuv"/>
                                     <constraint firstItem="hKb-Ei-PQU" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" id="F0c-zc-hYF"/>
                                     <constraint firstAttribute="trailing" secondItem="Sys-iB-e21" secondAttribute="trailing" constant="9" id="HeL-Rj-CRU"/>
+                                    <constraint firstItem="Sys-iB-e21" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" constant="56" id="Kbm-Hx-8Xt"/>
                                     <constraint firstItem="hKb-Ei-PQU" firstAttribute="height" secondItem="3mt-dQ-rvI" secondAttribute="height" id="SRs-eR-evw"/>
                                     <constraint firstAttribute="bottom" secondItem="Lot-0L-K9C" secondAttribute="bottom" id="Ssk-fx-LsA"/>
-                                    <constraint firstItem="Sys-iB-e21" firstAttribute="top" secondItem="Xjh-OR-WLh" secondAttribute="bottom" constant="-41" id="XOB-0c-udh"/>
                                     <constraint firstItem="3mt-dQ-rvI" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" id="ZUp-S2-O22"/>
                                     <constraint firstItem="Lot-0L-K9C" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" priority="250" constant="104" id="aQS-Hn-1d8"/>
                                     <constraint firstItem="hKb-Ei-PQU" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" id="ijq-d5-fxW"/>

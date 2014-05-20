@@ -199,6 +199,11 @@
 }
 
 - (CGSize)intrinsicContentSize {
+    CGFloat tileSize = self.tileSize.floatValue;
+    int pixelCountX = (int) (CGRectGetWidth(self.frame) / tileSize);
+    int pixelCountY = (int) (CGRectGetHeight(self.frame) / tileSize);
+    CGSize colorMapSize = CGSizeMake(pixelCountX * tileSize, pixelCountY * tileSize);
+    return colorMapSize;
     return self.colorMapLayer.frame.size;
 }
 
