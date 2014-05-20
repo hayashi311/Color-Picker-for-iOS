@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="TQD-yp-f8W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="TQD-yp-f8W">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -104,7 +104,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xjh-OR-WLh" customClass="HRColorInfoView">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xjh-OR-WLh" customClass="HRColorInfoView">
                                         <rect key="frame" x="8" y="5" width="66" height="84"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -113,7 +113,7 @@
                                             <constraint firstAttribute="width" constant="66" id="zlF-WP-7Oj"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sys-iB-e21" customClass="HRBrightnessSlider">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sys-iB-e21" customClass="HRBrightnessSlider">
                                         <rect key="frame" x="78" y="48" width="233" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.66666666666666663" green="0.61911003492255423" blue="0.62945342689079642" alpha="1" colorSpace="calibratedRGB"/>
@@ -127,7 +127,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lot-0L-K9C" customClass="HRColorMapView">
-                                        <rect key="frame" x="0.0" y="93" width="320" height="411"/>
+                                        <rect key="frame" x="0.0" y="104" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <userDefinedRuntimeAttributes>
@@ -139,7 +139,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-Ei-PQU">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-Ei-PQU">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -147,7 +147,7 @@
                                             <constraint firstAttribute="width" constant="100" id="AXh-O4-Oq5"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3mt-dQ-rvI">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3mt-dQ-rvI">
                                         <rect key="frame" x="0.0" y="89" width="100" height="4"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -167,7 +167,7 @@
                                     <constraint firstAttribute="bottom" secondItem="Lot-0L-K9C" secondAttribute="bottom" id="Ssk-fx-LsA"/>
                                     <constraint firstItem="Sys-iB-e21" firstAttribute="top" secondItem="Xjh-OR-WLh" secondAttribute="bottom" constant="-41" id="XOB-0c-udh"/>
                                     <constraint firstItem="3mt-dQ-rvI" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" id="ZUp-S2-O22"/>
-                                    <constraint firstItem="Lot-0L-K9C" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" priority="250" constant="93" id="aQS-Hn-1d8"/>
+                                    <constraint firstItem="Lot-0L-K9C" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" priority="250" constant="104" id="aQS-Hn-1d8"/>
                                     <constraint firstItem="hKb-Ei-PQU" firstAttribute="top" secondItem="v0V-0H-PQL" secondAttribute="top" id="ijq-d5-fxW"/>
                                     <constraint firstItem="3mt-dQ-rvI" firstAttribute="top" secondItem="Xjh-OR-WLh" secondAttribute="bottom" id="jbS-iH-5fL"/>
                                     <constraint firstItem="Xjh-OR-WLh" firstAttribute="leading" secondItem="v0V-0H-PQL" secondAttribute="leading" constant="8" id="rRE-7P-oIj"/>

@@ -54,7 +54,7 @@
     colorPickerView = [[HRColorPickerView alloc] init];
     colorPickerView.color = _color;
 
-    if (_fullColor){
+    if (_fullColor) {
         HRColorMapView *colorMapView = [[HRColorMapView alloc] init];
         colorMapView.saturationUpperLimit = @1;
         colorMapView.tileSize = @16;
@@ -81,12 +81,10 @@
     if ([self respondsToSelector:@selector(topLayoutGuide)]) {
         CGRect frame = colorPickerView.frame;
         frame.origin.y = self.topLayoutGuide.length;
+        frame.size.height -= self.topLayoutGuide.length;
         colorPickerView.frame = frame;
     }
-    NSLog(@"self.view.frame %@", NSStringFromCGRect(self.view.frame));
-    NSLog(@"[UIScreen mainScreen].applicationFrame %@", NSStringFromCGRect([UIScreen mainScreen].applicationFrame));
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
