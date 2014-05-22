@@ -199,9 +199,9 @@ typedef struct timeval timeval;
     CGFloat headerHeight = (20 + 44) * 1.625;
     self.colorMapView.frame = CGRectMake(
             0, headerHeight,
-            CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight
+            CGRectGetWidth(self.frame),
+            MAX(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight)
     );
-    NSLog(@"self.colorMapView.frame %@ %f %f", NSStringFromCGRect(self.colorMapView.frame), headerHeight, CGRectGetHeight(self.frame));
     // use intrinsicContentSize for 3.5inch screen
     CGRect colorMapFrame = (CGRect) {
             .origin = CGPointZero,
