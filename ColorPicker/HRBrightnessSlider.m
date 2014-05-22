@@ -103,6 +103,7 @@
             CGRectGetMidY(_controlFrame));
     _sliderLayer.cornerRadius = _renderingFrame.size.height / 2;
     _sliderLayer.frame = _renderingFrame;
+    [self updateCursor];
 }
 
 - (UIColor *)color {
