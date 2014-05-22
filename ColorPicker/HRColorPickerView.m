@@ -99,7 +99,7 @@ typedef struct timeval timeval;
 
 - (UIView <HRColorInfoView> *)colorInfoView {
     if (!_colorInfoView) {
-        _colorInfoView = [HRColorInfoView colorInfoViewWithFrame:CGRectZero];
+        _colorInfoView = [[HRColorInfoView alloc] init];
         _colorInfoView.color = self.color;
         [self addSubview:self.colorInfoView];
     }
@@ -113,13 +113,12 @@ typedef struct timeval timeval;
 
 - (UIControl <HRBrightnessSlider> *)brightnessSlider {
     if (!_brightnessSlider) {
-        NSLog(@"!_brightnessSlider");
-        _brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:CGRectZero];
+        _brightnessSlider = [[HRBrightnessSlider alloc] init];
         _brightnessSlider.brightnessLowerLimit = @0.4;
         _brightnessSlider.color = self.color;
         [_brightnessSlider addTarget:self
                               action:@selector(brightnessChanged:)
-                    forControlEvents:UIControlEventEditingChanged];
+                    forControlEvents:UIControlEventValueChanged];
         [self addSubview:_brightnessSlider];
     }
     return _brightnessSlider;
@@ -130,7 +129,7 @@ typedef struct timeval timeval;
     _brightnessSlider.color = self.color;
     [_brightnessSlider addTarget:self
                           action:@selector(brightnessChanged:)
-                forControlEvents:UIControlEventEditingChanged];
+                forControlEvents:UIControlEventValueChanged];
 }
 
 - (UIControl <HRColorMapView> *)colorMapView {
@@ -145,7 +144,7 @@ typedef struct timeval timeval;
         _colorMapView.color = self.color;
         [_colorMapView addTarget:self
                           action:@selector(colorMapColorChanged:)
-                forControlEvents:UIControlEventEditingChanged];
+                forControlEvents:UIControlEventValueChanged];
         _colorMapView.backgroundColor = [UIColor redColor];
         [self addSubview:_colorMapView];
     }
@@ -158,7 +157,7 @@ typedef struct timeval timeval;
     _colorMapView.color = self.color;
     [_colorMapView addTarget:self
                       action:@selector(colorMapColorChanged:)
-            forControlEvents:UIControlEventEditingChanged];
+            forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)brightnessChanged:(UIControl <HRBrightnessSlider> *)slider {
@@ -182,7 +181,7 @@ typedef struct timeval timeval;
     timersub(&now, &_lastDrawTime, &diff);
     if (timercmp(&diff, &_waitTimeDuration, >)) {
         _lastDrawTime = now;
-        [self sendActionsForControlEvents:UIControlEventEditingChanged];
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
 

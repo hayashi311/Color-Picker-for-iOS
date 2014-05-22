@@ -47,10 +47,6 @@
 @synthesize brightness = _brightness;
 @synthesize brightnessLowerLimit = _brightnessLowerLimit;
 
-+ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame {
-    return [[HRBrightnessSlider alloc] initWithFrame:frame];
-}
-
 - (id)init {
     return [self initWithFrame:CGRectZero];
 }
@@ -186,7 +182,7 @@
     selectedBrightness = selectedBrightness * (1.0 - self.brightnessLowerLimit.floatValue) + self.brightnessLowerLimit.floatValue;
     _brightness = @(selectedBrightness);
 
-    [self sendActionsForControlEvents:UIControlEventEditingChanged];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 - (void)updateCursor {

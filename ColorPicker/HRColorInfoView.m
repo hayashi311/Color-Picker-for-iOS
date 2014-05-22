@@ -44,10 +44,6 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
 
 @synthesize color = _color;
 
-+ (HRColorInfoView *)colorInfoViewWithFrame:(CGRect)frame {
-    return [[HRColorInfoView alloc] initWithFrame:frame];
-}
-
 - (id)init {
     return [self initWithFrame:CGRectZero];
 }

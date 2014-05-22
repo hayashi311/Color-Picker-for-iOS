@@ -329,7 +329,7 @@
                                     alpha:1.0];
     _color = selectedColor;
     [self updateColorCursor];
-    [self sendActionsForControlEvents:UIControlEventEditingChanged];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 - (void)updateColorCursor {

@@ -32,13 +32,6 @@
 
 @interface HRSampleColorPickerViewController2 : UIViewController
 
-/** Initialize controller with selected color.
- * @param defaultColor selected color
- * @param fullColor If YES, browseable full color. If NO color was limited.
- * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
- */
-
-
 @property (weak) id <HRColorPickerViewControllerDelegate> delegate;
 
 - (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor;

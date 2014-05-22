@@ -14,6 +14,7 @@
 		5A9609AF01047237D853AA4A /* HRColorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A96068A373E534008D7C3CD /* HRColorInfoView.m */; };
 		5A9609ED49BDBF8BED624F64 /* HRColorMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A960E1844766B749480FD79 /* HRColorMapView.m */; };
 		5A960A49BABFEF92F0906C08 /* UIImage+CoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9601E646B60A41D7B272B6 /* UIImage+CoreGraphics.m */; };
+		5A960DDAC1FAA18584883AF4 /* HRSampleColorPickerViewController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A96072C9621156B09ECE30E /* HRSampleColorPickerViewController3.m */; };
 		5A960E4C18B27F97510AF01D /* HRSampleColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9605347C99063D65D09707 /* HRSampleColorPickerViewController.m */; };
 		DA0203EA160F20840030C93D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA0203E9160F20830030C93D /* Default-568h@2x.png */; };
 		DA3CD22E148205F700492DF7 /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CD22D148205F700492DF7 /* HRBrightnessCursor.m */; };
@@ -43,8 +44,10 @@
 		5A9605347C99063D65D09707 /* HRSampleColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSampleColorPickerViewController.m; sourceTree = "<group>"; };
 		5A96068A373E534008D7C3CD /* HRColorInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorInfoView.m; sourceTree = "<group>"; };
 		5A9606B41F0C30F27038D44F /* HRBrightnessSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessSlider.m; sourceTree = "<group>"; };
+		5A96072C9621156B09ECE30E /* HRSampleColorPickerViewController3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSampleColorPickerViewController3.m; sourceTree = "<group>"; };
 		5A9607E144B89628A7AD769B /* UIImage+CoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CoreGraphics.h"; sourceTree = "<group>"; };
 		5A9609895A2D64809BCB4C38 /* HRSampleColorPickerViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSampleColorPickerViewController2.m; sourceTree = "<group>"; };
+		5A9609AEAC4227D8CB082F38 /* HRSampleColorPickerViewController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRSampleColorPickerViewController3.h; sourceTree = "<group>"; };
 		5A960B38CC298F0104212AD6 /* HRColorInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorInfoView.h; sourceTree = "<group>"; };
 		5A960E1844766B749480FD79 /* HRColorMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorMapView.m; sourceTree = "<group>"; };
 		5A960F2A9C9BAA292C0D92E5 /* HRColorMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorMapView.h; sourceTree = "<group>"; };
@@ -169,6 +172,8 @@
 				5A9609895A2D64809BCB4C38 /* HRSampleColorPickerViewController2.m */,
 				DA4A2DE7191F5C8B00D9DB9B /* HRSampleRootTableViewController.h */,
 				DA4A2DE8191F5C8B00D9DB9B /* HRSampleRootTableViewController.m */,
+				5A96072C9621156B09ECE30E /* HRSampleColorPickerViewController3.m */,
+				5A9609AEAC4227D8CB082F38 /* HRSampleColorPickerViewController3.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				5A960A49BABFEF92F0906C08 /* UIImage+CoreGraphics.m in Sources */,
 				5A96038FAFBF33414CA3FF88 /* HRBrightnessSlider.m in Sources */,
 				5A9609AF01047237D853AA4A /* HRColorInfoView.m in Sources */,
+				5A960DDAC1FAA18584883AF4 /* HRSampleColorPickerViewController3.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -71,7 +71,7 @@
 //    Please uncomment. If you want to catch the color change event.
 //    [colorPickerView addTarget:self
 //                        action:@selector(colorWasChanged:)
-//              forControlEvents:UIControlEventEditingChanged];
+//              forControlEvents:UIControlEventValueChanged];
 
     [self.view addSubview:colorPickerView];
 }

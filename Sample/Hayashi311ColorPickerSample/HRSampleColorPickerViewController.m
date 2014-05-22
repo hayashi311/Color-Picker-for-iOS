@@ -32,7 +32,7 @@
     id <HRColorPickerViewControllerDelegate> __weak delegate;
 }
 
-@property (nonatomic, retain) IBOutlet HRColorPickerView *colorPickerView;
+@property (nonatomic, weak) IBOutlet HRColorPickerView *colorPickerView;
 
 @end
 
