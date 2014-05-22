@@ -49,11 +49,7 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
 }
 
 - (id)init {
-    self = [super init];
-    if (self) {
-        [self _init];
-    }
-    return self;
+    return [self initWithFrame:CGRectZero];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -114,6 +110,10 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
     [rectanglePath closePath];
     [self.color setFill];
     [rectanglePath fill];
+}
+
+- (UIView *)viewForBaselineLayout {
+    return _hexColorLabel;
 }
 
 @end

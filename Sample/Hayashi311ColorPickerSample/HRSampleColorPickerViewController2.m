@@ -28,6 +28,7 @@
 #import "HRSampleColorPickerViewController2.h"
 #import "HRColorPickerView.h"
 #import "HRColorMapView.h"
+#import "HRBrightnessSlider.h"
 
 @implementation HRSampleColorPickerViewController2 {
     id <HRColorPickerViewControllerDelegate> __weak delegate;
@@ -60,6 +61,11 @@
         colorMapView.tileSize = @16;
         [colorPickerView addSubview:colorMapView];
         colorPickerView.colorMapView = colorMapView;
+
+        HRBrightnessSlider *slider = [[HRBrightnessSlider alloc] init];
+        slider.brightnessLowerLimit = @0;
+        [colorPickerView addSubview:slider];
+        colorPickerView.brightnessSlider = slider;
     }
 
 //    Please uncomment. If you want to catch the color change event.

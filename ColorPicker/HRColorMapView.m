@@ -124,6 +124,10 @@
     return [[HRColorMapView alloc] initWithFrame:frame saturationUpperLimit:saturationUpperLimit];
 }
 
+- (id)init {
+    return [self initWithFrame:CGRectZero saturationUpperLimit:0.95];
+}
+
 - (id)initWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit {
     self = [super initWithFrame:frame];
     if (self) {
@@ -138,14 +142,6 @@
     if (self) {
         [self _init];
         self.backgroundColor = [UIColor whiteColor];
-    }
-    return self;
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        [self _init];
     }
     return self;
 }

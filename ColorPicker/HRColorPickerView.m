@@ -113,6 +113,7 @@ typedef struct timeval timeval;
 
 - (UIControl <HRBrightnessSlider> *)brightnessSlider {
     if (!_brightnessSlider) {
+        NSLog(@"!_brightnessSlider");
         _brightnessSlider = [HRBrightnessSlider brightnessSliderWithFrame:CGRectZero];
         _brightnessSlider.brightnessLowerLimit = @0.4;
         _brightnessSlider.color = self.color;
@@ -213,18 +214,17 @@ typedef struct timeval timeval;
 
     self.colorInfoView.frame = CGRectMake(8, (headerHeight - 84) / 2.0f, 66, 84);
 
-    CGFloat brightnessPickerTop = (headerHeight - 84.0f) / 2.0f;
+    CGFloat hexLabelHeight = 18;
+    CGFloat sliderHeight = 11;
+    CGFloat brightnessPickerTop = CGRectGetMaxY(self.colorInfoView.frame) - hexLabelHeight - sliderHeight;
 
     CGRect brightnessPickerFrame = CGRectMake(
-            CGRectGetMaxX(self.colorInfoView.frame) + CGRectGetMinX(self.colorInfoView.frame),
+            CGRectGetMaxX(self.colorInfoView.frame) + 9,
             brightnessPickerTop,
-            CGRectGetWidth(self.frame) - CGRectGetMaxX(self.colorInfoView.frame) - CGRectGetMinX(self.colorInfoView.frame) * 2,
-            84.0f);
+            CGRectGetWidth(self.frame) - CGRectGetMaxX(self.colorInfoView.frame) - 9 * 2,
+            sliderHeight);
 
-    CGRect brightnessPickerTouchFrame = CGRectInset(brightnessPickerFrame, 20, 0);
-    self.brightnessSlider.frame = brightnessPickerTouchFrame;
-
-
+    self.brightnessSlider.frame = [self.brightnessSlider frameForAlignmentRect:brightnessPickerFrame];
 }
 
 @end

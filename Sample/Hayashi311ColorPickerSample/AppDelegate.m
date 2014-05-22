@@ -34,6 +34,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[NSUserDefaults standardUserDefaults] setBool:NO
+                                            forKey:@"UIViewShowAlignmentRects"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     return YES;
 }
 

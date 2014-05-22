@@ -39,6 +39,8 @@
 - (id)init {
     self = [super initWithFrame:CGRectMake(0, 0, 28, 28)];
     if (self) {
+        NSLog(@"%@", [NSThread callStackSymbols]);
+        NSLog(@"HRBrightnessCursor init");
         self.backgroundColor = [UIColor clearColor];
         self.userInteractionEnabled = NO;
         _backLayer = [[CALayer alloc] init];

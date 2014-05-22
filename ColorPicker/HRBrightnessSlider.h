@@ -41,6 +41,6 @@
 
 @interface HRBrightnessSlider : UIControl <HRBrightnessSlider>
 
-+ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame;
++ (HRBrightnessSlider *)brightnessSliderWithFrame:(CGRect)frame __attribute__((deprecated));
 
 @end

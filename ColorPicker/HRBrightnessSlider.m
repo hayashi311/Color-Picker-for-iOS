@@ -30,14 +30,11 @@
 #import "HRCgUtil.h"
 #import "HRBrightnessCursor.h"
 
-const CGFloat kHRBrightnessSliderHeight = 11.;
-const CGFloat kHRBrightnessSliderMarginBottom = 18.;
-
-@implementation HRBrightnessSlider{
+@implementation HRBrightnessSlider {
     HRBrightnessCursor *_brightnessCursor;
 
     CAGradientLayer *_sliderLayer;
-    NSNumber * _brightness;
+    NSNumber *_brightness;
     UIColor *_color;
     NSNumber *_brightnessLowerLimit;
 
@@ -55,11 +52,7 @@ const CGFloat kHRBrightnessSliderMarginBottom = 18.;
 }
 
 - (id)init {
-    self = [super init];
-    if (self) {
-        [self _init];
-    }
-    return self;
+    return [self initWithFrame:CGRectZero];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -97,18 +90,23 @@ const CGFloat kHRBrightnessSliderMarginBottom = 18.;
     panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self addGestureRecognizer:panGestureRecognizer];
 
-
     _brightnessCursor = [[HRBrightnessCursor alloc] init];
     [self addSubview:_brightnessCursor];
 
     _needsToUpdateColor = NO;
+    self.backgroundColor = [UIColor clearColor];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    CGRect frame = _renderingFrame;
-    _sliderLayer.cornerRadius = frame.size.height / 2;
-    _sliderLayer.frame = frame;
+    CGRect frame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
+    _renderingFrame = UIEdgeInsetsInsetRect(frame, self.alignmentRectInsets);
+    _controlFrame = CGRectInset(_renderingFrame, 8, 0);
+    _brightnessCursor.center = CGPointMake(
+            CGRectGetMinX(_controlFrame),
+            CGRectGetMidY(_controlFrame));
+    _sliderLayer.cornerRadius = _renderingFrame.size.height / 2;
+    _sliderLayer.frame = _renderingFrame;
 }
 
 - (UIColor *)color {
@@ -193,7 +191,7 @@ const CGFloat kHRBrightnessSliderMarginBottom = 18.;
 
 - (void)updateCursor {
     CGFloat brightnessCursorX = (1.0f - (self.brightness.floatValue - self.brightnessLowerLimit.floatValue) / (1.0f - self.brightnessLowerLimit.floatValue));
-    if (brightnessCursorX < 0){
+    if (brightnessCursorX < 0) {
         return;
     }
     CGPoint point = CGPointMake(brightnessCursorX * _controlFrame.size.width + _controlFrame.origin.x, _brightnessCursor.center.y);
@@ -203,18 +201,20 @@ const CGFloat kHRBrightnessSliderMarginBottom = 18.;
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    CGRect sliderFrame = CGRectMake(0, 0, self.frame.size.width, kHRBrightnessSliderHeight);
-    sliderFrame = CGRectInset(sliderFrame, 20, 0);
-    sliderFrame.origin.y = CGRectGetHeight(self.frame) - kHRBrightnessSliderHeight / 2 - kHRBrightnessSliderMarginBottom;
-    self.sliderFrame = sliderFrame;
 }
 
-- (void)setSliderFrame:(CGRect)sliderFrame {
-    _renderingFrame = sliderFrame;
-    _controlFrame = CGRectInset(_renderingFrame, 8, 0);
-    _brightnessCursor.center = CGPointMake(
-            CGRectGetMinX(_controlFrame),
-            CGRectGetMidY(_controlFrame));
+#pragma mark AutoLayout
+
+- (UIEdgeInsets)alignmentRectInsets {
+    return UIEdgeInsetsMake(10, 20, 10, 20);
+}
+
+- (CGRect)alignmentRectForFrame:(CGRect)frame {
+    return UIEdgeInsetsInsetRect(frame, self.alignmentRectInsets);
+}
+
+- (CGRect)frameForAlignmentRect:(CGRect)alignmentRect {
+    return UIEdgeInsetsInsetRect(alignmentRect, UIEdgeInsetsMake(-10, -20, -10, -20));
 }
 
 @end
