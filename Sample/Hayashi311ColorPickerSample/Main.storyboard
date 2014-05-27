@@ -110,26 +110,6 @@
                                             <segue destination="NPW-f7-MGO" kind="push" id="R7C-VN-9iK"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ORE-yJ-GFf" style="IBUITableViewCellStyleDefault" id="Py2-dE-kGL">
-                                        <rect key="frame" x="0.0" y="394" width="320" height="66"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Py2-dE-kGL" id="cQ5-lQ-C7m">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="65"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Benchmark" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ORE-yJ-GFf">
-                                                    <rect key="frame" x="15" y="0.0" width="270" height="65"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="GUi-iY-fnc" kind="push" id="oNA-oi-NwA"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -147,25 +127,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vzf-JC-nVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="103"/>
-        </scene>
-        <!--Benchmarks View Controller-->
-        <scene sceneID="GKD-tn-Y1s">
-            <objects>
-                <viewController id="GUi-iY-fnc" customClass="HRBenchmarksViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3XW-iN-epZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="KmS-dc-MOM"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XVB-30-Ttj">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="8UT-ce-aJS"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zk7-oH-mFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="818" y="860"/>
         </scene>
         <!--Sample Color Picker View Controller-->
         <scene sceneID="aai-bR-j9j">

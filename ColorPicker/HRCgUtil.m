@@ -25,8 +25,6 @@
  * $FreeBSD$
  */
 
-#import "HRCgUtil.h"
-
 void HRSetRoundedRectanglePath(CGContextRef context, const CGRect rect, CGFloat radius) {
     CGFloat lx = CGRectGetMinX(rect);
     CGFloat cx = CGRectGetMidX(rect);

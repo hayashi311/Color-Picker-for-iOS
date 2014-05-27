@@ -25,20 +25,10 @@
  * $FreeBSD$
  */
 
-#import <UIKit/UIKit.h>
 #import "HRHSVColorUtil.h"
 
-@protocol HRColorCursor
-@optional
-- (void)setEditing:(BOOL)editing;
-@end
+void HSVColorFromUIColor(UIColor *uiColor, HRHSVColor *hsv) {
+    CGFloat alpha;
+    [uiColor getHue:&hsv->h saturation:&hsv->s brightness:&hsv->v alpha:&alpha];
+}
 
-@interface HRColorCursor : UIView <HRColorCursor>
-
-@property (nonatomic, strong) UIColor *color;
-
-+ (CGSize)cursorSize;
-
-+ (HRColorCursor *)colorCursorWithPoint:(CGPoint)point;
-
-@end

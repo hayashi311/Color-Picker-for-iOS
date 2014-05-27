@@ -30,7 +30,7 @@
 #import "HRColorMapView.h"
 #import "HRBrightnessSlider.h"
 #import "HRColorInfoView.h"
-#import "HRColorUtil.h"
+#import "HRHSVColorUtil.h"
 
 typedef struct timeval timeval;
 

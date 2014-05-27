@@ -27,7 +27,7 @@
 
 
 #import "HRColorMapView.h"
-#import "HRColorUtil.h"
+#import "HRHSVColorUtil.h"
 #import "UIImage+CoreGraphics.h"
 #import "HRColorCursor.h"
 
@@ -67,13 +67,16 @@
 
         HRHSVColor pixelHsv;
         pixelHsv.s = pixelHsv.v = 1;
-        HRRGBColor pixelRgb;
         for (int i = 0; i < pixelCountX; ++i) {
-            CGFloat pixelX = (CGFloat) i / pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+            CGFloat pixelX = (CGFloat) i / pixelCountX;
 
             pixelHsv.h = pixelX;
-            RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
-            CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
+            UIColor *color;
+            color = [UIColor colorWithHue:pixelHsv.h
+                               saturation:pixelHsv.s
+                               brightness:pixelHsv.v
+                                    alpha:1];
+            CGContextSetFillColorWithColor(context, color.CGColor);
             CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, rect.origin.y, tileSize - margin, CGRectGetHeight(rect)));
         }
 
@@ -330,7 +333,9 @@
     CGFloat pixelY = (int) ((tapPoint.y) / _tileSize.floatValue) / (CGFloat) (pixelCountY - 1); // Y(彩度)
 
     HRHSVColor selectedHSVColor;
-    HSVColorAt(&selectedHSVColor, pixelX, pixelY, self.saturationUpperLimit.floatValue, self.brightness);
+    selectedHSVColor.h = pixelX;
+    selectedHSVColor.s = 1.0f - (pixelY * self.saturationUpperLimit.floatValue);
+    selectedHSVColor.v = self.brightness;
 
     UIColor *selectedColor;
     selectedColor = [UIColor colorWithHue:selectedHSVColor.h

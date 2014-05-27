@@ -35,7 +35,7 @@
 
 @end
 
-@implementation HRColorCursor{
+@implementation HRColorCursor {
     CALayer *_backLayer;
     CALayer *_colorLayer;
     UIColor *_color;

@@ -25,8 +25,6 @@
  * $FreeBSD$
  */
 
-#import "HRColorUtil.h"
-
 // 角丸のパスをセット
 void HRSetRoundedRectanglePath(CGContextRef context, const CGRect rect, CGFloat radius);
 

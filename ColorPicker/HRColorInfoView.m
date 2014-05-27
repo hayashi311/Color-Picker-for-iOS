@@ -27,7 +27,6 @@
 
 
 #import "HRColorInfoView.h"
-#import "HRCgUtil.h"
 
 const CGFloat kHRColorInfoViewLabelHeight = 18.;
 const CGFloat kHRColorInfoViewCornerRadius = 3.;
@@ -95,7 +94,10 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
 
 - (void)setColor:(UIColor *)color {
     _color = color;
-    _hexColorLabel.text = [NSString stringWithFormat:@"#%06x", HexColorFromUIColor(color)];
+    CGFloat r, g, b, a;
+    [_color getRed:&r green:&g blue:&b alpha:&a];
+    int rgb = (int) (r * 255.0f)<<16 | (int) (g * 255.0f)<<8 | (int) (b * 255.0f)<<0;
+    _hexColorLabel.text = [NSString stringWithFormat:@"#%06x", rgb];
     [self setNeedsDisplay];
 }
 

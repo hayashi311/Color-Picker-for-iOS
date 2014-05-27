@@ -26,10 +26,10 @@
  */
 
 #import "HRBrightnessCursor.h"
-#import "HRCgUtil.h"
+#import "HRHSVColorUtil.h"
 
 
-@implementation HRBrightnessCursor{
+@implementation HRBrightnessCursor {
     CALayer *_backLayer;
     CALayer *_colorLayer;
     UILabel *_brightnessLabel;

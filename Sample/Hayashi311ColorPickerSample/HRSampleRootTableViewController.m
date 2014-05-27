@@ -52,6 +52,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow
+                                  animated:YES];
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
