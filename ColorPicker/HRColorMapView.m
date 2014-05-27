@@ -62,28 +62,31 @@
     CGSize colorMapSize = CGSizeMake(pixelCountX * tileSize, pixelCountY * tileSize);
 
     void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
+
         CGFloat margin = 0;
-        CGFloat height;
 
         HRHSVColor pixelHsv;
+        pixelHsv.s = pixelHsv.v = 1;
         HRRGBColor pixelRgb;
+        for (int i = 0; i < pixelCountX; ++i) {
+            CGFloat pixelX = (CGFloat) i / pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
+
+            pixelHsv.h = pixelX;
+            RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
+            CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
+            CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, rect.origin.y, tileSize - margin, CGRectGetHeight(rect)));
+        }
+
+        CGFloat top;
         for (int j = 0; j < pixelCountY; ++j) {
-            height = tileSize * j + rect.origin.y;
-            CGFloat pixelY = (CGFloat) j / (pixelCountY - 1); // Y(彩度)は0.0f~1.0f
-            for (int i = 0; i < pixelCountX; ++i) {
-                CGFloat pixelX = (CGFloat) i / pixelCountX; // X(色相)は1.0f=0.0fなので0.0f~0.95fの値をとるように
-
-                pixelHsv.h = pixelX;
-                pixelHsv.s = 1.0f - (pixelY * saturationUpperLimit);
-                pixelHsv.v = 1.f;
-
-                RGBColorFromHSVColor(&pixelHsv, &pixelRgb);
-                CGContextSetRGBFillColor(context, pixelRgb.r, pixelRgb.g, pixelRgb.b, 1.0f);
-
-                CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, height, tileSize - margin, tileSize - margin));
-            }
+            top = tileSize * j + rect.origin.y;
+            CGFloat pixelY = (CGFloat) j / (pixelCountY - 1);
+            CGFloat alpha = (pixelY * saturationUpperLimit);
+            CGContextSetRGBFillColor(context, 1, 1, 1, alpha);
+            CGContextFillRect(context, CGRectMake(rect.origin.x, top, CGRectGetWidth(rect), tileSize - margin));
         }
     };
+
     return [UIImage hr_imageWithSize:colorMapSize renderer:renderToContext];
 }
 
@@ -147,6 +150,7 @@
 }
 
 - (void)_init {
+    self.alpha = 0;
     _didLayoutSubview = NO;
     self.brightness = 0.5;
     self.backgroundColor = [UIColor whiteColor];
@@ -177,15 +181,22 @@
     [_initializeQueue addOperationWithBlock:^{
         [self createColorMapLayer];
         dispatch_async(dispatch_get_main_queue(), ^{
+
             [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
-            self.colorMapLayer.opacity = self.brightness;
             [self.layer insertSublayer:self.colorMapLayer atIndex:1];
+            self.colorMapLayer.opacity = self.brightness;
             [self invalidateIntrinsicContentSize];
+
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.alpha = 1;
+                             }];
         });
     }];
 }
 
 #pragma mark - layout
+
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -200,13 +211,12 @@
     int pixelCountY = (int) (CGRectGetHeight(self.frame) / tileSize);
     CGSize colorMapSize = CGSizeMake(pixelCountX * tileSize, pixelCountY * tileSize);
     return colorMapSize;
-    return self.colorMapLayer.frame.size;
 }
 
 #pragma mark color map
 
 - (BOOL)isAbleToCreateColorMap {
-    if (!_didLayoutSubview){
+    if (!_didLayoutSubview) {
         return NO;
     }
     if (CGRectIsNull(self.frame) || CGRectIsEmpty(self.frame) || CGRectEqualToRect(self.frame, CGRectZero)) {

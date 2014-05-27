@@ -370,7 +370,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" red="0.86822775139999997" green="0.55123080609999997" blue="0.52609642590000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.20598814142376876" green="0.86822775139999997" blue="0.17019018215089596" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
