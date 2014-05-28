@@ -26,11 +26,14 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "HRSampleColorPickerViewController.h"
 
-@interface SampleTopViewController : UIViewController {
-    UILabel *hexColorLabel;
-}
+@class HRColorPickerView;
 
-- (void)openColorPicker:(id)sender;
+@interface HRSampleColorPickerViewController2 : UIViewController
+
+@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
+
+- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor;
 
 @end

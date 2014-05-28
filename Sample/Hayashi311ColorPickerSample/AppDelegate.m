@@ -27,7 +27,6 @@
 
 
 #import "AppDelegate.h"
-#import "SampleTopViewController.h"
 
 @implementation AppDelegate
 
@@ -35,21 +34,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    // テンプレートからの変更点↓
-    SampleTopViewController *sampleTopViewController = [[SampleTopViewController alloc] init];
-    navigationController = [[UINavigationController alloc] initWithRootViewController:sampleTopViewController];
-
-    navigationController.navigationBar.translucent = NO;
-    navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-
-    [self.window setRootViewController:navigationController];
-
-    // テンプレートからの変更点↑
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-
+    [[NSUserDefaults standardUserDefaults] setBool:NO
+                                            forKey:@"UIViewShowAlignmentRects"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     return YES;
 }
 

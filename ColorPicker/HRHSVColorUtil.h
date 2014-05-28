@@ -25,38 +25,17 @@
  * $FreeBSD$
  */
 
-#import <UIKit/UIKit.h>
-#import "HRColorPickerViewController.h"
+/////////////////////////////////////////////////////////////////////////////
+//
+// 0.0f~1.0fの値をとるHSVの構造体です
+//
+/////////////////////////////////////////////////////////////////////////////
 
-@class HRColorPickerView;
+typedef struct {
+    CGFloat h;
+    CGFloat s;
+    CGFloat v;
+} HRHSVColor;
 
-@interface HRColorPickerViewController2 : UIViewController {
-    id <HRColorPickerViewControllerDelegate> __weak delegate;
-    HRColorPickerView *colorPickerView;
+void HSVColorFromUIColor(UIColor *, HRHSVColor *outHSV);
 
-    UIColor *_color;
-    BOOL _fullColor;
-    HCPCSaveStyle _saveStyle;
-}
-
-+ (HRColorPickerViewController2 *)colorPickerViewControllerWithColor:(UIColor *)color;
-
-/** Initialize controller with selected color. 
- * @param defaultColor selected color
- * @param fullColor If YES, browseable full color. If NO color was limited.
- * @param saveStyle If it's HCPCSaveStyleSaveAlways, save color when self is closing. If it's HCPCSaveStyleSaveAndCancel, shows Cancel and Save button.
- */
-- (id)initWithColor:(UIColor *)defaultColor fullColor:(BOOL)fullColor saveStyle:(HCPCSaveStyle)saveStyle;
-
-/** @deprecated use -save: instead of this . */
-- (void)saveColor:(id)sender;
-
-- (void)save;
-- (void)save:(id)sender;
-- (void)cancel:(id)sender;
-
-
-@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
-
-
-@end

@@ -25,12 +25,10 @@
  * $FreeBSD$
  */
 
-#import "HRColorUtil.h"
+#import "HRHSVColorUtil.h"
 
-// 角丸のパスをセット
-void HRSetRoundedRectanglePath(CGContextRef context, const CGRect rect, CGFloat radius);
+void HSVColorFromUIColor(UIColor *uiColor, HRHSVColor *hsv) {
+    CGFloat alpha;
+    [uiColor getHue:&hsv->h saturation:&hsv->s brightness:&hsv->v alpha:&alpha];
+}
 
-// かっこいい角丸の四角を描きます。色付き。
-void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, UIColor *color, CGFloat size) __attribute__((overloadable));
-
-void HRDrawSquareColorBatch(CGContextRef context, CGPoint position, HRRGBColor *color, CGFloat size) __attribute__((deprecated, overloadable));

@@ -26,50 +26,30 @@
  */
 
 #import "HRColorCursor.h"
-#import "HRCgUtil.h"
 
 @interface HRColorCursor ()
 - (id)initWithPoint:(CGPoint)point;
-@end
-
-@interface HRFlatStyleColorCursor : HRColorCursor
 
 @property (nonatomic) BOOL editing;
 @property (nonatomic, getter=isGrayCursor) BOOL grayCursor;
-@end
-
-@interface HROldStyleColorCursor : HRColorCursor
 
 @end
 
-@implementation HRColorCursor
+@implementation HRColorCursor {
+    CALayer *_backLayer;
+    CALayer *_colorLayer;
+    UIColor *_color;
+    BOOL _editing;
+}
+
+@synthesize color = _color;
 
 + (CGSize)cursorSize {
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return CGSizeMake(30.0, 30.0f);
-    }
     return CGSizeMake(28.0, 28.0f);
 }
 
-+ (CGFloat)outlineSize {
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return 4.0f;
-    }
-    return 0.0f;
-}
-
-+ (CGFloat)shadowSize {
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return 2.0f;
-    }
-    return 0.0f;
-}
-
 + (HRColorCursor *)colorCursorWithPoint:(CGPoint)point {
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return [[HROldStyleColorCursor alloc] initWithPoint:point];
-    }
-    return [[HRFlatStyleColorCursor alloc] initWithPoint:point];
+    return [[HRColorCursor alloc] initWithPoint:point];
 }
 
 - (id)initWithPoint:(CGPoint)point {
@@ -80,23 +60,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
         [self setUserInteractionEnabled:FALSE];
         self.color = [UIColor whiteColor];
-    }
-    return self;
-}
 
-@end
-
-@implementation HRFlatStyleColorCursor {
-    CALayer *_backLayer;
-    CALayer *_colorLayer;
-    UIColor *_color;
-    BOOL _editing;
-}
-@synthesize color = _color;
-
-- (id)initWithPoint:(CGPoint)point {
-    self = [super initWithPoint:point];
-    if (self) {
         CGRect backFrame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
         _backLayer = [[CALayer alloc] init];
         _backLayer.frame = backFrame;
@@ -113,7 +77,6 @@
     }
     return self;
 }
-
 
 - (void)setColor:(UIColor *)color {
     _color = color;
@@ -165,43 +128,3 @@
 
 @end
 
-@implementation HROldStyleColorCursor {
-    UIColor *_cursorColor;
-}
-@synthesize color = _cursorColor;
-
-- (void)setColor:(UIColor *)color {
-    _cursorColor = color;
-    [self setNeedsDisplay];
-}
-
-- (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGFloat outlineSize = [HRColorCursor outlineSize];
-    CGSize cursorSize = [HRColorCursor cursorSize];
-    CGFloat shadowSize = [HRColorCursor shadowSize];
-
-    CGContextSaveGState(context);
-    HRSetRoundedRectanglePath(context, CGRectMake(shadowSize, shadowSize, cursorSize.width - shadowSize * 2.0f, cursorSize.height - shadowSize * 2.0f), 2.0f);
-
-    HRHSVColor hsvColor;
-    HSVColorFromUIColor(self.color, &hsvColor);
-
-    if (hsvColor.v > 0.7 && hsvColor.s < 0.4) {
-        [[UIColor colorWithWhite:0.6 alpha:1] set];
-    } else {
-        [[UIColor whiteColor] set];
-    }
-
-    if (shadowSize) {
-        CGContextSetShadow(context, CGSizeMake(0.0f, 1.0f), shadowSize);
-    }
-    CGContextDrawPath(context, kCGPathFill);
-    CGContextRestoreGState(context);
-
-    [self.color set];
-    CGContextFillRect(context, CGRectMake(outlineSize + shadowSize, outlineSize + shadowSize, cursorSize.width - (outlineSize + shadowSize) * 2.0f, cursorSize.height - (outlineSize + shadowSize) * 2.0f));
-}
-
-
-@end

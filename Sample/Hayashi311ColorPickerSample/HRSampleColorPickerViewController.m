@@ -25,20 +25,33 @@
  * $FreeBSD$
  */
 
-#import <UIKit/UIKit.h>
-#import "HRHSVColorUtil.h"
+#import "HRSampleColorPickerViewController.h"
+#import "HRColorPickerView.h"
 
-@protocol HRColorCursor
-@optional
-- (void)setEditing:(BOOL)editing;
+@interface HRSampleColorPickerViewController () {
+    id <HRColorPickerViewControllerDelegate> __weak delegate;
+}
+
+@property (nonatomic, weak) IBOutlet HRColorPickerView *colorPickerView;
+
 @end
 
-@interface HRColorCursor : UIView <HRColorCursor>
+@implementation HRSampleColorPickerViewController
 
-@property (nonatomic, strong) UIColor *color;
+@synthesize delegate;
 
-+ (CGSize)cursorSize;
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+    }
+    return self;
+}
 
-+ (HRColorCursor *)colorCursorWithPoint:(CGPoint)point;
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.delegate) {
+        [self.delegate setSelectedColor:self.colorPickerView.color];
+    }
+}
 
 @end
