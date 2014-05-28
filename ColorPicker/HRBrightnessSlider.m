@@ -27,7 +27,6 @@
 
 
 #import "HRBrightnessSlider.h"
-#import "HRCgUtil.h"
 #import "HRBrightnessCursor.h"
 #import "HRHSVColorUtil.h"
 
