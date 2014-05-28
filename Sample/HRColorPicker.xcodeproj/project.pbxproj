@@ -35,7 +35,7 @@
 		46E87BFB146F46C600BC1608 /* HRColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerView.m; sourceTree = "<group>"; };
 		46E87BFC146F46C600BC1608 /* HRHSVColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRHSVColorUtil.h; sourceTree = "<group>"; };
 		46E87BFD146F46C600BC1608 /* HRHSVColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRHSVColorUtil.m; sourceTree = "<group>"; };
-		46FD94B21475604400384FD7 /* Hayashi311ColorPickerSample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hayashi311ColorPickerSample-Info.plist"; sourceTree = "<group>"; };
+		46FD94B21475604400384FD7 /* HRColorPicker-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HRColorPicker-Info.plist"; sourceTree = "<group>"; };
 		46FD94B31475604400384FD7 /* Hayashi311ColorPickerSample-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Hayashi311ColorPickerSample-Prefix.pch"; sourceTree = "<group>"; };
 		5A96000BB289E1B816E7711D /* HRBrightnessSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessSlider.h; sourceTree = "<group>"; };
 		5A9601E646B60A41D7B272B6 /* UIImage+CoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CoreGraphics.m"; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		DA3CD2311482068B00492DF7 /* HRColorCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorCursor.m; sourceTree = "<group>"; };
 		DA4A2DE7191F5C8B00D9DB9B /* HRSampleRootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRSampleRootTableViewController.h; sourceTree = "<group>"; };
 		DA4A2DE8191F5C8B00D9DB9B /* HRSampleRootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRSampleRootTableViewController.m; sourceTree = "<group>"; };
-		DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hayashi311ColorPickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA877C2D14527BD000A0754C /* HRColorPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HRColorPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA877C3114527BD000A0754C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA877C3314527BD000A0754C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DA877C3514527BD000A0754C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -122,7 +122,7 @@
 		DA877C2E14527BD000A0754C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */,
+				DA877C2D14527BD000A0754C /* HRColorPicker.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,7 +155,7 @@
 		DA877C3814527BD000A0754C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				46FD94B21475604400384FD7 /* Hayashi311ColorPickerSample-Info.plist */,
+				46FD94B21475604400384FD7 /* HRColorPicker-Info.plist */,
 				46FD94B31475604400384FD7 /* Hayashi311ColorPickerSample-Prefix.pch */,
 				DA877C3A14527BD000A0754C /* InfoPlist.strings */,
 				DA877C3D14527BD000A0754C /* main.m */,
@@ -181,9 +181,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA877C2C14527BD000A0754C /* Hayashi311ColorPickerSample */ = {
+		DA877C2C14527BD000A0754C /* HRColorPicker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "Hayashi311ColorPickerSample" */;
+			buildConfigurationList = DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "HRColorPicker" */;
 			buildPhases = (
 				DA877C2914527BD000A0754C /* Sources */,
 				DA877C2A14527BD000A0754C /* Frameworks */,
@@ -193,9 +193,9 @@
 			);
 			dependencies = (
 			);
-			name = Hayashi311ColorPickerSample;
+			name = HRColorPicker;
 			productName = hayashi311ColorPicker;
-			productReference = DA877C2D14527BD000A0754C /* Hayashi311ColorPickerSample.app */;
+			productReference = DA877C2D14527BD000A0754C /* HRColorPicker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -207,7 +207,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Hayashi Ryota";
 			};
-			buildConfigurationList = DA877C2714527BD000A0754C /* Build configuration list for PBXProject "Hayashi311ColorPickerSample" */;
+			buildConfigurationList = DA877C2714527BD000A0754C /* Build configuration list for PBXProject "HRColorPicker" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -219,7 +219,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA877C2C14527BD000A0754C /* Hayashi311ColorPickerSample */,
+				DA877C2C14527BD000A0754C /* HRColorPicker */,
 			);
 		};
 /* End PBXProject section */
@@ -341,9 +341,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
-				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
+				INFOPLIST_FILE = "Hayashi311ColorPickerSample/HRColorPicker-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Hayashi311ColorPickerSample;
+				PRODUCT_NAME = HRColorPicker;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -355,9 +355,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Prefix.pch";
-				INFOPLIST_FILE = "Hayashi311ColorPickerSample/Hayashi311ColorPickerSample-Info.plist";
+				INFOPLIST_FILE = "Hayashi311ColorPickerSample/HRColorPicker-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Hayashi311ColorPickerSample;
+				PRODUCT_NAME = HRColorPicker;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -366,7 +366,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DA877C2714527BD000A0754C /* Build configuration list for PBXProject "Hayashi311ColorPickerSample" */ = {
+		DA877C2714527BD000A0754C /* Build configuration list for PBXProject "HRColorPicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA877C4314527BD000A0754C /* Debug */,
@@ -375,7 +375,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "Hayashi311ColorPickerSample" */ = {
+		DA877C4514527BD000A0754C /* Build configuration list for PBXNativeTarget "HRColorPicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA877C4614527BD000A0754C /* Debug */,
