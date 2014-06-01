@@ -2,7 +2,7 @@
 ***HRColorPicker*** is a lightweight color picker for iOS  
 that's easy to use for both users and developers.  
 
-[![Video](https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/Vimeo.png)](http://hayashi311.github.io/Color-Picker-for-iOS/)
+<a href="http://hayashi311.github.io/Color-Picker-for-iOS/" target="_blank"><img src="https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/Vimeo.png" alt="Video" style="max-width:100%;"></a>
 
 ### Try HRColorPicker
 To try HRColorPicker, open Terminal.app and enter the following command:  
