@@ -2,13 +2,14 @@
 ***HRColorPicker*** is a lightweight color picker for iOS  
 that's easy to use for both users and developers.  
 
+[![Video](https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/Vimeo.png)](http://hayashi311.github.io/Color-Picker-for-iOS/)
 
 ### Try HRColorPicker
 To try HRColorPicker, open Terminal.app and enter the following command:  
 
     $ pod try Color-Picker-for-iOS
 
-![](https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/eb95b42707d1319cc5e43562ac275e44f3eb6376/screen_shot2.png)
+![](https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/screen_shot2.png)
 
 ### How to use it
 
@@ -37,7 +38,7 @@ HRColorPicker is optimized for ***Interface Builder*** and ***AutoLayout***.
 #### Interface Builder
 Layout, color, and tile size can be changed only through the Interface Builder.
 
-image
+![](https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/IB.png)
 
 #### Without Interface Builder
 As shown below, you can also programmatically customize HRColorPicker.
@@ -65,6 +66,6 @@ Create your custom UI class that implement protocol methods.
 - new BSD License 
 
 
-### requirement
+### Requirement
 - iOS7.x~
   
