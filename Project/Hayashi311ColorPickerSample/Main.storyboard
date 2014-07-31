@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="TQD-yp-f8W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="TQD-yp-f8W">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -16,8 +16,28 @@
                         <sections>
                             <tableViewSection id="c7y-ia-whg">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Txj-Bv-FYZ" style="IBUITableViewCellStyleDefault" id="jKG-u2-uxf">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="9ZJ-fT-B5K" style="IBUITableViewCellStyleDefault" id="bOF-8j-WWh">
                                         <rect key="frame" x="0.0" y="64" width="320" height="66"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bOF-8j-WWh" id="j9v-ho-kBy">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="65"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="StoryBoard(Basic)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9ZJ-fT-B5K">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Fh1-Bc-Qjo" kind="push" id="UdL-zM-Q1i"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Txj-Bv-FYZ" style="IBUITableViewCellStyleDefault" id="jKG-u2-uxf">
+                                        <rect key="frame" x="0.0" y="130" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jKG-u2-uxf" id="dMw-Dj-6cd">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="65"/>
@@ -37,7 +57,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="HpX-8u-cR4" style="IBUITableViewCellStyleDefault" id="7UM-oA-kGm">
-                                        <rect key="frame" x="0.0" y="130" width="320" height="66"/>
+                                        <rect key="frame" x="0.0" y="196" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7UM-oA-kGm" id="5Bv-ja-yON">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="65"/>
@@ -57,7 +77,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="AGN-4O-tGX" style="IBUITableViewCellStyleDefault" id="6b8-k4-aWb">
-                                        <rect key="frame" x="0.0" y="196" width="320" height="66"/>
+                                        <rect key="frame" x="0.0" y="262" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6b8-k4-aWb" id="wWR-EH-2aE">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="65"/>
@@ -74,7 +94,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="oDg-Ie-JPf" style="IBUITableViewCellStyleDefault" id="shD-Kv-lGs">
-                                        <rect key="frame" x="0.0" y="262" width="320" height="66"/>
+                                        <rect key="frame" x="0.0" y="328" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="shD-Kv-lGs" id="a0H-nh-5jd">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="65"/>
@@ -91,7 +111,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="gjN-z6-jKT" style="IBUITableViewCellStyleDefault" id="TUP-LL-vTf">
-                                        <rect key="frame" x="0.0" y="328" width="320" height="66"/>
+                                        <rect key="frame" x="0.0" y="394" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TUP-LL-vTf" id="7kw-3X-cks">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="65"/>
@@ -127,6 +147,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vzf-JC-nVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="103"/>
+        </scene>
+        <!--Sample Color Picker View Controller-->
+        <scene sceneID="gVi-iA-PwY">
+            <objects>
+                <viewController id="Fh1-Bc-Qjo" customClass="HRSampleColorPickerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rgl-g8-uDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="dry-Uj-eUq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uSQ-iO-Hpy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pwg-8M-Eu2" customClass="HRColorPickerView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Pwg-8M-Eu2" secondAttribute="trailing" id="2ck-O5-A1x"/>
+                            <constraint firstItem="Pwg-8M-Eu2" firstAttribute="top" secondItem="Rgl-g8-uDJ" secondAttribute="bottom" id="8Hg-3L-4KY"/>
+                            <constraint firstItem="Pwg-8M-Eu2" firstAttribute="leading" secondItem="uSQ-iO-Hpy" secondAttribute="leading" id="W1P-g8-ZNw"/>
+                            <constraint firstItem="dry-Uj-eUq" firstAttribute="top" secondItem="Pwg-8M-Eu2" secondAttribute="bottom" id="qYe-tt-nL6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="WH8-Xt-DB4"/>
+                    <connections>
+                        <outlet property="colorPickerView" destination="Pwg-8M-Eu2" id="lZk-ln-SRu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yXK-bf-Px9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="818" y="-624"/>
         </scene>
         <!--Sample Color Picker View Controller-->
         <scene sceneID="aai-bR-j9j">
@@ -214,11 +269,6 @@
                                     <constraint firstItem="Xjh-OR-WLh" firstAttribute="top" secondItem="hKb-Ei-PQU" secondAttribute="bottom" id="wKq-LK-CAh"/>
                                     <constraint firstItem="Sys-iB-e21" firstAttribute="left" secondItem="Xjh-OR-WLh" secondAttribute="right" constant="9" id="y1K-9A-fMk"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" red="0.86822775135869568" green="0.55123080613677711" blue="0.52609642589664274" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="brightnessSlider" destination="Sys-iB-e21" id="Meb-ir-Nv5"/>
                                     <outlet property="colorInfoView" destination="Xjh-OR-WLh" id="Eiu-BI-riE"/>
