@@ -95,9 +95,9 @@ typedef struct timeval timeval;
 - (void)setColor:(UIColor *)color {
     // RGBのデフォルトカラーをHSVに変換
     HSVColorFromUIColor(color, &_currentHsvColor);
-    if (self.brightnessSlider) self.brightnessSlider.color = self.color;
-    if (self.colorInfoView) self.colorInfoView.color = self.color;
-    if (self.colorMapView) {
+    if (_brightnessSlider) self.brightnessSlider.color = self.color;
+    if (_colorInfoView) self.colorInfoView.color = self.color;
+    if (_colorMapView) {
         self.colorMapView.color = self.color;
         self.colorMapView.brightness = _currentHsvColor.v;
     }
