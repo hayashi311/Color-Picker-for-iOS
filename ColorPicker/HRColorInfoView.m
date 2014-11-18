@@ -33,6 +33,7 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
 
 @interface HRColorInfoView () {
     UIColor *_color;
+    NSNumber *_showHex;
 }
 @end
 
@@ -65,11 +66,16 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
 
 - (void)_init {
     self.backgroundColor = [UIColor clearColor];
-    _hexColorLabel = [[UILabel alloc] init];
-    _hexColorLabel.backgroundColor = [UIColor clearColor];
-    _hexColorLabel.font = [UIFont systemFontOfSize:12];
-    _hexColorLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
-    _hexColorLabel.textAlignment = NSTextAlignmentCenter;
+    
+    if([_showHex isEqualToNumber:@TRUE])
+    {
+        _hexColorLabel = [[UILabel alloc] init];
+        _hexColorLabel.backgroundColor = [UIColor clearColor];
+        _hexColorLabel.font = [UIFont systemFontOfSize:12];
+        _hexColorLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
+        _hexColorLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_hexColorLabel];
+    }
 
     [self addSubview:_hexColorLabel];
 
@@ -83,11 +89,14 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    _hexColorLabel.frame = CGRectMake(
-            0,
-            CGRectGetHeight(self.frame) - kHRColorInfoViewLabelHeight,
-            CGRectGetWidth(self.frame),
-            kHRColorInfoViewLabelHeight);
+    if([_showHex isEqualToNumber:@TRUE])
+    {
+        _hexColorLabel.frame = CGRectMake(
+                                          0,
+                                          CGRectGetHeight(self.frame) - kHRColorInfoViewLabelHeight,
+                                          CGRectGetWidth(self.frame),
+                                          kHRColorInfoViewLabelHeight);
+    }
 
     _borderLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
 }
@@ -97,21 +106,37 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
     CGFloat r, g, b, a;
     [_color getRed:&r green:&g blue:&b alpha:&a];
     int rgb = (int) (r * 255.0f)<<16 | (int) (g * 255.0f)<<8 | (int) (b * 255.0f)<<0;
-    _hexColorLabel.text = [NSString stringWithFormat:@"#%06x", rgb];
+    if([_showHex isEqualToNumber:@TRUE])
+        _hexColorLabel.text = [NSString stringWithFormat:@"#%06x", rgb];
     [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGRect colorRect = CGRectMake(0, 0, CGRectGetWidth(rect), CGRectGetHeight(rect) - kHRColorInfoViewLabelHeight);
-
-    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:colorRect byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(4, 4)];
+    CGRect colorRect;
+    UIBezierPath *rectanglePath;
+    
+    if([_showHex isEqualToNumber:@TRUE])
+    {
+        colorRect = CGRectMake(0, 0, CGRectGetWidth(rect), CGRectGetHeight(rect) - kHRColorInfoViewLabelHeight);
+        rectanglePath = [UIBezierPath bezierPathWithRoundedRect:colorRect byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(4, 4)];
+    }
+    else
+    {
+        colorRect = CGRectMake(0, 0, CGRectGetWidth(rect), CGRectGetHeight(rect));
+        rectanglePath = [UIBezierPath bezierPathWithRoundedRect:colorRect byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomRight | UIRectCornerBottomLeft cornerRadii:CGSizeMake(4, 4)];
+    }
     [rectanglePath closePath];
     [self.color setFill];
     [rectanglePath fill];
 }
 
 - (UIView *)viewForBaselineLayout {
-    return _hexColorLabel;
+    if([_showHex isEqualToNumber:@TRUE])
+    {
+        return _hexColorLabel;
+    }
+    else
+        return nil;
 }
 
 @end

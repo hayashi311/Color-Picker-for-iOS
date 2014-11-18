@@ -30,6 +30,7 @@
 
 @protocol HRColorInfoView
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) NSNumber *showHex;
 @end
 
 @interface HRColorInfoView : UIView <HRColorInfoView>
