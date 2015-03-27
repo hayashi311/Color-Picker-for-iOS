@@ -334,8 +334,6 @@
 		brightness = 0.0f;
 	
 	[self setBrightness:brightness];
-	
-	NSLog(@"PINCH : %f", sender.scale, brightness);
 }
 
 - (void)update:(CGPoint)tapPoint {
