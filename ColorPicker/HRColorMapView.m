@@ -333,7 +333,20 @@
 	else if(brightness < .0f)
 		brightness = 0.0f;
 	
-	[self setBrightness:brightness];
+	self.brightness = brightness;
+	
+	CGFloat hue;
+	CGFloat saturation;
+
+	[_color getHue:&hue saturation:&saturation brightness:nil alpha:nil];
+	
+	UIColor *selectedColor;
+	selectedColor = [UIColor colorWithHue:hue
+							   saturation:saturation
+							   brightness:brightness
+									alpha:1.0];
+	_color = selectedColor;
+	[self updateColorCursor];
 }
 
 - (void)update:(CGPoint)tapPoint {
