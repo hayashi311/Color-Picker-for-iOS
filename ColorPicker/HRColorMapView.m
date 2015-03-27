@@ -158,12 +158,6 @@
     self.brightness = 0.5;
     self.backgroundColor = [UIColor whiteColor];
 
-    CGFloat lineWidth = 1.f / [[UIScreen mainScreen] scale];
-    _lineLayer = [[CALayer alloc] init];
-    _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
-    _lineLayer.frame = CGRectMake(0, -lineWidth, CGRectGetWidth(self.frame), lineWidth);
-    [self.layer addSublayer:_lineLayer];
-
     // タイルの中心にくるようにずらす
     CGPoint cursorOrigin = CGPointMake(
             -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
@@ -178,6 +172,10 @@
     UIPanGestureRecognizer *panGestureRecognizer;
     panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self addGestureRecognizer:panGestureRecognizer];
+	
+	UIPinchGestureRecognizer *pinchGestureRecognizer;
+	pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+	[self addGestureRecognizer:pinchGestureRecognizer];
 
     _initializeQueue = [[NSOperationQueue alloc] init];
     [_initializeQueue setSuspended:YES];
@@ -320,6 +318,24 @@
             [_colorCursor setEditing:YES];
         }
     }
+}
+
+-(void)handlePinch:(UIPinchGestureRecognizer *)sender
+{
+	CGFloat brightness = self.brightness;
+	if(sender.scale < 1.0f)
+		brightness = brightness - sender.scale / 100;
+	else
+		brightness = brightness + sender.scale / 100;
+	
+	if(brightness > 1.0f)
+		brightness = 1.0f;
+	else if(brightness < .0f)
+		brightness = 0.0f;
+	
+	[self setBrightness:brightness];
+	
+	NSLog(@"PINCH : %f", sender.scale, brightness);
 }
 
 - (void)update:(CGPoint)tapPoint {
