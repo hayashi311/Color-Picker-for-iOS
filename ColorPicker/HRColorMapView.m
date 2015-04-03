@@ -51,6 +51,7 @@
 @synthesize color = _color;
 @synthesize saturationUpperLimit = _saturationUpperLimit;
 
+
 #pragma mark - generate color map image
 
 + (UIImage *)colorMapImageWithSize:(CGSize)size
@@ -301,6 +302,7 @@
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
         [self update:tapPoint];
+		[self sendActionsForControlEvents:UIControlEventEditingDidEnd];
     }
 }
 
@@ -309,6 +311,7 @@
         if (sender.numberOfTouches <= 0) {
             if ([_colorCursor respondsToSelector:@selector(setEditing:)]) {
                 [_colorCursor setEditing:NO];
+				[self sendActionsForControlEvents:UIControlEventEditingDidEnd];
             }
             return;
         }
@@ -372,6 +375,7 @@
     _color = selectedColor;
     [self updateColorCursor];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
+	
 }
 
 - (void)updateColorCursor {
