@@ -203,11 +203,27 @@ typedef struct timeval timeval;
     }
 
     CGFloat headerHeight = (20 + 44) * 1.625;
-    self.colorMapView.frame = CGRectMake(
-            0, headerHeight,
-            CGRectGetWidth(self.frame),
-            MAX(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight)
-    );
+    
+    self.colorInfoView.frame = CGRectMake(8, (headerHeight - 84) / 2.0f, 66, 84);
+    
+    CGFloat hexLabelHeight = 18;
+    CGFloat sliderHeight = 11;
+    CGFloat brightnessPickerTop = CGRectGetMaxY(self.colorInfoView.frame) - hexLabelHeight - sliderHeight;
+    
+    CGRect brightnessPickerFrame = CGRectMake(
+                                              CGRectGetMaxX(self.colorInfoView.frame) + 9,
+                                              brightnessPickerTop,
+                                              CGRectGetWidth(self.frame) - CGRectGetMaxX(self.colorInfoView.frame) - 9 * 2,
+                                              sliderHeight);
+    
+    self.brightnessSlider.frame = [self.brightnessSlider frameForAlignmentRect:brightnessPickerFrame];
+    
+    CGFloat mapHeight = self.bounds.size.height - MAX(CGRectGetMaxY(self.brightnessSlider.frame), CGRectGetMaxY(self.colorInfoView.frame)) - 8;
+    self.colorMapView.frame = CGRectMake(0,
+                                         self.bounds.size.height - mapHeight,
+                                         CGRectGetWidth(self.frame),
+                                         MAX(0, mapHeight));
+    
     // use intrinsicContentSize for 3.5inch screen
     CGRect colorMapFrame = (CGRect) {
             .origin = CGPointZero,
@@ -217,19 +233,6 @@ typedef struct timeval timeval;
     self.colorMapView.frame = colorMapFrame;
     headerHeight = CGRectGetMinY(colorMapFrame);
 
-    self.colorInfoView.frame = CGRectMake(8, (headerHeight - 84) / 2.0f, 66, 84);
-
-    CGFloat hexLabelHeight = 18;
-    CGFloat sliderHeight = 11;
-    CGFloat brightnessPickerTop = CGRectGetMaxY(self.colorInfoView.frame) - hexLabelHeight - sliderHeight;
-
-    CGRect brightnessPickerFrame = CGRectMake(
-            CGRectGetMaxX(self.colorInfoView.frame) + 9,
-            brightnessPickerTop,
-            CGRectGetWidth(self.frame) - CGRectGetMaxX(self.colorInfoView.frame) - 9 * 2,
-            sliderHeight);
-
-    self.brightnessSlider.frame = [self.brightnessSlider frameForAlignmentRect:brightnessPickerFrame];
 }
 
 @end
