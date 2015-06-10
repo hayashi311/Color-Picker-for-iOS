@@ -27,6 +27,7 @@
 
 #import "HRSampleRootTableViewController.h"
 #import "HRSampleColorPickerViewController2.h"
+#import "HRColorPickerView.h"
 
 @interface HRSampleRootTableViewController ()
 
@@ -75,6 +76,17 @@
                                              animated:YES];
         return;
 
+    }
+    else if(indexPath.row == 6){
+        UIViewController* c = [[UIViewController alloc]init];
+        c.view.frame = CGRectMake(0, 0, 320, 500);
+        c.view.backgroundColor = self.view.backgroundColor;
+        HRColorPickerView* view = [[HRColorPickerView alloc]initWithFrame:CGRectMake(0, 0, 200, 250)];
+        view.center = CGPointMake(c.view.bounds.size.width/2, c.view.bounds.size.height/2);
+        view.backgroundColor = [UIColor colorWithRed:(float)0xcc/0xff green:(float)0xdd/0xff blue:(float)0xff/0xff alpha:1];
+        [view setColor:[UIColor brownColor]];
+        [c.view addSubview:view];
+        [self.navigationController pushViewController:c animated:YES];
     }
 }
 
