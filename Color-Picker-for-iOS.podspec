@@ -4,9 +4,9 @@ Pod::Spec.new do |s|
   s.summary      = "ColorPicker for iPhone and iPod touch"
   s.homepage     = 'https://github.com/hayashi311/Color-Picker-for-iOS'
   s.license      = { :type => 'new BSD License', :file => 'LICENSE.txt' }
-  s.author       = { "hayashi311" => "yomoapp@gmail.com" }
+  s.author       = { "hayashi311" => "hayashi311@gmail.com" }
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/hayashi311/Color-Picker-for-iOS.git", :tag => "2.0.1" }
+  s.source       = { :git => "https://github.com/hayashi311/Color-Picker-for-iOS.git", :tag => "2.0.2" }
   s.source_files  = "ColorPicker/*.{h,m}"
   s.requires_arc = true
 end
