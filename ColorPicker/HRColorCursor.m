@@ -42,8 +42,6 @@
     BOOL _editing;
 }
 
-@synthesize color = _color;
-
 + (CGSize)cursorSize {
     return CGSizeMake(28.0, 28.0f);
 }

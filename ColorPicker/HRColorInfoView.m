@@ -41,8 +41,6 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
     CALayer *_borderLayer;
 }
 
-@synthesize color = _color;
-
 - (id)init {
     return [self initWithFrame:CGRectZero];
 }
