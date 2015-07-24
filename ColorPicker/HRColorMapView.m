@@ -48,6 +48,8 @@
 @implementation HRColorMapView {
     CALayer *_lineLayer;
 }
+@synthesize color = _color;
+@synthesize saturationUpperLimit = _saturationUpperLimit;
 
 #pragma mark - generate color map image
 
