@@ -34,7 +34,8 @@
 @interface HRSampleColorPickerViewController : UIViewController {
 }
 
-@property (weak) id <HRColorPickerViewControllerDelegate> delegate;
+@property (nonatomic, strong) UIColor* color;
+@property (nonatomic, weak) id <HRColorPickerViewControllerDelegate> delegate;
 
 @end
 

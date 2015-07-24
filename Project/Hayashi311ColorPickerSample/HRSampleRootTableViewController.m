@@ -28,17 +28,17 @@
 #import "HRSampleRootTableViewController.h"
 #import "HRSampleColorPickerViewController2.h"
 
-@interface HRSampleRootTableViewController ()
+@interface HRSampleRootTableViewController () <HRColorPickerViewControllerDelegate>
 
 @property IBOutlet UITableViewCell *codeCell;
 @property IBOutlet UITableViewCell *codeFullColorCell;
 
+@property (nonatomic, strong) UIColor *color;
 @end
 
 @implementation HRSampleRootTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
 
@@ -46,8 +46,12 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.color = [UIColor blueColor];
+}
+
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -62,20 +66,35 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (self.codeCell == cell){
+    if (self.codeCell == cell) {
         HRSampleColorPickerViewController2 *controller;
-        controller = [[HRSampleColorPickerViewController2 alloc] initWithColor:[UIColor blueColor] fullColor:NO];
+        controller = [[HRSampleColorPickerViewController2 alloc] initWithColor:self.color fullColor:NO];
+        controller.delegate = self;
         [self.navigationController pushViewController:controller
                                              animated:YES];
         return;
     } else if (self.codeFullColorCell == cell) {
         HRSampleColorPickerViewController2 *controller;
-        controller = [[HRSampleColorPickerViewController2 alloc] initWithColor:[UIColor blueColor] fullColor:YES];
+        controller = [[HRSampleColorPickerViewController2 alloc] initWithColor:self.color fullColor:YES];
+        controller.delegate = self;
         [self.navigationController pushViewController:controller
                                              animated:YES];
         return;
-
     }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [super prepareForSegue:segue sender:sender];
+    if ([segue.destinationViewController isKindOfClass:[HRSampleColorPickerViewController class]]) {
+        HRSampleColorPickerViewController *controller = segue.destinationViewController;
+        controller.delegate = self;
+        controller.color = self.color;
+    }
+};
+
+
+- (void)setSelectedColor:(UIColor *)color {
+    self.color = color;
 }
 
 @end

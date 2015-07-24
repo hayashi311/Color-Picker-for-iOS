@@ -58,7 +58,7 @@
     if (_fullColor) {
         HRColorMapView *colorMapView = [[HRColorMapView alloc] init];
         colorMapView.saturationUpperLimit = @1;
-        colorMapView.tileSize = @16;
+        colorMapView.tileSize = @1;
         [colorPickerView addSubview:colorMapView];
         colorPickerView.colorMapView = colorMapView;
 

@@ -36,7 +36,9 @@
 
 @end
 
-@implementation HRSampleColorPickerViewController
+@implementation HRSampleColorPickerViewController {
+    UIColor *_color;
+}
 
 @synthesize delegate;
 
@@ -49,15 +51,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.colorPickerView.color = [UIColor purpleColor];
+    self.colorPickerView.color = _color;
+    [self.colorPickerView addTarget:self
+                             action:@selector(colorDidChange:)
+                   forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.delegate) {
-        [self.delegate setSelectedColor:self.colorPickerView.color];
+        [self.delegate setSelectedColor:self.color];
     }
 }
 
+- (void)colorDidChange:(HRColorPickerView *)colorPickerView {
+    _color = colorPickerView.color;
+}
+
 @end
+
