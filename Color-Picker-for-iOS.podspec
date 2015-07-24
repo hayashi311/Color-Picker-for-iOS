@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Color-Picker-for-iOS"
-  s.version      = "2.0.1"
+  s.version      = "2.0.2"
   s.summary      = "ColorPicker for iPhone and iPod touch"
   s.homepage     = 'https://github.com/hayashi311/Color-Picker-for-iOS'
   s.license      = { :type => 'new BSD License', :file => 'LICENSE.txt' }
