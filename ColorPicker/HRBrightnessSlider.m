@@ -37,9 +37,14 @@
     NSNumber *_brightness;
     UIColor *_color;
 
+    NSNumber *_brightnessLowerLimit;
+
     CGRect _controlFrame;
     CGRect _renderingFrame;
 }
+
+@synthesize brightness = _brightness;
+@synthesize brightnessLowerLimit = _brightnessLowerLimit;
 
 - (id)init {
     return [self initWithFrame:CGRectZero];
@@ -182,7 +187,6 @@
     CGPoint point = CGPointMake(brightnessCursorX * _controlFrame.size.width + _controlFrame.origin.x, _brightnessCursor.center.y);
     _brightnessCursor.center = point;
     _brightnessCursor.color = self.color;
-    NSLog(@"self.color = %@", self.color);
 }
 
 - (void)setFrame:(CGRect)frame {
