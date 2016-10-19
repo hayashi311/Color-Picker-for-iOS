@@ -194,13 +194,18 @@
             [CATransaction setValue:(id) kCFBooleanTrue
                              forKey:kCATransactionDisableActions];
             
+            self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
             self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.colorMapImage.size};
             self.colorMapLayer.contents = (id) self.colorMapImage.CGImage;
             
+            self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
             self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.backgroundImage.size};
             self.colorMapBackgroundLayer.contents = (id) self.backgroundImage.CGImage;
             
             [CATransaction commit];
+            
+            [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
+            [self.layer insertSublayer:self.colorMapLayer atIndex:1];
             
             self.colorMapLayer.opacity = self.brightness;
             [self invalidateIntrinsicContentSize];
