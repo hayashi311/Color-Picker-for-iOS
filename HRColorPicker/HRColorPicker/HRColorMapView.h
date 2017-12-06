@@ -27,18 +27,24 @@
 
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@protocol HRBrightnessSlider
+@protocol HRColorMapView
 
 @required
-@property (nonatomic, readonly) NSNumber *brightness;
-@property (nonatomic) UIColor *color;
+@property (nonatomic, strong) UIColor *color;
+@property (nonatomic) CGFloat brightness;
 
 @optional
-@property (nonatomic) NSNumber *brightnessLowerLimit;
+@property (nonatomic) NSNumber *saturationUpperLimit;
 
 @end
 
-@interface HRBrightnessSlider : UIControl <HRBrightnessSlider>
+@interface HRColorMapView : UIControl <HRColorMapView>
+
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit;
+
+@property (nonatomic) NSNumber *tileSize;
 
 @end
