@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		665127FF1FD874550093B538 /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127EF1FD874540093B538 /* HRBrightnessCursor.m */; };
 		665128001FD874550093B538 /* HRColorMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127F01FD874540093B538 /* HRColorMapView.m */; };
-		665128011FD874550093B538 /* HRColorCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F11FD874540093B538 /* HRColorCursor.h */; };
-		665128021FD874550093B538 /* HRColorMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F21FD874540093B538 /* HRColorMapView.h */; };
-		665128031FD874550093B538 /* HRHSVColorUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F31FD874540093B538 /* HRHSVColorUtil.h */; };
-		665128041FD874550093B538 /* HRBrightnessSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F41FD874540093B538 /* HRBrightnessSlider.h */; };
+		665128011FD874550093B538 /* HRColorCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F11FD874540093B538 /* HRColorCursor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		665128021FD874550093B538 /* HRColorMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F21FD874540093B538 /* HRColorMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		665128031FD874550093B538 /* HRHSVColorUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F31FD874540093B538 /* HRHSVColorUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		665128041FD874550093B538 /* HRBrightnessSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F41FD874540093B538 /* HRBrightnessSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		665128051FD874550093B538 /* HRBrightnessSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127F51FD874540093B538 /* HRBrightnessSlider.m */; };
-		665128061FD874550093B538 /* HRColorInfoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F61FD874540093B538 /* HRColorInfoView.h */; };
+		665128061FD874550093B538 /* HRColorInfoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F61FD874540093B538 /* HRColorInfoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		665128071FD874550093B538 /* HRColorCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127F71FD874540093B538 /* HRColorCursor.m */; };
-		665128081FD874550093B538 /* UIImage+CoreGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F81FD874540093B538 /* UIImage+CoreGraphics.h */; };
-		665128091FD874550093B538 /* HRColorPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F91FD874540093B538 /* HRColorPickerView.h */; };
-		6651280A1FD874550093B538 /* HRBrightnessCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127FA1FD874540093B538 /* HRBrightnessCursor.h */; };
+		665128081FD874550093B538 /* UIImage+CoreGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F81FD874540093B538 /* UIImage+CoreGraphics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		665128091FD874550093B538 /* HRColorPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F91FD874540093B538 /* HRColorPickerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6651280A1FD874550093B538 /* HRBrightnessCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127FA1FD874540093B538 /* HRBrightnessCursor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6651280B1FD874550093B538 /* HRColorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127FB1FD874540093B538 /* HRColorInfoView.m */; };
 		6651280C1FD874550093B538 /* HRHSVColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127FC1FD874540093B538 /* HRHSVColorUtil.m */; };
 		6651280D1FD874550093B538 /* UIImage+CoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127FD1FD874550093B538 /* UIImage+CoreGraphics.m */; };
