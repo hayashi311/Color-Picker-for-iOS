@@ -184,8 +184,9 @@
     _initializeQueue = [[NSOperationQueue alloc] init];
     [_initializeQueue setSuspended:YES];
     [_initializeQueue addOperationWithBlock:^{
-        [self createColorMapLayer];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self createColorMapLayer];
+            
             [CATransaction begin];
             [CATransaction setValue:(id) kCFBooleanTrue
                              forKey:kCATransactionDisableActions];
