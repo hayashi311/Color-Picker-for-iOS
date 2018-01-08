@@ -27,11 +27,14 @@
 
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@protocol HRColorInfoView
-@property (nonatomic, strong) UIColor *color;
-@end
+typedef void(^renderToContext)(CGContextRef, CGRect);
 
-@interface HRColorInfoView : UIView <HRColorInfoView>
+@interface UIImage (CoreGraphics)
+
++ (UIImage *)hr_imageWithSize:(CGSize)size renderer:(renderToContext)renderer;
+
++ (UIImage *)hr_imageWithSize:(CGSize)size opaque:(BOOL)opaque renderer:(renderToContext)renderer;
 
 @end
