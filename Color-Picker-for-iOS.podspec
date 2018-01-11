@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.author       = { "hayashi311" => "hayashi311@gmail.com" }
   s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/9folders-nakcheon/Color-Picker-for-iOS.git", :tag => "2.0.3" }
-  s.source_files  = "HRColorPicker/**/*.{h,m}"
+  s.source_files  = "ColorPicker/*.{h,m}"
   s.requires_arc = true
 end
