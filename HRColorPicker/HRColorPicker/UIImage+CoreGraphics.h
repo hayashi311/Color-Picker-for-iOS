@@ -27,18 +27,14 @@
 
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@protocol HRBrightnessSlider
+typedef void(^renderToContext)(CGContextRef, CGRect);
 
-@required
-@property (nonatomic, readonly) NSNumber *brightness;
-@property (nonatomic) UIColor *color;
+@interface UIImage (CoreGraphics)
 
-@optional
-@property (nonatomic) NSNumber *brightnessLowerLimit;
++ (UIImage *)hr_imageWithSize:(CGSize)size renderer:(renderToContext)renderer;
 
-@end
-
-@interface HRBrightnessSlider : UIControl <HRBrightnessSlider>
++ (UIImage *)hr_imageWithSize:(CGSize)size opaque:(BOOL)opaque renderer:(renderToContext)renderer;
 
 @end

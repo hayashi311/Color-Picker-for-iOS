@@ -27,11 +27,26 @@
 
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@protocol HRColorInfoView
+@protocol HRColorMapView
+
+@required
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic) CGFloat brightness;
+
+@optional
+@property (nonatomic) NSNumber *saturationUpperLimit;
+
 @end
 
-@interface HRColorInfoView : UIView <HRColorInfoView>
+@interface HRColorMapView : UIControl <HRColorMapView>
+
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
++ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit;
+
+@property (nonatomic) NSNumber *tileSize;
+
+- (void)viewControllerWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator;
 
 @end

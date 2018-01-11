@@ -25,17 +25,14 @@
  * $FreeBSD$
  */
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// 0.0f~1.0fの値をとるHSVの構造体です
-//
-/////////////////////////////////////////////////////////////////////////////
 
-typedef struct {
-    CGFloat h;
-    CGFloat s;
-    CGFloat v;
-} HRHSVColor;
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-void HSVColorFromUIColor(UIColor *, HRHSVColor *outHSV);
+@protocol HRColorInfoView
+@property (nonatomic, strong) UIColor *color;
+@end
 
+@interface HRColorInfoView : UIView <HRColorInfoView>
+
+@end

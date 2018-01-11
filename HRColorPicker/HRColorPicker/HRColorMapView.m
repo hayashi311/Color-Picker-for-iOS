@@ -43,6 +43,8 @@
 @property (atomic, strong) CALayer *colorMapLayer; // brightness 1.0
 @property (atomic, strong) CALayer *colorMapBackgroundLayer; // brightness 0 (= black)
 
+@property (nonatomic, strong) UIImage *colorMapImage;
+@property (nonatomic, strong) UIImage *backgroundImage;
 @end
 
 @implementation HRColorMapView {
@@ -182,8 +184,21 @@
     _initializeQueue = [[NSOperationQueue alloc] init];
     [_initializeQueue setSuspended:YES];
     [_initializeQueue addOperationWithBlock:^{
-        [self createColorMapLayer];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self createColorMapLayer];
+            
+            [CATransaction begin];
+            [CATransaction setValue:(id) kCFBooleanTrue
+                             forKey:kCATransactionDisableActions];
+
+            self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
+            self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.colorMapImage.size};
+            self.colorMapLayer.contents = (id) self.colorMapImage.CGImage;
+            self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
+            self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.backgroundImage.size};
+            self.colorMapBackgroundLayer.contents = (id) self.backgroundImage.CGImage;
+
+            [CATransaction commit];
 
             [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
             [self.layer insertSublayer:self.colorMapLayer atIndex:1];
@@ -206,9 +221,9 @@
     self.colorMapBackgroundLayer = nil;
     
     [_initializeQueue addOperationWithBlock:^{
-        [self createColorMapLayerForViewControllerWillTransitionToSize:size];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+            [self createColorMapLayerForViewControllerWillTransitionToSize:size];    
             [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
             [self.layer insertSublayer:self.colorMapLayer atIndex:1];
             self.colorMapLayer.opacity = self.brightness;
@@ -274,6 +289,7 @@
     _colorCursor.frame = cursorFrame;
 }
 
+
 - (void)createColorMapLayerForViewControllerWillTransitionToSize:(CGSize)size {
     
     if (self.colorMapLayer) {
@@ -288,27 +304,12 @@
         sizeToUse = CGSizeMake(sizeToUse.width, (int)sizeToUse.height + 1);
     }
 
-    UIImage *colorMapImage;
-    colorMapImage = [HRColorMapView colorMapImageWithSize:sizeToUse
-                                                 tileSize:self.tileSize.floatValue
-                                     saturationUpperLimit:self.saturationUpperLimit.floatValue];
+    self.colorMapImage = [HRColorMapView colorMapImageWithSize:sizeToUse
+                                                      tileSize:self.tileSize.floatValue
+                                          saturationUpperLimit:self.saturationUpperLimit.floatValue];
 
-    UIImage *backgroundImage;
-    backgroundImage = [HRColorMapView backgroundImageWithSize:sizeToUse
-                                                     tileSize:self.tileSize.floatValue];
-
-    [CATransaction begin];
-    [CATransaction setValue:(id) kCFBooleanTrue
-                     forKey:kCATransactionDisableActions];
-
-    self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = colorMapImage.size};
-    self.colorMapLayer.contents = (id) colorMapImage.CGImage;
-    self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = backgroundImage.size};
-    self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
-
-    [CATransaction commit];
+    self.backgroundImage = [HRColorMapView backgroundImageWithSize:sizeToUse
+                                                          tileSize:self.tileSize.floatValue];
 }
 
 - (void)createColorMapLayer {
@@ -324,27 +325,12 @@
         sizeToUse = CGSizeMake(sizeToUse.width, (int)sizeToUse.height + 1);
     }
     
-    UIImage *colorMapImage;
-    colorMapImage = [HRColorMapView colorMapImageWithSize:sizeToUse
-                                                 tileSize:self.tileSize.floatValue
-                                     saturationUpperLimit:self.saturationUpperLimit.floatValue];
-    
-    UIImage *backgroundImage;
-    backgroundImage = [HRColorMapView backgroundImageWithSize:sizeToUse
-                                                     tileSize:self.tileSize.floatValue];
-    
-    [CATransaction begin];
-    [CATransaction setValue:(id) kCFBooleanTrue
-                     forKey:kCATransactionDisableActions];
-    
-    self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = colorMapImage.size};
-    self.colorMapLayer.contents = (id) colorMapImage.CGImage;
-    self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = backgroundImage.size};
-    self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
-    
-    [CATransaction commit];
+    self.colorMapImage = [HRColorMapView colorMapImageWithSize:sizeToUse
+                                                      tileSize:self.tileSize.floatValue
+                                          saturationUpperLimit:self.saturationUpperLimit.floatValue];
+
+    self.backgroundImage = [HRColorMapView backgroundImageWithSize:sizeToUse
+                                                          tileSize:self.tileSize.floatValue];
 }
 
 - (void)setColor:(UIColor *)color {

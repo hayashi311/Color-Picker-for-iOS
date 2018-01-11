@@ -25,27 +25,19 @@
  * $FreeBSD$
  */
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// 0.0f~1.0fの値をとるHSVの構造体です
+//
+/////////////////////////////////////////////////////////////////////////////
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@protocol HRColorMapView
+typedef struct {
+    CGFloat h;
+    CGFloat s;
+    CGFloat v;
+} HRHSVColor;
 
-@required
-@property (nonatomic, strong) UIColor *color;
-@property (nonatomic) CGFloat brightness;
+void HSVColorFromUIColor(UIColor *, HRHSVColor *outHSV);
 
-@optional
-@property (nonatomic) NSNumber *saturationUpperLimit;
-
-@end
-
-@interface HRColorMapView : UIControl <HRColorMapView>
-
-+ (HRColorMapView *)colorMapWithFrame:(CGRect)frame;
-+ (HRColorMapView *)colorMapWithFrame:(CGRect)frame saturationUpperLimit:(CGFloat)saturationUpperLimit;
-
-@property (nonatomic) NSNumber *tileSize;
-
-- (void)viewControllerWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator;
-
-@end
