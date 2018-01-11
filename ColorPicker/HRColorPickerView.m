@@ -43,10 +43,10 @@ typedef struct timeval timeval;
     UIView <HRColorInfoView> *_colorInfoView;
     UIControl <HRColorMapView> *_colorMapView;
     UIControl <HRBrightnessSlider> *_brightnessSlider;
-
+    
     // 色情報
     HRHSVColor _currentHsvColor;
-
+    
     // フレームレート
     timeval _lastDrawTime;
     timeval _waitTimeDuration;
@@ -76,7 +76,7 @@ typedef struct timeval timeval;
 - (void)_init {
     // フレームレートの調整
     gettimeofday(&_lastDrawTime, NULL);
-
+    
     _waitTimeDuration.tv_sec = (__darwin_time_t) 0.0;
     _waitTimeDuration.tv_usec = (__darwin_suseconds_t) (1000000.0 / 15.0);
 }
@@ -145,7 +145,7 @@ typedef struct timeval timeval;
                                     saturationUpperLimit:0.9];
         colorMapView.tileSize = @16;
         _colorMapView = colorMapView;
-
+        
         _colorMapView.brightness = _currentHsvColor.v;
         _colorMapView.color = self.color;
         [_colorMapView addTarget:self
@@ -184,7 +184,7 @@ typedef struct timeval timeval;
 - (void)sendActions {
     timeval now, diff;
     gettimeofday(&now, NULL);
-            timersub(&now, &_lastDrawTime, &diff);
+    timersub(&now, &_lastDrawTime, &diff);
     if (timercmp(&diff, &_waitTimeDuration, >)) {
         _lastDrawTime = now;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
@@ -197,38 +197,43 @@ typedef struct timeval timeval;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-
+    
     if (self.usingAutoLayout) {
         return;
     }
-
+    
     CGFloat headerHeight = (20 + 44) * 1.625;
-    self.colorMapView.frame = CGRectMake(
-            0, headerHeight,
-            CGRectGetWidth(self.frame),
-            MAX(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight)
-    );
+    self.colorMapView.frame = CGRectMake(0,
+                                         headerHeight,
+                                         CGRectGetWidth(self.frame),
+                                         MAX(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerHeight));
     // use intrinsicContentSize for 3.5inch screen
+    CGSize sizeOfColorMapView = self.colorMapView.intrinsicContentSize;
+    if (sizeOfColorMapView.height + headerHeight > self.bounds.size.height) {
+        sizeOfColorMapView = CGSizeMake(self.bounds.size.width, self.bounds.size.height - headerHeight);
+    }
+    else {
+        sizeOfColorMapView = CGSizeMake(self.bounds.size.width, self.bounds.size.height - headerHeight);
+    }
     CGRect colorMapFrame = (CGRect) {
-            .origin = CGPointZero,
-            .size = self.colorMapView.intrinsicContentSize
+        .origin = CGPointZero,
+        .size = sizeOfColorMapView
     };
     colorMapFrame.origin.y = CGRectGetHeight(self.frame) - CGRectGetHeight(colorMapFrame);
     self.colorMapView.frame = colorMapFrame;
     headerHeight = CGRectGetMinY(colorMapFrame);
-
+    
     self.colorInfoView.frame = CGRectMake(8, (headerHeight - 84) / 2.0f, 66, 84);
-
+    
     CGFloat hexLabelHeight = 18;
     CGFloat sliderHeight = 11;
     CGFloat brightnessPickerTop = CGRectGetMaxY(self.colorInfoView.frame) - hexLabelHeight - sliderHeight;
-
-    CGRect brightnessPickerFrame = CGRectMake(
-            CGRectGetMaxX(self.colorInfoView.frame) + 9,
-            brightnessPickerTop,
-            CGRectGetWidth(self.frame) - CGRectGetMaxX(self.colorInfoView.frame) - 9 * 2,
-            sliderHeight);
-
+    
+    CGRect brightnessPickerFrame = CGRectMake(CGRectGetMaxX(self.colorInfoView.frame) + 9,
+                                              brightnessPickerTop,
+                                              CGRectGetWidth(self.frame) - CGRectGetMaxX(self.colorInfoView.frame) - 9 * 2,
+                                              sliderHeight);
+    
     self.brightnessSlider.frame = [self.brightnessSlider frameForAlignmentRect:brightnessPickerFrame];
 }
 

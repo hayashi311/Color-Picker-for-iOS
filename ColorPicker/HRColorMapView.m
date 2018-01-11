@@ -198,6 +198,30 @@
     }];
 }
 
+- (void)viewControllerWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [self.colorMapLayer removeFromSuperlayer];
+    self.colorMapLayer = nil;
+    [self.colorMapBackgroundLayer removeFromSuperlayer];
+    self.colorMapBackgroundLayer = nil;
+    
+    [_initializeQueue addOperationWithBlock:^{
+        [self createColorMapLayerForViewControllerWillTransitionToSize:size];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
+            [self.layer insertSublayer:self.colorMapLayer atIndex:1];
+            self.colorMapLayer.opacity = self.brightness;
+            [self invalidateIntrinsicContentSize];
+            
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.alpha = 1;
+                             }];
+        });
+    }];
+}
+
 #pragma mark - layout
 
 
@@ -250,18 +274,27 @@
     _colorCursor.frame = cursorFrame;
 }
 
-- (void)createColorMapLayer {
+- (void)createColorMapLayerForViewControllerWillTransitionToSize:(CGSize)size {
+    
     if (self.colorMapLayer) {
         return;
     }
+    
+    CGSize sizeToUse = size;
+    if (sizeToUse.width - (int)sizeToUse.width > 0) {
+        sizeToUse = CGSizeMake((int)sizeToUse.width + 1, sizeToUse.height);
+    }
+    if (sizeToUse.height - (int)sizeToUse.height > 0) {
+        sizeToUse = CGSizeMake(sizeToUse.width, (int)sizeToUse.height + 1);
+    }
 
     UIImage *colorMapImage;
-    colorMapImage = [HRColorMapView colorMapImageWithSize:self.frame.size
+    colorMapImage = [HRColorMapView colorMapImageWithSize:sizeToUse
                                                  tileSize:self.tileSize.floatValue
                                      saturationUpperLimit:self.saturationUpperLimit.floatValue];
 
     UIImage *backgroundImage;
-    backgroundImage = [HRColorMapView backgroundImageWithSize:self.frame.size
+    backgroundImage = [HRColorMapView backgroundImageWithSize:sizeToUse
                                                      tileSize:self.tileSize.floatValue];
 
     [CATransaction begin];
@@ -275,6 +308,42 @@
     self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = backgroundImage.size};
     self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
 
+    [CATransaction commit];
+}
+
+- (void)createColorMapLayer {
+    if (self.colorMapLayer) {
+        return;
+    }
+    
+    CGSize sizeToUse = self.frame.size;
+    if (sizeToUse.width - (int)sizeToUse.width > 0) {
+        sizeToUse = CGSizeMake((int)sizeToUse.width + 1, sizeToUse.height);
+    }
+    if (sizeToUse.height - (int)sizeToUse.height > 0) {
+        sizeToUse = CGSizeMake(sizeToUse.width, (int)sizeToUse.height + 1);
+    }
+    
+    UIImage *colorMapImage;
+    colorMapImage = [HRColorMapView colorMapImageWithSize:sizeToUse
+                                                 tileSize:self.tileSize.floatValue
+                                     saturationUpperLimit:self.saturationUpperLimit.floatValue];
+    
+    UIImage *backgroundImage;
+    backgroundImage = [HRColorMapView backgroundImageWithSize:sizeToUse
+                                                     tileSize:self.tileSize.floatValue];
+    
+    [CATransaction begin];
+    [CATransaction setValue:(id) kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+    
+    self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
+    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = colorMapImage.size};
+    self.colorMapLayer.contents = (id) colorMapImage.CGImage;
+    self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
+    self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = backgroundImage.size};
+    self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
+    
     [CATransaction commit];
 }
 
