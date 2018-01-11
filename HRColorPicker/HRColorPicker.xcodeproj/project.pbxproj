@@ -7,45 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		665127FF1FD874550093B538 /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127EF1FD874540093B538 /* HRBrightnessCursor.m */; };
-		665128001FD874550093B538 /* HRColorMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127F01FD874540093B538 /* HRColorMapView.m */; };
-		665128011FD874550093B538 /* HRColorCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F11FD874540093B538 /* HRColorCursor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		665128021FD874550093B538 /* HRColorMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F21FD874540093B538 /* HRColorMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		665128031FD874550093B538 /* HRHSVColorUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F31FD874540093B538 /* HRHSVColorUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		665128041FD874550093B538 /* HRBrightnessSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F41FD874540093B538 /* HRBrightnessSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		665128051FD874550093B538 /* HRBrightnessSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127F51FD874540093B538 /* HRBrightnessSlider.m */; };
-		665128061FD874550093B538 /* HRColorInfoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F61FD874540093B538 /* HRColorInfoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		665128071FD874550093B538 /* HRColorCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127F71FD874540093B538 /* HRColorCursor.m */; };
-		665128081FD874550093B538 /* UIImage+CoreGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F81FD874540093B538 /* UIImage+CoreGraphics.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		665128091FD874550093B538 /* HRColorPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127F91FD874540093B538 /* HRColorPickerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6651280A1FD874550093B538 /* HRBrightnessCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 665127FA1FD874540093B538 /* HRBrightnessCursor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6651280B1FD874550093B538 /* HRColorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127FB1FD874540093B538 /* HRColorInfoView.m */; };
-		6651280C1FD874550093B538 /* HRHSVColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127FC1FD874540093B538 /* HRHSVColorUtil.m */; };
-		6651280D1FD874550093B538 /* UIImage+CoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127FD1FD874550093B538 /* UIImage+CoreGraphics.m */; };
-		6651280E1FD874550093B538 /* HRColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 665127FE1FD874550093B538 /* HRColorPickerView.m */; };
-		66C8E0A31FD867DD009485CC /* HRColorPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C8E0A11FD867DD009485CC /* HRColorPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1B2C956B200752C0000B5ACA /* HRColorMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C9559200752C0000B5ACA /* HRColorMapView.h */; };
+		1B2C956C200752C0000B5ACA /* HRColorCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C955A200752C0000B5ACA /* HRColorCursor.h */; };
+		1B2C956D200752C0000B5ACA /* HRHSVColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C955B200752C0000B5ACA /* HRHSVColorUtil.m */; };
+		1B2C956E200752C0000B5ACA /* HRBrightnessSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C955C200752C0000B5ACA /* HRBrightnessSlider.h */; };
+		1B2C956F200752C0000B5ACA /* HRColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C955D200752C0000B5ACA /* HRColorPickerView.m */; };
+		1B2C9570200752C0000B5ACA /* UIImage+CoreGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C955E200752C0000B5ACA /* UIImage+CoreGraphics.h */; };
+		1B2C9571200752C0000B5ACA /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C955F200752C0000B5ACA /* HRBrightnessCursor.m */; };
+		1B2C9572200752C0000B5ACA /* HRColorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C9560200752C0000B5ACA /* HRColorInfoView.m */; };
+		1B2C9573200752C0000B5ACA /* HRColorCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C9561200752C0000B5ACA /* HRColorCursor.m */; };
+		1B2C9574200752C0000B5ACA /* HRColorMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C9562200752C0000B5ACA /* HRColorMapView.m */; };
+		1B2C9575200752C0000B5ACA /* HRColorPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C9563200752C0000B5ACA /* HRColorPicker.h */; };
+		1B2C9576200752C0000B5ACA /* HRBrightnessSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C9564200752C0000B5ACA /* HRBrightnessSlider.m */; };
+		1B2C9577200752C0000B5ACA /* HRHSVColorUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C9565200752C0000B5ACA /* HRHSVColorUtil.h */; };
+		1B2C9578200752C0000B5ACA /* HRBrightnessCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C9566200752C0000B5ACA /* HRBrightnessCursor.h */; };
+		1B2C9579200752C0000B5ACA /* UIImage+CoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2C9567200752C0000B5ACA /* UIImage+CoreGraphics.m */; };
+		1B2C957A200752C0000B5ACA /* HRColorPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C9568200752C0000B5ACA /* HRColorPickerView.h */; };
+		1B2C957C200752C0000B5ACA /* HRColorInfoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B2C956A200752C0000B5ACA /* HRColorInfoView.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		665127EF1FD874540093B538 /* HRBrightnessCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessCursor.m; sourceTree = "<group>"; };
-		665127F01FD874540093B538 /* HRColorMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorMapView.m; sourceTree = "<group>"; };
-		665127F11FD874540093B538 /* HRColorCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorCursor.h; sourceTree = "<group>"; };
-		665127F21FD874540093B538 /* HRColorMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorMapView.h; sourceTree = "<group>"; };
-		665127F31FD874540093B538 /* HRHSVColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRHSVColorUtil.h; sourceTree = "<group>"; };
-		665127F41FD874540093B538 /* HRBrightnessSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessSlider.h; sourceTree = "<group>"; };
-		665127F51FD874540093B538 /* HRBrightnessSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessSlider.m; sourceTree = "<group>"; };
-		665127F61FD874540093B538 /* HRColorInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorInfoView.h; sourceTree = "<group>"; };
-		665127F71FD874540093B538 /* HRColorCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorCursor.m; sourceTree = "<group>"; };
-		665127F81FD874540093B538 /* UIImage+CoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CoreGraphics.h"; sourceTree = "<group>"; };
-		665127F91FD874540093B538 /* HRColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerView.h; sourceTree = "<group>"; };
-		665127FA1FD874540093B538 /* HRBrightnessCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessCursor.h; sourceTree = "<group>"; };
-		665127FB1FD874540093B538 /* HRColorInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorInfoView.m; sourceTree = "<group>"; };
-		665127FC1FD874540093B538 /* HRHSVColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRHSVColorUtil.m; sourceTree = "<group>"; };
-		665127FD1FD874550093B538 /* UIImage+CoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CoreGraphics.m"; sourceTree = "<group>"; };
-		665127FE1FD874550093B538 /* HRColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerView.m; sourceTree = "<group>"; };
+		1B2C9559200752C0000B5ACA /* HRColorMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorMapView.h; sourceTree = "<group>"; };
+		1B2C955A200752C0000B5ACA /* HRColorCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorCursor.h; sourceTree = "<group>"; };
+		1B2C955B200752C0000B5ACA /* HRHSVColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRHSVColorUtil.m; sourceTree = "<group>"; };
+		1B2C955C200752C0000B5ACA /* HRBrightnessSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessSlider.h; sourceTree = "<group>"; };
+		1B2C955D200752C0000B5ACA /* HRColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorPickerView.m; sourceTree = "<group>"; };
+		1B2C955E200752C0000B5ACA /* UIImage+CoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CoreGraphics.h"; sourceTree = "<group>"; };
+		1B2C955F200752C0000B5ACA /* HRBrightnessCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessCursor.m; sourceTree = "<group>"; };
+		1B2C9560200752C0000B5ACA /* HRColorInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorInfoView.m; sourceTree = "<group>"; };
+		1B2C9561200752C0000B5ACA /* HRColorCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorCursor.m; sourceTree = "<group>"; };
+		1B2C9562200752C0000B5ACA /* HRColorMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRColorMapView.m; sourceTree = "<group>"; };
+		1B2C9563200752C0000B5ACA /* HRColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPicker.h; sourceTree = "<group>"; };
+		1B2C9564200752C0000B5ACA /* HRBrightnessSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRBrightnessSlider.m; sourceTree = "<group>"; };
+		1B2C9565200752C0000B5ACA /* HRHSVColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRHSVColorUtil.h; sourceTree = "<group>"; };
+		1B2C9566200752C0000B5ACA /* HRBrightnessCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRBrightnessCursor.h; sourceTree = "<group>"; };
+		1B2C9567200752C0000B5ACA /* UIImage+CoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CoreGraphics.m"; sourceTree = "<group>"; };
+		1B2C9568200752C0000B5ACA /* HRColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorPickerView.h; sourceTree = "<group>"; };
+		1B2C956A200752C0000B5ACA /* HRColorInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRColorInfoView.h; sourceTree = "<group>"; };
+		1B2C957E200752F5000B5ACA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66C8E09E1FD867DD009485CC /* HRColorPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HRColorPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		66C8E0A11FD867DD009485CC /* HRColorPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HRColorPicker.h; sourceTree = "<group>"; };
-		66C8E0A21FD867DD009485CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +59,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B2C9558200752C0000B5ACA /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				1B2C9563200752C0000B5ACA /* HRColorPicker.h */,
+				1B2C9566200752C0000B5ACA /* HRBrightnessCursor.h */,
+				1B2C955F200752C0000B5ACA /* HRBrightnessCursor.m */,
+				1B2C955C200752C0000B5ACA /* HRBrightnessSlider.h */,
+				1B2C9564200752C0000B5ACA /* HRBrightnessSlider.m */,
+				1B2C955A200752C0000B5ACA /* HRColorCursor.h */,
+				1B2C9561200752C0000B5ACA /* HRColorCursor.m */,
+				1B2C956A200752C0000B5ACA /* HRColorInfoView.h */,
+				1B2C9560200752C0000B5ACA /* HRColorInfoView.m */,
+				1B2C9559200752C0000B5ACA /* HRColorMapView.h */,
+				1B2C9562200752C0000B5ACA /* HRColorMapView.m */,
+				1B2C9568200752C0000B5ACA /* HRColorPickerView.h */,
+				1B2C955D200752C0000B5ACA /* HRColorPickerView.m */,
+				1B2C9565200752C0000B5ACA /* HRHSVColorUtil.h */,
+				1B2C955B200752C0000B5ACA /* HRHSVColorUtil.m */,
+				1B2C955E200752C0000B5ACA /* UIImage+CoreGraphics.h */,
+				1B2C9567200752C0000B5ACA /* UIImage+CoreGraphics.m */,
+				1B2C957D200752F5000B5ACA /* HRColorPicker */,
+			);
+			name = ColorPicker;
+			path = ../ColorPicker;
+			sourceTree = "<group>";
+		};
+		1B2C957D200752F5000B5ACA /* HRColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				1B2C957E200752F5000B5ACA /* Info.plist */,
+			);
+			path = HRColorPicker;
+			sourceTree = SOURCE_ROOT;
+		};
 		66C8E0941FD867DD009485CC = {
 			isa = PBXGroup;
 			children = (
-				66C8E0A01FD867DD009485CC /* HRColorPicker */,
+				1B2C9558200752C0000B5ACA /* ColorPicker */,
 				66C8E09F1FD867DD009485CC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -75,31 +109,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		66C8E0A01FD867DD009485CC /* HRColorPicker */ = {
-			isa = PBXGroup;
-			children = (
-				665127FA1FD874540093B538 /* HRBrightnessCursor.h */,
-				665127EF1FD874540093B538 /* HRBrightnessCursor.m */,
-				665127F41FD874540093B538 /* HRBrightnessSlider.h */,
-				665127F51FD874540093B538 /* HRBrightnessSlider.m */,
-				665127F11FD874540093B538 /* HRColorCursor.h */,
-				665127F71FD874540093B538 /* HRColorCursor.m */,
-				665127F61FD874540093B538 /* HRColorInfoView.h */,
-				665127FB1FD874540093B538 /* HRColorInfoView.m */,
-				665127F21FD874540093B538 /* HRColorMapView.h */,
-				665127F01FD874540093B538 /* HRColorMapView.m */,
-				66C8E0A11FD867DD009485CC /* HRColorPicker.h */,
-				665127F91FD874540093B538 /* HRColorPickerView.h */,
-				665127FE1FD874550093B538 /* HRColorPickerView.m */,
-				665127F31FD874540093B538 /* HRHSVColorUtil.h */,
-				665127FC1FD874540093B538 /* HRHSVColorUtil.m */,
-				66C8E0A21FD867DD009485CC /* Info.plist */,
-				665127F81FD874540093B538 /* UIImage+CoreGraphics.h */,
-				665127FD1FD874550093B538 /* UIImage+CoreGraphics.m */,
-			);
-			path = HRColorPicker;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -107,15 +116,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				665128041FD874550093B538 /* HRBrightnessSlider.h in Headers */,
-				665128081FD874550093B538 /* UIImage+CoreGraphics.h in Headers */,
-				665128061FD874550093B538 /* HRColorInfoView.h in Headers */,
-				665128091FD874550093B538 /* HRColorPickerView.h in Headers */,
-				665128011FD874550093B538 /* HRColorCursor.h in Headers */,
-				66C8E0A31FD867DD009485CC /* HRColorPicker.h in Headers */,
-				665128031FD874550093B538 /* HRHSVColorUtil.h in Headers */,
-				6651280A1FD874550093B538 /* HRBrightnessCursor.h in Headers */,
-				665128021FD874550093B538 /* HRColorMapView.h in Headers */,
+				1B2C9577200752C0000B5ACA /* HRHSVColorUtil.h in Headers */,
+				1B2C957C200752C0000B5ACA /* HRColorInfoView.h in Headers */,
+				1B2C956C200752C0000B5ACA /* HRColorCursor.h in Headers */,
+				1B2C9578200752C0000B5ACA /* HRBrightnessCursor.h in Headers */,
+				1B2C957A200752C0000B5ACA /* HRColorPickerView.h in Headers */,
+				1B2C9575200752C0000B5ACA /* HRColorPicker.h in Headers */,
+				1B2C956E200752C0000B5ACA /* HRBrightnessSlider.h in Headers */,
+				1B2C9570200752C0000B5ACA /* UIImage+CoreGraphics.h in Headers */,
+				1B2C956B200752C0000B5ACA /* HRColorMapView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,14 +195,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6651280E1FD874550093B538 /* HRColorPickerView.m in Sources */,
-				665127FF1FD874550093B538 /* HRBrightnessCursor.m in Sources */,
-				6651280C1FD874550093B538 /* HRHSVColorUtil.m in Sources */,
-				6651280D1FD874550093B538 /* UIImage+CoreGraphics.m in Sources */,
-				665128071FD874550093B538 /* HRColorCursor.m in Sources */,
-				6651280B1FD874550093B538 /* HRColorInfoView.m in Sources */,
-				665128001FD874550093B538 /* HRColorMapView.m in Sources */,
-				665128051FD874550093B538 /* HRBrightnessSlider.m in Sources */,
+				1B2C9572200752C0000B5ACA /* HRColorInfoView.m in Sources */,
+				1B2C9573200752C0000B5ACA /* HRColorCursor.m in Sources */,
+				1B2C956F200752C0000B5ACA /* HRColorPickerView.m in Sources */,
+				1B2C9574200752C0000B5ACA /* HRColorMapView.m in Sources */,
+				1B2C956D200752C0000B5ACA /* HRHSVColorUtil.m in Sources */,
+				1B2C9571200752C0000B5ACA /* HRBrightnessCursor.m in Sources */,
+				1B2C9576200752C0000B5ACA /* HRBrightnessSlider.m in Sources */,
+				1B2C9579200752C0000B5ACA /* UIImage+CoreGraphics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

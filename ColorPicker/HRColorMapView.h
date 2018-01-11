@@ -47,4 +47,6 @@
 
 @property (nonatomic) NSNumber *tileSize;
 
+- (void)viewControllerWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator;
+
 @end
