@@ -34,9 +34,10 @@
 
 typedef struct timeval timeval;
 
-@interface HRColorPickerView () {
-}
+@interface HRColorPickerView () <UITextFieldDelegate>
 
+// keyboard
+@property (strong, nonatomic) UITapGestureRecognizer* tapHideKeyboard;
 @end
 
 @implementation HRColorPickerView {
@@ -81,6 +82,12 @@ typedef struct timeval timeval;
     _waitTimeDuration.tv_usec = (__darwin_suseconds_t) (1000000.0 / 15.0);
 }
 
+- (void)dealloc
+{
+    [self removeGestureRecognizer:self.tapHideKeyboard];
+    self.tapHideKeyboard = nil;
+}
+
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
 }
@@ -100,6 +107,38 @@ typedef struct timeval timeval;
     if (_colorMapView) {
         self.colorMapView.color = self.color;
         self.colorMapView.brightness = _currentHsvColor.v;
+    }
+    if (_textField) {
+        if (!_textField.isFirstResponder) {
+            _textField.text = [self hexStringFromColor:self.color];
+            if (![[[self hexStringFromColor:self.color] lowercaseString] isEqualToString:@"#FFFFFF".lowercaseString]) {
+                _textField.textColor = self.color;
+            }
+            else {
+                _textField.textColor = [UIColor blackColor];
+            }
+        }
+    }
+}
+
+- (void)setTextField:(UITextField *)textField
+{
+    _textField = textField;
+    _textField.text = [self hexStringFromColor:self.color];
+    if (![[[self hexStringFromColor:self.color] lowercaseString] isEqualToString:@"#FFFFFF".lowercaseString]) {
+        _textField.textColor = self.color;
+    }
+    else {
+        _textField.textColor = [UIColor blackColor];
+    }
+    [self addSubview:_textField];
+    [self sendSubviewToBack:_textField];
+    _textField.delegate = self;
+    
+    if (!self.tapHideKeyboard) {
+        self.tapHideKeyboard = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionHideKeyboardTapDetected:)];
+        self.tapHideKeyboard.numberOfTapsRequired = 1;
+        [self addGestureRecognizer:self.tapHideKeyboard];
     }
 }
 
@@ -171,6 +210,13 @@ typedef struct timeval timeval;
     self.colorMapView.brightness = _currentHsvColor.v;
     self.colorMapView.color = self.color;
     self.colorInfoView.color = self.color;
+    self.textField.text = [self hexStringFromColor:self.color];
+    if (![[[self hexStringFromColor:self.color] lowercaseString] isEqualToString:@"#FFFFFF".lowercaseString]) {
+        _textField.textColor = self.color;
+    }
+    else {
+        _textField.textColor = [UIColor blackColor];
+    }
     [self sendActions];
 }
 
@@ -178,6 +224,13 @@ typedef struct timeval timeval;
     HSVColorFromUIColor(colorMapView.color, &_currentHsvColor);
     self.brightnessSlider.color = colorMapView.color;
     self.colorInfoView.color = self.color;
+    self.textField.text = [self hexStringFromColor:self.color];
+    if (![[[self hexStringFromColor:self.color] lowercaseString] isEqualToString:@"#FFFFFF".lowercaseString]) {
+        _textField.textColor = self.color;
+    }
+    else {
+        _textField.textColor = [UIColor blackColor];
+    }
     [self sendActions];
 }
 
@@ -235,6 +288,128 @@ typedef struct timeval timeval;
                                               sliderHeight);
     
     self.brightnessSlider.frame = [self.brightnessSlider frameForAlignmentRect:brightnessPickerFrame];
+    self.textField.frame = CGRectMake(self.colorInfoView.frame.origin.x + self.colorInfoView.frame.size.width + 16.0,
+                                      self.colorInfoView.frame.origin.y,
+                                      200.0,
+                                      30.0);
+}
+
+- (NSString *)hexStringFromColor:(UIColor *)color {
+    const CGFloat *components = CGColorGetComponents(color.CGColor);
+    
+    CGFloat r = components[0];
+    CGFloat g = components[1];
+    CGFloat b = components[2];
+    
+    return [NSString stringWithFormat:@"#%02lX%02lX%02lX",
+            lroundf(r * 255),
+            lroundf(g * 255),
+            lroundf(b * 255)];
+}
+
+- (UIColor *)colorWithHexString:(NSString *)hex
+{
+    NSString *cString = [hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].uppercaseString;
+    
+    // String should be 6 or 8 characters
+    if (cString.length < 6) return [UIColor grayColor];
+    
+    // strip 0X if it appears
+    if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
+    
+    // #으로 시작해도 #을 지워준다.
+    if ([cString hasPrefix:@"#"]) cString = [cString substringFromIndex:1];
+    
+    if (cString.length != 6) return  [UIColor grayColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    
+    // Scan values
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.0f];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //NSLog(@"%s: %@", __PRETTY_FUNCTION__, textField.text);
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    //NSLog(@"%s: %@", __PRETTY_FUNCTION__, textField.text);
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    // 다른 칸으로 이동하면 여기가 호출됨
+    //NSLog(@"%s: %@", __PRETTY_FUNCTION__, textField.text);
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    //NSLog(@"%s: %@", __PRETTY_FUNCTION__, textField.text);
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //NSLog(@"%s: %@, %@", __PRETTY_FUNCTION__, textField.text, string);
+    
+    NSString *inputString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    //NSLog(@"inputText = %@", inputString);
+    
+    UIColor *color = [self colorWithHexString:inputString];
+    self.color = color;
+    if (![[[self hexStringFromColor:self.color] lowercaseString] isEqualToString:@"#FFFFFF".lowercaseString]) {
+        _textField.textColor = self.color;
+    }
+    else {
+        _textField.textColor = [UIColor blackColor];
+    }
+    
+    self.brightnessSlider.color = self.color;
+    self.colorInfoView.color = self.color;
+    self.colorMapView.color = self.color;
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    //NSLog(@"%s: %@", __PRETTY_FUNCTION__, textField.text);
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    // next 버튼을 누르면 여기가 호출됨
+    //NSLog(@"%s: %@", __PRETTY_FUNCTION__, textField.text);
+    return YES;
+}
+
+- (void)actionHideKeyboardTapDetected:(UITapGestureRecognizer *)sender
+{
+    [_textField resignFirstResponder];
 }
 
 @end

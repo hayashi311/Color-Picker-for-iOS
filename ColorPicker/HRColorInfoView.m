@@ -94,10 +94,17 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
 
 - (void)setColor:(UIColor *)color {
     _color = color;
-    CGFloat r, g, b, a;
-    [_color getRed:&r green:&g blue:&b alpha:&a];
-    int rgb = (int) (r * 255.0f)<<16 | (int) (g * 255.0f)<<8 | (int) (b * 255.0f)<<0;
-    _hexColorLabel.text = [NSString stringWithFormat:@"#%06x", rgb];
+    
+    const CGFloat *components = CGColorGetComponents(color.CGColor);
+    
+    CGFloat r = components[0];
+    CGFloat g = components[1];
+    CGFloat b = components[2];
+    
+    _hexColorLabel.text = [NSString stringWithFormat:@"#%02lX%02lX%02lX",
+                           lroundf(r * 255),
+                           lroundf(g * 255),
+                           lroundf(b * 255)];
     [self setNeedsDisplay];
 }
 
