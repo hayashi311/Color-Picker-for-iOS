@@ -375,7 +375,19 @@ typedef struct timeval timeval;
 {
     //NSLog(@"%s: %@, %@", __PRETTY_FUNCTION__, textField.text, string);
     
+    NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"#1234567890abcdefABCDEF"] invertedSet];
+    NSString *filtered = [[string componentsSeparatedByCharactersInSet:invalidCharSet] componentsJoinedByString:@""];
+    if (![string isEqualToString:filtered]) {
+        return NO;
+    }
+    
     NSString *inputString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    inputString = [inputString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    inputString = [@"#" stringByAppendingString:inputString];
+    textField.delegate = nil;
+    textField.text = inputString;
+    textField.delegate = self;
+    
     //NSLog(@"inputText = %@", inputString);
     
     UIColor *color = [self colorWithHexString:inputString];
@@ -391,7 +403,7 @@ typedef struct timeval timeval;
     self.colorInfoView.color = self.color;
     self.colorMapView.color = self.color;
     
-    return YES;
+    return NO;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
