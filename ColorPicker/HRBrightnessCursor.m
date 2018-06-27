@@ -104,16 +104,16 @@
     }
     _editing = editing;
     void (^showState)(void) = ^{
-        _brightnessLabel.alpha = 1.;
-        _brightnessLabel.transform = CGAffineTransformIdentity;
-        _backLayer.transform = CATransform3DMakeScale(1.6, 1.6, 1.0);
-        _colorLayer.transform = CATransform3DMakeScale(1.4, 1.4, 1.0);
+        self->_brightnessLabel.alpha = 1.;
+        self->_brightnessLabel.transform = CGAffineTransformIdentity;
+        self->_backLayer.transform = CATransform3DMakeScale(1.6, 1.6, 1.0);
+        self->_colorLayer.transform = CATransform3DMakeScale(1.4, 1.4, 1.0);
     };
     void (^hiddenState)(void) = ^{
-        _brightnessLabel.alpha = 0.;
-        _brightnessLabel.transform = CGAffineTransformMakeTranslation(0, 10);
-        _backLayer.transform = CATransform3DIdentity;
-        _colorLayer.transform = CATransform3DIdentity;
+        self->_brightnessLabel.alpha = 0.;
+        self->_brightnessLabel.transform = CGAffineTransformMakeTranslation(0, 10);
+        self->_backLayer.transform = CATransform3DIdentity;
+        self->_colorLayer.transform = CATransform3DIdentity;
     };
     if (_editing) {
         hiddenState();

@@ -110,12 +110,12 @@
     }
     _editing = editing;
     void (^showState)(void) = ^{
-        _backLayer.transform = CATransform3DMakeScale(1.6, 1.6, 1.0);
-        _colorLayer.transform = CATransform3DMakeScale(1.4, 1.4, 1.0);
+        self->_backLayer.transform = CATransform3DMakeScale(1.6, 1.6, 1.0);
+        self->_colorLayer.transform = CATransform3DMakeScale(1.4, 1.4, 1.0);
     };
     void (^hiddenState)(void) = ^{
-        _backLayer.transform = CATransform3DIdentity;
-        _colorLayer.transform = CATransform3DIdentity;
+        self->_backLayer.transform = CATransform3DIdentity;
+        self->_colorLayer.transform = CATransform3DIdentity;
     };
     if (_editing) {
         hiddenState();
