@@ -117,7 +117,11 @@ const CGFloat kHRColorInfoViewCornerRadius = 3.;
     [rectanglePath fill];
 }
 
-- (UIView *)viewForBaselineLayout {
+- (UIView *)viewForLastBaselineLayout {
+    return _hexColorLabel;
+}
+
+- (UIView *)viewForFirstBaselineLayout {
     return _hexColorLabel;
 }
 
