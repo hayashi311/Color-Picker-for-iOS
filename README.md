@@ -35,7 +35,7 @@ You can receive `.valueChanged` event when user changes color.
 
 #### Beautiful UI with haptic feedback.
 
-[Animation GIF]
+![](https://github.com/hayashi311/Color-Picker-for-iOS/raw/screenshot/ColorfulUI.gif)
 
 #### Wide color space support
 
@@ -44,12 +44,11 @@ You can receive `.valueChanged` event when user changes color.
 | .extendedSRGB | The extended sRGB is color space for support wider and deeper representation of color. |
 | .sRGB | sRGB (standard Red Green Blue) is often the "default" color space for images that contain no color space information |
 
-[image]
+![](https://github.com/hayashi311/Color-Picker-for-iOS/raw/screenshot/ColorPicker_ColorSpace.png)
 
 #### Dark mode support
 
-Light Dark
-[image]
+![](https://github.com/hayashi311/Color-Picker-for-iOS/raw/screenshot/ColorPicker_Dark.png)
 
 ## Requirements
 
