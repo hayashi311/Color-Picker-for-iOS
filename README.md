@@ -5,25 +5,56 @@
 [![License](https://img.shields.io/cocoapods/l/Colorful.svg?style=flat)](https://cocoapods.org/pods/Colorful)
 [![Platform](https://img.shields.io/cocoapods/p/Colorful.svg?style=flat)](https://cocoapods.org/pods/Colorful)
 
-## Example
+### How to use it
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+#### Podfile
+
+```
+platform :ios, '10.0'
+pod "Colorful", "~> 3.0"
+```
+
+#### Install
+
+```
+$ pod install
+```
+
+#### Usage
+
+```swift
+let colorPicker = ColorPicker(frame: ...)
+colorPicker.addTarget(self, action: #selector(...), for: .valueChanged)
+colorPicker.set(color: .red, colorSpace: .extendedSRGB)
+view.add(subview: colorPicker)
+```
+
+You can receive `.valueChanged` event when user changes color.
+
+### Reason why you choose colorful
+
+#### Beautiful UI with haptic feedback.
+
+[Animation GIF]
+
+#### Wide color space support
+
+| ColorSpace | Description |
+| :-------: | :---------: |
+| .extendedSRGB | The extended sRGB is color space for support wider and deeper representation of color. |
+| .sRGB | sRGB (standard Red Green Blue) is often the "default" color space for images that contain no color space information |
+
+[image]
+
+#### Dark mode support
+
+Light Dark
+[image]
 
 ## Requirements
 
-## Installation
-
-Colorful is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'Colorful'
-```
-
-## Author
-
-hayashi311, hayashi311@gmail.com
+iOS10 ~
 
 ## License
 
-Colorful is available under the MIT license. See the LICENSE file for more info.
+Colorful is available under new BSD License. See the LICENSE file for more info.
