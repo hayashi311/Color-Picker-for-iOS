@@ -1,71 +1,59 @@
-## HRColorPicker  
-***HRColorPicker*** is a lightweight color picker for iOS  
-that's easy to use for both users and developers.  
+# Colorful
 
-<a href="http://hayashi311.github.io/Color-Picker-for-iOS/" target="_blank"><img src="https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/Vimeo.png" alt="Video" style="max-width:100%;"></a>
-
-### Try HRColorPicker
-To try HRColorPicker, open Terminal.app and enter the following command:  
-
-    $ pod try Color-Picker-for-iOS
-
-![](https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/screen_shot2.png)
+[![CI Status](https://img.shields.io/travis/hayashi311/Colorful.svg?style=flat)](https://travis-ci.org/hayashi311/Colorful)
+[![Version](https://img.shields.io/cocoapods/v/Colorful.svg?style=flat)](https://cocoapods.org/pods/Colorful)
+[![License](https://img.shields.io/cocoapods/l/Colorful.svg?style=flat)](https://cocoapods.org/pods/Colorful)
+[![Platform](https://img.shields.io/cocoapods/p/Colorful.svg?style=flat)](https://cocoapods.org/pods/Colorful)
 
 ### How to use it
 
 #### Podfile
 
-    platform :ios, '7.0'
-    pod "Color-Picker-for-iOS", "~> 2.0"
+```
+platform :ios, '10.0'
+pod "Colorful", "~> 3.0"
+```
 
 #### Install
 
-    $ pod install
+```
+$ pod install
+```
 
 #### Usage
 
-    colorPickerView = [[HRColorPickerView alloc] init];
-    colorPickerView.color = self.color;
-    [colorPickerView addTarget:self
-                        action:@selector(action:)
-              forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:colorPickerView];
-  
-HRColorPicker is optimized for ***Interface Builder*** and ***AutoLayout***.
+```swift
+let colorPicker = ColorPicker(frame: ...)
+colorPicker.addTarget(self, action: #selector(...), for: .valueChanged)
+colorPicker.set(color: .red, colorSpace: .extendedSRGB)
+view.add(subview: colorPicker)
+```
 
-### How to customize
+You can receive `.valueChanged` event when user changes color.
 
-#### Interface Builder
-Layout, color, and tile size can be changed only through the Interface Builder.
+### Reason why you choose colorful
 
-![](https://raw.githubusercontent.com/hayashi311/Color-Picker-for-iOS/screenshot/IB.png)
+#### Beautiful UI with haptic feedback.
 
-#### Without Interface Builder
-As shown below, you can also programmatically customize HRColorPicker.
+![](https://github.com/hayashi311/Color-Picker-for-iOS/raw/screenshot/ColorfulUI.gif)
 
-    colorPickerView.colorMapView.saturationUpperLimit = @1;
+#### Wide color space support
 
-If you would like to change the layout, it is strongly recommended that you use the Interface Builder and AutoLayout.
+| ColorSpace | Description |
+| :-------: | :---------: |
+| .extendedSRGB | The extended sRGB is color space for support wider and deeper representation of color. |
+| .sRGB | sRGB (standard Red Green Blue) is often the "default" color space for images that contain no color space information |
 
-### Changing the UI components
+![](https://github.com/hayashi311/Color-Picker-for-iOS/raw/screenshot/ColorPicker_ColorSpace.png)
 
-If you would like to customize the user interface, HRColorPicker allows you to completely change out certain UI components.
+#### Dark mode support
 
-    @property (nonatomic, strong) IBOutlet UIView <HRColorInfoView> *colorInfoView;
-    @property (nonatomic, strong) IBOutlet UIControl <HRColorMapView> *colorMapView;
-    @property (nonatomic, strong) IBOutlet UIControl <HRBrightnessSlider> *brightnessSlider;
+![](https://github.com/hayashi311/Color-Picker-for-iOS/raw/screenshot/ColorPicker_Dark.png)
 
-Create your custom UI class that implement protocol methods.
+## Requirements
 
-    YourAwesomeBrightnessSlider *slider = [[YourAwesomeBrightnessSlider alloc] init];
-    [colorPickerView addSubview:slider];
-    colorPickerView.brightnessSlider = slider;
+iOS10 ~
 
-### Lisence
+## License
 
-- new BSD License 
-
-
-### Requirement
-- iOS7.x~
-  
+Colorful is available under new BSD License. See the LICENSE file for more info.
