@@ -1,0 +1,16 @@
+PODS:
+  - Colorful (3.0.0)
+
+DEPENDENCIES:
+  - Colorful (from `../`)
+
+EXTERNAL SOURCES:
+  Colorful:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Colorful: e4dd4eccb7eeb1a467e075bd5ab51214b52b2e77
+
+PODFILE CHECKSUM: a66a05cfd17624715d07316465c31c1ca04906e0
+
+COCOAPODS: 1.9.1
