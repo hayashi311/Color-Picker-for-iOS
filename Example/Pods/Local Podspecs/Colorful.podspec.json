@@ -6,7 +6,7 @@
   "homepage": "https://github.com/hayashi311/Color-Picker-for-iOS",
   "license": {
     "type": "new BSD License",
-    "file": "LICENSE.txt"
+    "file": "LICENSE"
   },
   "authors": {
     "hayashi311": "hayashi311@gmail.com"

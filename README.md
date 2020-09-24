@@ -26,7 +26,7 @@ $ pod install
 let colorPicker = ColorPicker(frame: ...)
 colorPicker.addTarget(self, action: #selector(...), for: .valueChanged)
 colorPicker.set(color: .red, colorSpace: .extendedSRGB)
-view.add(subview: colorPicker)
+view.addSubview(colorPicker)
 ```
 
 You can receive `.valueChanged` event when user changes color.
