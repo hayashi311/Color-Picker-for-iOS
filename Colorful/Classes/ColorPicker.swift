@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ColorPicker: UIControl {
+public final class ColorPicker: UIControl {
     
     private(set) lazy var colorSpace: HRColorSpace = { preconditionFailure() }()
 
@@ -27,12 +27,12 @@ public class ColorPicker: UIControl {
 
     private let feedbackGenerator = UISelectionFeedbackGenerator()
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -95,7 +95,7 @@ public class ColorPicker: UIControl {
     }
     
     @objc
-    func handleColorMapPan(pan: UIPanGestureRecognizer) {
+    private func handleColorMapPan(pan: UIPanGestureRecognizer) {
         switch pan.state {
         case .began:
             colorMapCursor.startEditing()
@@ -112,7 +112,7 @@ public class ColorPicker: UIControl {
     }
 
     @objc
-    func handleColorMapTap(tap: UITapGestureRecognizer) {
+    private func handleColorMapTap(tap: UITapGestureRecognizer) {
         let selectedColor = colorMap.color(at: tap.location(in: colorMap))
         hsvColor = selectedColor.with(brightness: hsvColor.brightness)
         mapColorToView()
@@ -121,7 +121,7 @@ public class ColorPicker: UIControl {
     }
 
     private var prevFeedbackedHSV: HSVColor?
-    fileprivate func feedbackIfNeeds() {
+    private func feedbackIfNeeds() {
         if prevFeedbackedHSV != hsvColor {
             feedbackGenerator.selectionChanged()
             prevFeedbackedHSV = hsvColor
@@ -130,7 +130,7 @@ public class ColorPicker: UIControl {
 
     // ↑似た構造ではあるのだが、本質的に異なるので分けた
     private var prevSentActionHSV: HSVColor?
-    func sendActionIfNeeds() {
+    private func sendActionIfNeeds() {
         if prevSentActionHSV != hsvColor {
             sendActions(for: .valueChanged)
             prevSentActionHSV = hsvColor
