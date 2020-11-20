@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(name: "Colorful",
-                      platforms: [.iOS(.v10), .iPadOS(.v13)],
+                      platforms: [.iOS(.v11)],
                       products: [.library(name: "Colorful",
                                           targets: ["Colorful"])],
                       targets: [.target(name: "Colorful",
