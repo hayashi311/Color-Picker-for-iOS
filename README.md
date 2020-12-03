@@ -52,7 +52,7 @@ You can receive `.valueChanged` event when user changes color.
 
 ## Requirements
 
-iOS10 ~
+iOS11 ~
 
 ## License
 
