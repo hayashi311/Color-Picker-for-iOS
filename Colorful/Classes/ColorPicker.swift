@@ -70,14 +70,16 @@ public final class ColorPicker: UIControl {
 
         let margin: CGFloat = 12
         let brightnessSliderWidth: CGFloat = 72
-        let colorMapSize = bounds.width - brightnessSliderWidth - margin * 3
+        let colorMapSize = min(bounds.width - brightnessSliderWidth - margin * 3, bounds.height - 2 * margin)
 
-        colorMap.frame = CGRect(x: 0, y: (bounds.height - colorMapSize)/2, width: colorMapSize + margin * 2, height: colorMapSize)
-        brightnessSlider.frame = CGRect(x: colorMapSize + margin * 2, y: (bounds.height - colorMapSize)/2,
+        let colorMapX = (bounds.width - (colorMapSize + margin * 2 + brightnessSliderWidth)) / 2
+
+        colorMap.frame = CGRect(x: colorMapX, y: (bounds.height - colorMapSize)/2, width: colorMapSize + margin * 2, height: colorMapSize)
+        brightnessSlider.frame = CGRect(x: colorMap.frame.maxX, y: (bounds.height - colorMapSize)/2,
                                         width: brightnessSliderWidth, height: colorMapSize)
 
         let brightnessCursorSize = CGSize(width: brightnessSliderWidth, height: 28)
-        brightnessCursor.frame = CGRect(x: colorMapSize + margin * 2,
+        brightnessCursor.frame = CGRect(x: colorMap.frame.maxX,
                                         y: (bounds.height - brightnessCursorSize.height)/2,
                                         width: brightnessCursorSize.width, height: brightnessCursorSize.height)
         mapColorToView(initialize: true)
