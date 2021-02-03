@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Colorful'
-  s.version          = '3.0.0'
+  s.version          = '3.0.1'
   s.summary          = 'Colorful: iOS Color Picker built in Swift'
 
   s.description      = <<-DESC
