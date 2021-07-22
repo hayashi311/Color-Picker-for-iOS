@@ -31,6 +31,13 @@ view.addSubview(colorPicker)
 
 You can receive `.valueChanged` event when user changes color.
 
+You can hide the brightness slider and set the brightness level programmatically:
+
+```swift
+colorPicker.isBrightnessSliderHidden = true
+colorPicker.brightnessLevel = 1.0
+```
+
 ## Reason why you choose colorful
 
 ### Beautiful UI with haptic feedback.

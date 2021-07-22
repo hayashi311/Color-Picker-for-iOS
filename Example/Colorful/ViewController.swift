@@ -13,7 +13,9 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var colorPicker: ColorPicker!
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var uiSwitch: UISwitch!
+    @IBOutlet weak var sRGBSwitch: UISwitch!
+    @IBOutlet weak var brightnessSwitch: UISwitch!
+    @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var colorSpaceLabel: UILabel!
 
     var colorSpace: HRColorSpace = .sRGB
@@ -24,6 +26,7 @@ class ViewController: UIViewController {
         colorPicker.set(color: UIColor(displayP3Red: 1.0, green: 1.0, blue: 0, alpha: 1), colorSpace: colorSpace)
         updateColorSpaceText()
         handleColorChanged(picker: colorPicker)
+        brightnessSlider.isHidden = !colorPicker.isBrightnessSliderHidden
     }
 
     @objc func handleColorChanged(picker: ColorPicker) {
@@ -46,12 +49,25 @@ class ViewController: UIViewController {
     }
 
     @IBAction func handleSwitchAction(_ sender: UISwitch) {
-        colorSpace = sender.isOn ? .extendedSRGB : .sRGB
-        colorPicker.set(color: colorPicker.color, colorSpace: colorSpace)
-        updateColorSpaceText()
-        handleColorChanged(picker: colorPicker)
+        switch sender.tag {
+        case 0:
+            colorSpace = sender.isOn ? .extendedSRGB : .sRGB
+            colorPicker.set(color: colorPicker.color, colorSpace: colorSpace)
+            updateColorSpaceText()
+            handleColorChanged(picker: colorPicker)
+        case 1:
+            colorPicker.isBrightnessSliderHidden.toggle()
+            brightnessSlider.isHidden = !colorPicker.isBrightnessSliderHidden
+            brightnessSlider.value = Float(colorPicker.brightnessLevel)
+        default:
+            break
+        }
     }
-
+    
+    @IBAction func handleSliderAction(_ sender: UISlider) {
+        colorPicker.brightnessLevel = CGFloat(sender.value)
+    }
+    
     func updateColorSpaceText() {
         switch colorSpace {
         case .extendedSRGB:
